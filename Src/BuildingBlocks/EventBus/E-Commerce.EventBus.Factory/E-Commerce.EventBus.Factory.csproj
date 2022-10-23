@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>E_Commerce.EventBus.Factory</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\E-Commerce.EventBus.AzureServiceBus\E-Commerce.EventBus.AzureServiceBus.csproj" />
+    <ProjectReference Include="..\E-Commerce.EventBus.Base\E-Commerce.EventBus.Base.csproj" />
+    <ProjectReference Include="..\E-Commerce.EventBus.RabbitMq\E-Commerce.EventBus.RabbitMq.csproj" />
+  </ItemGroup>
+
+</Project>
