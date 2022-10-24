@@ -46,6 +46,7 @@ namespace E_Commerce.CatalogService.Persistence.Concretes.Services
 
             GetCatalogItemDto getCatalogItemDto = _mapper.Map<GetCatalogItemDto>(catalogItem);
             SetWebRoothImage(getCatalogItemDto.CatalogItemsImages);
+
             return getCatalogItemDto;
         }
 

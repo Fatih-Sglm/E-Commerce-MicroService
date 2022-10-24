@@ -69,13 +69,13 @@ namespace E_Commerce.EventBus.RabbitMq
                 var properties = _consumerChannel.CreateBasicProperties();
                 properties.DeliveryMode = 2; // persistent
 
-                _consumerChannel.QueueDeclare(queue: GetSubName(eventName), // Ensure queue exists while publishing
-                                     durable: true,
-                                     exclusive: false,
-                                     autoDelete: false,
-                                     arguments: null);
+                //_consumerChannel.QueueDeclare(queue: GetSubName(eventName), // Ensure queue exists while publishing
+                //                     durable: true,
+                //                     exclusive: false,
+                //                     autoDelete: false,
+                //                     arguments: null);
 
-                //consumerChannel.QueueBind(queue: GetSubName(eventName),
+                //_consumerChannel.QueueBind(queue: GetSubName(eventName),
                 //                  exchange: EventBusConfig.DefaultTopicName,
                 //                  routingKey: eventName);
 
@@ -96,7 +96,7 @@ namespace E_Commerce.EventBus.RabbitMq
                 if (!_conneciton.IsConnected)
                     _conneciton.TryConnect();
                 _consumerChannel.QueueDeclare(queue: GetSubName(eventName), true, false, false, null);
-                _consumerChannel.QueueBind(GetSubName(eventName), EventBusConfig.DefaultTopicName, eventName);
+                _consumerChannel.QueueBind(GetSubName(eventName), EventBusConfig?.DefaultTopicName, eventName);
             }
 
             SubsManager.AddSubscription<T, TH>();

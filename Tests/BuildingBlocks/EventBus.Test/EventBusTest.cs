@@ -119,7 +119,7 @@ namespace EventBus.Test
                 DefaultTopicName = "DefaultTopicName",
                 EventBusType = EventBusType.AzureServiceBus,
                 EventNameSuffix = "IntegrationEvent",
-                EventBusConnectionString = "Endpoint=sb://e-commerce-microservice.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=9p09YgXE715jIaC6PIEn7e61Pu3GfJcohsQeEDwpL48="
+                EventBusConnectionString = ""
 
             };
         }

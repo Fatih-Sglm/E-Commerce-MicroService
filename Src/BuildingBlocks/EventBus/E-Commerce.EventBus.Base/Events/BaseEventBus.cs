@@ -59,7 +59,7 @@ namespace E_Commerce.EventBus.Base.Events
                         var integrationEvent = JsonConvert.DeserializeObject(message, eventType);
 
                         var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
-                        await Task.FromResult(concreteType.GetMethod("Handle").Invoke(handler, new object[] { integrationEvent }));
+                        await Task.FromResult(concreteType.GetMethod("HandleAsync").Invoke(handler, new object[] { integrationEvent }));
                     }
                 }
 

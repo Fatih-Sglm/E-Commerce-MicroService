@@ -15,7 +15,12 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Profiles
             CreateMap<IPaginate<CatalogItem>, CatalogItemListModel>();
             CreateMap<CatalogItem, GetListCatalogItemDto>().
                 ForMember(x => x.CatalogTypeName, y => y.MapFrom(z => z.CatalogType.Type)).
-                ForMember(x => x.CatalogBrandName, y => y.MapFrom(z => z.CatalogBrand.Brand)).ForMember(x => x.CatalogItemsHeaderImage, y => y.MapFrom(z => z.CatalogItemImages.Where(x => x.IsHeader == true).Select(x => x.PictureFileName)));
+                ForMember(x => x.CatalogBrandName, y => y.MapFrom(z => z.CatalogBrand.Brand)).
+                ForMember(x => x.CatalogItemsHeaderImage, y => y.MapFrom(z => z.CatalogItemImages.Where(x => x.IsHeader == true).Select(x => x.PictureFileName)));
+
+
+
+
             CreateMap<CatalogItem, GetCatalogItemDto>().
                 ForMember(x => x.CatalogTypeName, y => y.MapFrom(z => z.CatalogType.Type)).
                 ForMember(x => x.CatalogBrandName, y => y.MapFrom(z => z.CatalogBrand.Brand)).
