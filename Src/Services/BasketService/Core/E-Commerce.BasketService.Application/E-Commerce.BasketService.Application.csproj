@@ -7,4 +7,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\BuildingBlocks\EventBus\E-Commerce.EventBus.Base\E-Commerce.EventBus.Base.csproj" />
+    <ProjectReference Include="..\E-Commerce.BasketService.Domain\E-Commerce.BasketService.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

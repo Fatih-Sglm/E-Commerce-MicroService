@@ -23,7 +23,7 @@ namespace E_Commerce.CatalogService.Api.Controllers
             return Ok(await Mediator.Send(updateCatalogItemCommand));
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> Get([FromQuery] GetListCatalogItemQuery getListCatalogItemCommand)
         {
             return Ok(await Mediator.Send(getListCatalogItemCommand));

@@ -32,7 +32,7 @@ internal class Program
         services.AddTransient<OrderPaymentSuccesIntegrationEventHandler>();
 
 
-        services.AddSingleton<IEventBus>(sp =>
+        services.AddSingleton(sp =>
         {
             EventBusConfig eventBusConfig = new()
             {

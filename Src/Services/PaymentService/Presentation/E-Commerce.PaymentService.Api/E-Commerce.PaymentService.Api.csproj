@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>E_Commerce.PaymentService.Api</RootNamespace>
+    <UserSecretsId>35a6f989-41cc-4ff8-8e87-1e2af6488881</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

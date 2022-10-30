@@ -1,3 +1,4 @@
+using E_Commerce.CatalogService.Api.Extensions;
 using E_Commerce.CatalogService.Application.Extensions;
 using E_Commerce.CatalogService.Persistence.Extension;
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContextServices(builder.Configuration);
+builder.Services.ConfigureConsul(builder.Configuration);
 builder.Services.AddPersistenceServiceRegistraiton();
 builder.Services.AddApplicationServiceRegistraiton();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -28,4 +30,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Start();
+app.RegisterWithConsul(app.Lifetime);
+app.WaitForShutdown();
