@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerce.CatalogService.Persistence.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    [Migration("20221110134844_InitMig")]
+    [Migration("20221111115724_InitMig")]
     partial class InitMig
     {
         /// <inheritdoc />
@@ -54,19 +54,19 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                         {
                             Id = 1L,
                             Brand = "Nike",
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 627, DateTimeKind.Local).AddTicks(7574)
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 637, DateTimeKind.Local).AddTicks(8851)
                         },
                         new
                         {
                             Id = 2L,
                             Brand = "Adidas",
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 627, DateTimeKind.Local).AddTicks(7591)
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 637, DateTimeKind.Local).AddTicks(8875)
                         },
                         new
                         {
                             Id = 3L,
                             Brand = "Puma",
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 627, DateTimeKind.Local).AddTicks(7592)
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 637, DateTimeKind.Local).AddTicks(8876)
                         });
                 });
 
@@ -116,7 +116,7 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                             Id = 1L,
                             CatalogBrandId = 1L,
                             CatalogTypeId = 1L,
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 630, DateTimeKind.Local).AddTicks(6445),
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 639, DateTimeKind.Local).AddTicks(5431),
                             Description = "Nike'ın günlük giyim için tasarlanmış ilk Air Max modeli olan Nike Air Max 270, dikkat çeken stili rahatlıkla buluşturuyor. Air Max ikonlarından ilham alan tasarım, büyük penceresi ve yeni renkleriyle Nike'ın en büyük yeniliğini sergiliyor.",
                             Name = "Nike Air Max 270",
                             Price = 1499.99m
@@ -126,7 +126,7 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                             Id = 2L,
                             CatalogBrandId = 1L,
                             CatalogTypeId = 2L,
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 630, DateTimeKind.Local).AddTicks(6458),
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 639, DateTimeKind.Local).AddTicks(5444),
                             Description = "Her takımın onu ligdeki diğer takımlardan ayıran gerçek renkleri ve eşsiz bir kimliği bulunur. Zengin basketbol mirasını onurlandıran bu Golden State Warriors Forma, takım ayrıntılarından ter tutmayan hafif fileye kadar profesyonellerin sahada giydiği formalardan ilham alır. Favori oyuncunu ve sevdiğin oyunu temsil ederken hem sahada hem de saha dışında kuru ve serin kalmana yardımcı olur",
                             Name = "Golden State Warriors Icon Edition 2022/23",
                             Price = 1849.90m
@@ -136,7 +136,7 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                             Id = 3L,
                             CatalogBrandId = 1L,
                             CatalogTypeId = 2L,
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 630, DateTimeKind.Local).AddTicks(6460),
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 639, DateTimeKind.Local).AddTicks(5446),
                             Description = "Önden mütevazi. Arkadan nefes kesici. Bu adidas tişört, bir süper kahraman gibi sürprizlerle dolu. Marvel'in Kara Panter karakterinden ilham alan bu tişört, kalın pamuklu kumaştan üretilmiştir. Gardırobundaki her parça ile mükemmel biçimde eşleşen model, serin havalarda hem sıcak kalmanı hem şık görünmeni sağlar.\r\n\r\nPamuklu ürünlerimiz, sürdürülebilir pamuk çiftçiliğini destekler.",
                             Name = "BLACK PANTHER GRAPHİC TİŞÖRT",
                             Price = 1499.99m
@@ -185,7 +185,7 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                             Id = 1L,
                             AvailableStock = 100L,
                             CatalogItemId = 1L,
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 631, DateTimeKind.Local).AddTicks(6878),
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 640, DateTimeKind.Local).AddTicks(6360),
                             Genders = 2,
                             Size = "43"
                         },
@@ -195,7 +195,7 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                             AvailableStock = 100L,
                             BodySize = 1,
                             CatalogItemId = 2L,
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 631, DateTimeKind.Local).AddTicks(6887),
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 640, DateTimeKind.Local).AddTicks(6374),
                             Genders = 0
                         },
                         new
@@ -204,7 +204,7 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                             AvailableStock = 50L,
                             BodySize = 2,
                             CatalogItemId = 3L,
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 631, DateTimeKind.Local).AddTicks(6890),
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 640, DateTimeKind.Local).AddTicks(6377),
                             Genders = 2
                         });
                 });
@@ -222,6 +222,9 @@ namespace ECommerce.CatalogService.Persistence.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FolderName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsHeader")
                         .HasColumnType("bit");
@@ -243,7 +246,8 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                         {
                             Id = 1L,
                             CatalogItemId = 1L,
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(2413),
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(841),
+                            FolderName = "Product//Shoes",
                             IsHeader = false,
                             PictureFileName = "Airmax270.png"
                         },
@@ -251,7 +255,8 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                         {
                             Id = 2L,
                             CatalogItemId = 2L,
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(2422),
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(851),
+                            FolderName = "Product//T-Shirt",
                             IsHeader = false,
                             PictureFileName = "GoldenState2022/23_uniform.png"
                         },
@@ -259,7 +264,8 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                         {
                             Id = 3L,
                             CatalogItemId = 3L,
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(2423),
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(852),
+                            FolderName = "Product//T-Shirt",
                             IsHeader = false,
                             PictureFileName = "black_panther_Tshirt.png"
                         });
@@ -292,19 +298,19 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(8497),
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(4012),
                             Type = "Shoes"
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(8504),
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(4019),
                             Type = "T-Shirt"
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(8505),
+                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(4020),
                             Type = "tracksuit"
                         });
                 });
