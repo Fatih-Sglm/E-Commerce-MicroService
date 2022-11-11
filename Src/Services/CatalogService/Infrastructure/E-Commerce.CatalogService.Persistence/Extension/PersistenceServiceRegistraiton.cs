@@ -17,6 +17,8 @@ namespace E_Commerce.CatalogService.Persistence.Extension
             services.AddScoped<ICatalogItemImageService, CatalogItemImageService>();
             services.AddScoped<ICatalogItemsService, CatalogItemsService>();
             services.AddScoped<ICatalogItemRepository, CatalogItemRepository>();
+            services.AddScoped<ICatalogTypeService, CatalogTypeService>();
+            services.AddScoped<ICatalogBrandService, CatalogBrandService>();
 
         }
     }

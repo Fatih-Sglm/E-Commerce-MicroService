@@ -2,7 +2,7 @@
 {
     public class GetCatalogItemDto
     {
-        public int Id { get; set; }
+        public uint Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
@@ -12,6 +12,6 @@
         public string Genders { get; set; }
         public string? BodySize { get; set; }
         public string? Size { get; set; }
-        public int AvailableStock { get; set; }
+        public uint AvailableStock { get; set; }
     }
 }

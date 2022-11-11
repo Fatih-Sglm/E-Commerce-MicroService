@@ -10,7 +10,7 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate
 
         public int Quantity { get; private set; }
 
-        public string Description { get; private set; }
+        public string? Description { get; private set; }
 
         public Guid? BuyerId { get; private set; }
 
@@ -22,7 +22,7 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate
         public OrderStatus OrderStatus { get; private set; }
 
         private readonly List<OrderItem> _orderItems;
-        public IReadOnlyCollection<OrderItem> OrderItems => _orderItems;
+        public IEnumerable<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
         public Guid? PaymentMethodId { get; set; }
 
@@ -33,13 +33,14 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate
         }
 
         public Order(string userName, Address address, int cardTypeId, string cardNumber, string cardSecurityNumber,
-                string cardHolderName, DateTime cardExpiration, Guid? paymentMethodId, Guid? buyerId = null) : this()
+                string cardHolderName, DateTime cardExpiration, int quantity, Guid? paymentMethodId, Guid? buyerId = null) : this()
         {
             BuyerId = buyerId;
             orderStatusId = OrderStatus.Submitted.Id;
             OrderDate = DateTime.UtcNow;
             Address = address;
             PaymentMethodId = paymentMethodId;
+            Quantity = quantity;
 
             AddOrderStartedDomainEvent(userName, cardTypeId, cardNumber,
                                        cardSecurityNumber, cardHolderName, cardExpiration);

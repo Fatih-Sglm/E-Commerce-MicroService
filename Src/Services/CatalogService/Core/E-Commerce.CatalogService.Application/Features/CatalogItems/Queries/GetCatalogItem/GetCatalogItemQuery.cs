@@ -7,7 +7,7 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Queries.Ge
 {
     public class GetCatalogItemQuery : IRequest<ResponseDto<GetCatalogItemDto>>
     {
-        public int Id { get; set; }
+        public uint Id { get; set; }
 
         public class GetCatalogItemQueryHandler : IRequestHandler<GetCatalogItemQuery, ResponseDto<GetCatalogItemDto>>
         {

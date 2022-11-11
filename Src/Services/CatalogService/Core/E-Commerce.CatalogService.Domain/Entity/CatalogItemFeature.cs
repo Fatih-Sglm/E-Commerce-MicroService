@@ -3,13 +3,13 @@ using E_Commerce.CatalogService.Domain.enums;
 
 namespace E_Commerce.CatalogService.Domain.Entity
 {
-    public class CatalogItemFeature : BaseEntity<int>
+    public class CatalogItemFeature : BaseEntity<uint>
     {
         public Genders Genders { get; set; }
         public BodySize? BodySize { get; set; }
         public string? Size { get; set; }
-        public int AvailableStock { get; set; }
+        public uint AvailableStock { get; set; }
         public CatalogItem CatalogItem { get; set; }
-        public int CatalogItemId { get; set; }
+        public uint CatalogItemId { get; set; }
     }
 }

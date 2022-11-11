@@ -5,7 +5,7 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItemPicture.Quer
 {
     public class GetCatalogItemImageCommand : IRequest<bool>
     {
-        public int CatalogItemId { get; set; }
+        public uint CatalogItemId { get; set; }
 
         public class GetCatalogItemImageCommandHandler : IRequestHandler<GetCatalogItemImageCommand, bool>
         {

@@ -1,5 +1,4 @@
 ﻿using E_Commerce.CatalogService.Domain.Entity;
-using E_Commerce.CatalogService.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,7 +10,7 @@ namespace E_Commerce.CatalogService.Persistence.EntityConfiguration
 
         public void Configure(EntityTypeBuilder<CatalogItem> builder)
         {
-            builder.ToTable("Catalog_Item", CatalogContext.DEFAULT_SCHEMA);
+            builder.ToTable("Catalog_Item");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.CreatedDate).IsRequired();
             builder.Property(x => x.UpdatedDate).IsRequired(false);

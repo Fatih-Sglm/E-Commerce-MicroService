@@ -1,4 +1,5 @@
 ﻿using E_Commerce.OrderService.Domain.SeedWork;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
@@ -6,6 +7,7 @@ namespace E_Commerce.OrderService.Application.Abstractions.Repostories.GenericRe
 {
     public interface IGenericRepository<T> : IRepository where T : BaseEntity
     {
+        DbSet<T> Table { get; }
         Task<T?> GetAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null);
 
         Task<IQueryable<T>> GetListAsync(Expression<Func<T, bool>>? predicate = null,
@@ -18,6 +20,5 @@ namespace E_Commerce.OrderService.Application.Abstractions.Repostories.GenericRe
         Task AddRangeAsync(List<T> datas);
         bool Update(T entity);
         bool Delete(T entity);
-        IQueryable<T> Query();
     }
 }

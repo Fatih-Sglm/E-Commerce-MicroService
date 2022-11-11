@@ -33,7 +33,7 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
             Alias = alias;
             Expiration = expiration;
             CardTypeId = cardTypeId;
-            //CardType = CardType.FromValue<CardType>(cardTypeId);
+            //CardType = Enumeration.FromValue<CardType>(cardTypeId);
         }
 
         public bool IsEqualTo(int cardTypeId, string cardNumber, DateTime expiration)

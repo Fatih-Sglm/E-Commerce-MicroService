@@ -1,6 +1,6 @@
 ﻿using E_Commerce.EventBus.Base.Events;
 
-namespace E_Commerce.OrderService.Application.IntegrationEvents
+namespace E_Commerce.OrderService.Api.IntegrationEvents.Events
 {
     public class OrderStartedIntegrationEvent : IntegrationEvent
     {

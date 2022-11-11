@@ -9,7 +9,7 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
     {
         public void Configure(EntityTypeBuilder<CardType> cardTypesConfiguration)
         {
-            cardTypesConfiguration.ToTable("cardtypes", OrderContext.DEFAULT_SCHEMA);
+            cardTypesConfiguration.ToTable("cardtypes", OrderDbContext.DEFAULT_SCHEMA);
 
             cardTypesConfiguration.HasKey(ct => ct.Id);
             cardTypesConfiguration.Property(i => i.Id).HasColumnName("id").ValueGeneratedOnAdd();
@@ -22,6 +22,16 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
             cardTypesConfiguration.Property(ct => ct.Name)
                 .HasMaxLength(200)
                 .IsRequired();
+
+            CardType[] cardTypes = new[]
+            {
+                new CardType(1 , "Amex"){},
+                new CardType(2 , "Visa"){},
+                new CardType(3 , "MasterCard"){},
+                new CardType(4 , "Capital One"){}
+            };
+
+            cardTypesConfiguration.HasData(cardTypes);
         }
     }
 }

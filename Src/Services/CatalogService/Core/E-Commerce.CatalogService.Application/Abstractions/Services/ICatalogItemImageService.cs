@@ -4,6 +4,6 @@ namespace E_Commerce.CatalogService.Application.Abstractions.Services
 {
     public interface ICatalogItemImageService
     {
-        Task CreateCatalogItemImage(int catalogItemId, IList<IFormFile> files);
+        Task CreateCatalogItemImage(uint catalogItemId, IList<IFormFile> files);
     }
 }

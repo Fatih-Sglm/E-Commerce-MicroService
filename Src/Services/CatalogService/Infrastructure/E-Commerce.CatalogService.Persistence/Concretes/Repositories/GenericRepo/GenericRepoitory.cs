@@ -7,44 +7,47 @@ using System.Linq.Expressions;
 
 namespace E_Commerce.CatalogService.Persistence.Concretes.Repositories.GenericRepo
 {
-    public class GenericRepoitory<T, TContext> : IGenericRepository<T>
-    where T : class, IEntity
+    public class GenericRepoitory<T, TContext> : IGenericRepository<T> where T : class, IEntity, new()
     where TContext : DbContext
     {
         protected TContext Context { get; }
+
 
         public GenericRepoitory(TContext context)
         {
             Context = context;
         }
 
+        public DbSet<T> Table => Context.Set<T>();
+
         public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null)
         {
-            IQueryable<T> queryable = Query();
+            IQueryable<T> queryable = Table.AsQueryable();
             if (include != null) queryable = include(queryable);
             return await queryable.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<IPaginate<T>> GetListAsync(Expression<Func<T, bool>>? predicate = null,
-                                                           Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy =
-                                                               null,
-                                                           Func<IQueryable<T>, IIncludableQueryable<T, object>>?
-                                                               include = null,
-                                                           int index = 0, int size = 10, bool enableTracking = true,
-                                                           CancellationToken cancellationToken = default)
+        public async Task<IPaginate<T>> GetListAsyncPaginate
+            (
+            Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, int index = 0, int size = 10,
+            bool enableTracking = true, CancellationToken cancellationToken = default
+            )
+
         {
-            IQueryable<T> queryable = Query();
-            if (!enableTracking) queryable = queryable.AsNoTracking();
-            if (include != null) queryable = include(queryable);
-            if (predicate != null) queryable = queryable.Where(predicate);
-            if (orderBy != null)
-                return await orderBy(queryable).ToPaginateAsync(index, size, 0, cancellationToken);
+            IQueryable<T> queryable = await GetListAsync(predicate, orderBy, include, enableTracking, cancellationToken);
             return await queryable.ToPaginateAsync(index, size, 0, cancellationToken);
         }
 
-        public async Task<IQueryable<T>> GetAllIQueryableAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, int index = 0, int size = 10, bool enableTracking = true, CancellationToken cancellationToken = default)
+        public async Task<IQueryable<T>> GetListAsync
+            (
+            Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+            bool enableTracking = true, CancellationToken cancellationToken = default
+            )
+
         {
-            IQueryable<T> queryable = Query();
+            IQueryable<T> queryable = Table.AsQueryable();
             if (!enableTracking) queryable = queryable.AsNoTracking();
             if (include != null) queryable = include(queryable);
             if (predicate != null) queryable = queryable.Where(predicate);
@@ -66,12 +69,6 @@ namespace E_Commerce.CatalogService.Persistence.Concretes.Repositories.GenericRe
         //    if (include != null) queryable = include(queryable);
         //    return await queryable.ToPaginateAsync(index, size, 0, cancellationToken);
         //}
-
-        public IQueryable<T> Query()
-        {
-            return Context.Set<T>();
-        }
-
         public async Task AddAsync(T entity)
         {
             Context.Entry(entity).State = EntityState.Added;

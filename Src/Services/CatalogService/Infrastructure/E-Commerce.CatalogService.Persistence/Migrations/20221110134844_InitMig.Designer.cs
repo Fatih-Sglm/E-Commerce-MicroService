@@ -9,28 +9,30 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace E_Commerce.CatalogService.Persistence.Migrations
+namespace ECommerce.CatalogService.Persistence.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    [Migration("20221022103635_addIsheaderCatalogItemImage")]
-    partial class addIsheaderCatalogItemImage
+    [Migration("20221110134844_InitMig")]
+    partial class InitMig
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasDefaultSchema("catalog")
+                .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogBrand", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Brand")
                         .IsRequired()
@@ -50,37 +52,37 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = 1L,
                             Brand = "Nike",
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 495, DateTimeKind.Local).AddTicks(3404)
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 627, DateTimeKind.Local).AddTicks(7574)
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 2L,
                             Brand = "Adidas",
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 495, DateTimeKind.Local).AddTicks(3415)
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 627, DateTimeKind.Local).AddTicks(7591)
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 3L,
                             Brand = "Puma",
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 495, DateTimeKind.Local).AddTicks(3416)
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 627, DateTimeKind.Local).AddTicks(7592)
                         });
                 });
 
             modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("CatalogBrandId")
-                        .HasColumnType("int");
+                    b.Property<long>("CatalogBrandId")
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("CatalogTypeId")
-                        .HasColumnType("int");
+                    b.Property<long>("CatalogTypeId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -111,30 +113,30 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CatalogBrandId = 1,
-                            CatalogTypeId = 1,
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 496, DateTimeKind.Local).AddTicks(4560),
+                            Id = 1L,
+                            CatalogBrandId = 1L,
+                            CatalogTypeId = 1L,
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 630, DateTimeKind.Local).AddTicks(6445),
                             Description = "Nike'ın günlük giyim için tasarlanmış ilk Air Max modeli olan Nike Air Max 270, dikkat çeken stili rahatlıkla buluşturuyor. Air Max ikonlarından ilham alan tasarım, büyük penceresi ve yeni renkleriyle Nike'ın en büyük yeniliğini sergiliyor.",
                             Name = "Nike Air Max 270",
                             Price = 1499.99m
                         },
                         new
                         {
-                            Id = 2,
-                            CatalogBrandId = 1,
-                            CatalogTypeId = 2,
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 496, DateTimeKind.Local).AddTicks(4567),
+                            Id = 2L,
+                            CatalogBrandId = 1L,
+                            CatalogTypeId = 2L,
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 630, DateTimeKind.Local).AddTicks(6458),
                             Description = "Her takımın onu ligdeki diğer takımlardan ayıran gerçek renkleri ve eşsiz bir kimliği bulunur. Zengin basketbol mirasını onurlandıran bu Golden State Warriors Forma, takım ayrıntılarından ter tutmayan hafif fileye kadar profesyonellerin sahada giydiği formalardan ilham alır. Favori oyuncunu ve sevdiğin oyunu temsil ederken hem sahada hem de saha dışında kuru ve serin kalmana yardımcı olur",
                             Name = "Golden State Warriors Icon Edition 2022/23",
                             Price = 1849.90m
                         },
                         new
                         {
-                            Id = 3,
-                            CatalogBrandId = 1,
-                            CatalogTypeId = 2,
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 496, DateTimeKind.Local).AddTicks(4568),
+                            Id = 3L,
+                            CatalogBrandId = 1L,
+                            CatalogTypeId = 2L,
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 630, DateTimeKind.Local).AddTicks(6460),
                             Description = "Önden mütevazi. Arkadan nefes kesici. Bu adidas tişört, bir süper kahraman gibi sürprizlerle dolu. Marvel'in Kara Panter karakterinden ilham alan bu tişört, kalın pamuklu kumaştan üretilmiştir. Gardırobundaki her parça ile mükemmel biçimde eşleşen model, serin havalarda hem sıcak kalmanı hem şık görünmeni sağlar.\r\n\r\nPamuklu ürünlerimiz, sürdürülebilir pamuk çiftçiliğini destekler.",
                             Name = "BLACK PANTHER GRAPHİC TİŞÖRT",
                             Price = 1499.99m
@@ -143,20 +145,20 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
 
             modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogItemFeature", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("AvailableStock")
-                        .HasColumnType("int");
+                    b.Property<long>("AvailableStock")
+                        .HasColumnType("bigint");
 
                     b.Property<int?>("BodySize")
                         .HasColumnType("int");
 
-                    b.Property<int>("CatalogItemId")
-                        .HasColumnType("int");
+                    b.Property<long>("CatalogItemId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -180,43 +182,43 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            AvailableStock = 100,
-                            CatalogItemId = 1,
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 497, DateTimeKind.Local).AddTicks(390),
+                            Id = 1L,
+                            AvailableStock = 100L,
+                            CatalogItemId = 1L,
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 631, DateTimeKind.Local).AddTicks(6878),
                             Genders = 2,
                             Size = "43"
                         },
                         new
                         {
-                            Id = 2,
-                            AvailableStock = 100,
+                            Id = 2L,
+                            AvailableStock = 100L,
                             BodySize = 1,
-                            CatalogItemId = 2,
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 497, DateTimeKind.Local).AddTicks(396),
+                            CatalogItemId = 2L,
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 631, DateTimeKind.Local).AddTicks(6887),
                             Genders = 0
                         },
                         new
                         {
-                            Id = 3,
-                            AvailableStock = 50,
+                            Id = 3L,
+                            AvailableStock = 50L,
                             BodySize = 2,
-                            CatalogItemId = 3,
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 497, DateTimeKind.Local).AddTicks(398),
+                            CatalogItemId = 3L,
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 631, DateTimeKind.Local).AddTicks(6890),
                             Genders = 2
                         });
                 });
 
             modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogItemImage", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("CatalogItemId")
-                        .HasColumnType("int");
+                    b.Property<long>("CatalogItemId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -239,25 +241,25 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CatalogItemId = 1,
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 497, DateTimeKind.Local).AddTicks(2725),
+                            Id = 1L,
+                            CatalogItemId = 1L,
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(2413),
                             IsHeader = false,
                             PictureFileName = "Airmax270.png"
                         },
                         new
                         {
-                            Id = 2,
-                            CatalogItemId = 2,
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 497, DateTimeKind.Local).AddTicks(2730),
+                            Id = 2L,
+                            CatalogItemId = 2L,
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(2422),
                             IsHeader = false,
                             PictureFileName = "GoldenState2022/23_uniform.png"
                         },
                         new
                         {
-                            Id = 3,
-                            CatalogItemId = 3,
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 497, DateTimeKind.Local).AddTicks(2731),
+                            Id = 3L,
+                            CatalogItemId = 3L,
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(2423),
                             IsHeader = false,
                             PictureFileName = "black_panther_Tshirt.png"
                         });
@@ -265,11 +267,11 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
 
             modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -289,20 +291,20 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 496, DateTimeKind.Local).AddTicks(5687),
+                            Id = 1L,
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(8497),
                             Type = "Shoes"
                         },
                         new
                         {
-                            Id = 2,
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 496, DateTimeKind.Local).AddTicks(5691),
+                            Id = 2L,
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(8504),
                             Type = "T-Shirt"
                         },
                         new
                         {
-                            Id = 3,
-                            CreatedDate = new DateTime(2022, 10, 22, 13, 36, 35, 496, DateTimeKind.Local).AddTicks(5692),
+                            Id = 3L,
+                            CreatedDate = new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(8505),
                             Type = "tracksuit"
                         });
                 });

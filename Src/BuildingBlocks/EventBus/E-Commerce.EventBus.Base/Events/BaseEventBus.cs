@@ -22,7 +22,7 @@ namespace E_Commerce.EventBus.Base.Events
 
         public virtual string ProcessEventName(string eventName)
         {
-            if (EventBusConfig.DeleteEventPrefix)
+            if (EventBusConfig!.DeleteEventPrefix)
                 eventName = eventName.TrimStart(EventBusConfig.EventNamePrefix.ToArray());
 
             if (EventBusConfig.DeleteEventSuffix)
@@ -55,11 +55,11 @@ namespace E_Commerce.EventBus.Base.Events
                         var handler = ServiceProvider.GetService(subscription.HandlerType);
                         if (handler == null) continue;
 
-                        var eventType = SubsManager.GetEventTypeByName($"{EventBusConfig.EventNamePrefix}{eventName}{EventBusConfig.EventNameSuffix}");
+                        var eventType = SubsManager.GetEventTypeByName($"{EventBusConfig!.EventNamePrefix}{eventName}{EventBusConfig.EventNameSuffix}");
                         var integrationEvent = JsonConvert.DeserializeObject(message, eventType);
 
                         var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
-                        await Task.FromResult(concreteType.GetMethod("HandleAsync").Invoke(handler, new object[] { integrationEvent }));
+                        await Task.FromResult(concreteType.GetMethod("HandleAsync")!.Invoke(handler, new object[] { integrationEvent }));
                     }
                 }
 

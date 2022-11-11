@@ -2,7 +2,7 @@
 {
     public class GetCatalogItemImageDto
     {
-        public int Id { get; set; }
+        public uint Id { get; set; }
         public string path { get; set; }
     }
 }

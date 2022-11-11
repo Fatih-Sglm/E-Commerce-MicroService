@@ -9,7 +9,7 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
     {
         public void Configure(EntityTypeBuilder<Buyer> buyerConfiguration)
         {
-            buyerConfiguration.ToTable("buyers", OrderContext.DEFAULT_SCHEMA);
+            buyerConfiguration.ToTable("buyers", OrderDbContext.DEFAULT_SCHEMA);
 
             buyerConfiguration.HasKey(b => b.Id);
 

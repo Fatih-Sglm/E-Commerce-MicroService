@@ -9,7 +9,7 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.ToTable("order", OrderContext.DEFAULT_SCHEMA);
+            builder.ToTable("order", OrderDbContext.DEFAULT_SCHEMA);
 
             builder.HasKey(o => o.Id);
 
@@ -26,7 +26,7 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
             var navigation = builder.Metadata.FindNavigation(nameof(Order.OrderItems));
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
 
-            builder.HasOne(o => o.Buyer).WithMany().HasForeignKey(o => o.BuyerId);
+            builder.HasOne(o => o.Buyer).WithMany().HasForeignKey(o => o.BuyerId).IsRequired(false);
 
 
             builder.HasOne(o => o.OrderStatus).WithMany().HasForeignKey("orderStatusId");

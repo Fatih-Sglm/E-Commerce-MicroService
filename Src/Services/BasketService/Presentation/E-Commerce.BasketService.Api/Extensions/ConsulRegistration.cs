@@ -36,7 +36,7 @@ namespace E_Commerce.BasketService.Api.Extensions
                 Name = "BasketService",
                 Address = $"{uri.Host}",
                 Port = uri.Port,
-                Tags = new[] { "BasketService", "Catalog" }
+                Tags = new[] { "BasketService", "Basket" }
             };
 
             logger.LogInformation("Registering with Consul");

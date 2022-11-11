@@ -6,7 +6,7 @@ namespace E_Commerce.OrderService.Persistence.Extensions
 {
     public static class MediatRExtesion
     {
-        public static async Task DispatchDomainEventAsync(this IMediator mediator, OrderContext orderContext)
+        public static async Task DispatchDomainEventAsync(this IMediator mediator, OrderDbContext orderContext)
         {
             var domainEntities = orderContext.ChangeTracker
                                    .Entries<BaseEntity>()

@@ -7,6 +7,6 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Dtos
         public Genders Genders { get; set; }
         public BodySize? BodySize { get; set; }
         public string? Size { get; set; }
-        public int AvailableStock { get; set; }
+        public uint AvailableStock { get; set; }
     }
 }

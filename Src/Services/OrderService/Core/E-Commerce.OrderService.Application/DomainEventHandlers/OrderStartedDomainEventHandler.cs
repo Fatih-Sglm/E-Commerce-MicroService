@@ -19,7 +19,7 @@ namespace E_Commerce.OrderService.Application.DomainEventHandlers
         {
             var cardTypeId = (orderStartedEvent.CardTypeId != 0) ? orderStartedEvent.CardTypeId : 1;
 
-            var buyer = await _buyerRepository.GetAsync(i => i.Name == orderStartedEvent.UserName, i => i.Include(i => i.PaymentMethods));
+            Buyer? buyer = await _buyerRepository.GetAsync(i => i.Name == orderStartedEvent.UserName, i => i.Include(i => i.PaymentMethods));
 
             bool buyerOriginallyExisted = buyer != null;
 
@@ -29,12 +29,12 @@ namespace E_Commerce.OrderService.Application.DomainEventHandlers
             }
 
             buyer.VerifyOrAddPaymentMethod(cardTypeId,
-                                           $"Payment Method on {DateTime.UtcNow}",
-                                           orderStartedEvent.CardNumber,
-                                           orderStartedEvent.CardSecurityNumber,
-                                           orderStartedEvent.CardHolderName,
-                                           orderStartedEvent.CardExpiration,
-                                           orderStartedEvent.Order.Id);
+                                          $"",
+                                          orderStartedEvent.CardNumber,
+                                          orderStartedEvent.CardSecurityNumber,
+                                          orderStartedEvent.CardHolderName,
+                                          orderStartedEvent.CardExpiration,
+                                          orderStartedEvent.Order.Id);
 
             var buyerUpdated = buyerOriginallyExisted ?
                 _buyerRepository.Update(buyer) :

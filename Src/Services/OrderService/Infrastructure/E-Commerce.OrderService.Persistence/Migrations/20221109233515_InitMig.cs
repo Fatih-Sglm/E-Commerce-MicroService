@@ -1,11 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace E_Commerce.OrderService.Persistence.Migrations
+namespace ECommerce.OrderService.Persistence.Migrations
 {
+    /// <inheritdoc />
     public partial class InitMig : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
@@ -93,13 +96,13 @@ namespace E_Commerce.OrderService.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BuyerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Address_Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_State = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BuyerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AddressStreet = table.Column<string>(name: "Address_Street", type: "nvarchar(max)", nullable: true),
+                    AddressCity = table.Column<string>(name: "Address_City", type: "nvarchar(max)", nullable: true),
+                    AddressState = table.Column<string>(name: "Address_State", type: "nvarchar(max)", nullable: true),
+                    AddressCountry = table.Column<string>(name: "Address_Country", type: "nvarchar(max)", nullable: true),
+                    AddressZipCode = table.Column<string>(name: "Address_ZipCode", type: "nvarchar(max)", nullable: true),
                     orderStatusId = table.Column<int>(type: "int", nullable: false),
                     PaymentMethodId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -112,8 +115,7 @@ namespace E_Commerce.OrderService.Persistence.Migrations
                         column: x => x.BuyerId,
                         principalSchema: "ordering",
                         principalTable: "buyers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_order_orderstatus_orderStatusId",
                         column: x => x.orderStatusId,
@@ -174,6 +176,7 @@ namespace E_Commerce.OrderService.Persistence.Migrations
                 column: "CardTypeId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

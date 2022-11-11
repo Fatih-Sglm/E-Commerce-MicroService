@@ -9,20 +9,21 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace E_Commerce.OrderService.Persistence.Migrations
+namespace ECommerce.OrderService.Persistence.Migrations
 {
-    [DbContext(typeof(OrderContext))]
-    [Migration("20221029173105_InitMig")]
-    partial class InitMig
+    [DbContext(typeof(OrderDbContext))]
+    [Migration("20221110000231_SeedDatas")]
+    partial class SeedDatas
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate.Buyer", b =>
                 {
@@ -36,7 +37,7 @@ namespace E_Commerce.OrderService.Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar");
 
                     b.HasKey("Id");
 
@@ -58,6 +59,28 @@ namespace E_Commerce.OrderService.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("cardtypes", "ordering");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Amex"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Visa"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "MasterCard"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Capital One"
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate.PaymentMethod", b =>
@@ -117,14 +140,12 @@ namespace E_Commerce.OrderService.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("BuyerId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("OrderDate")
@@ -202,6 +223,38 @@ namespace E_Commerce.OrderService.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("orderstatus", "ordering");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Submitted"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "AwaitingValidation"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "StockConfirmed"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Paid"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Shipped"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Cancelled"
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate.PaymentMethod", b =>
@@ -225,9 +278,7 @@ namespace E_Commerce.OrderService.Persistence.Migrations
                 {
                     b.HasOne("E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate.Buyer", "Buyer")
                         .WithMany()
-                        .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BuyerId");
 
                     b.HasOne("E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate.OrderStatus", "OrderStatus")
                         .WithMany()
@@ -241,23 +292,18 @@ namespace E_Commerce.OrderService.Persistence.Migrations
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("City")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Country")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("State")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Street")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("ZipCode")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("OrderId");

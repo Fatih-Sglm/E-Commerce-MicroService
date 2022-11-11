@@ -28,7 +28,7 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
         {
             var existingPayment = _paymentMethods.SingleOrDefault(p => p.IsEqualTo(cardTypeId, cardNumber, expiration));
 
-            if (existingPayment != null)
+            if (existingPayment is not null)
             {
                 // raise event 
                 AddDomainEvent(new BuyerAndPaymentMethodVerifiedDomainEvent(this, existingPayment, orderId));

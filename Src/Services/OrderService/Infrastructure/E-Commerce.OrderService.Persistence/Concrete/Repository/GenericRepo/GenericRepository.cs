@@ -1,25 +1,29 @@
 ﻿using E_Commerce.OrderService.Application.Abstractions.Repostories.GenericRepo;
 using E_Commerce.OrderService.Domain.SeedWork;
+using E_Commerce.OrderService.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace E_Commerce.OrderService.Persistence.Concrete.Repository.GenericRepo
 {
-    public class GenericRepoitory<T, TContext> : IGenericRepository<T> where T : BaseEntity where TContext : DbContext
+    public class GenericRepoitory<T> : IGenericRepository<T> where T : BaseEntity
     {
-        public IUnitOfWork UnitOfWork { get; }
+        private readonly OrderDbContext Context;
 
-        protected TContext Context { get; }
-
-        public GenericRepoitory(TContext context)
+        public GenericRepoitory(OrderDbContext context)
         {
             Context = context;
         }
 
+        public IUnitOfWork UnitOfWork => Context;
+
+        public DbSet<T> Table => Context.Set<T>();
+
         public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null)
         {
-            IQueryable<T> queryable = Query();
+            IQueryable<T> queryable = Table.AsQueryable();
             if (include != null) queryable = include(queryable);
             return await queryable.FirstOrDefaultAsync(predicate);
         }
@@ -32,7 +36,7 @@ namespace E_Commerce.OrderService.Persistence.Concrete.Repository.GenericRepo
                                                            int index = 0, int size = 10, bool enableTracking = true,
                                                            CancellationToken cancellationToken = default)
         {
-            IQueryable<T> queryable = Query();
+            IQueryable<T> queryable = Table.AsQueryable();
             if (!enableTracking) queryable = queryable.AsNoTracking();
             if (include != null) queryable = include(queryable);
             if (predicate != null) queryable = queryable.Where(predicate);
@@ -41,27 +45,24 @@ namespace E_Commerce.OrderService.Persistence.Concrete.Repository.GenericRepo
             return await Task.FromResult(queryable);
         }
 
-        public IQueryable<T> Query()
-        {
-            return Context.Set<T>();
-        }
+
 
         public async Task<bool> AddAsync(T entity)
         {
-            Context.Entry(entity).State = EntityState.Added;
-            return true;
+            EntityEntry<T> entityEntry = await Table.AddAsync(entity);
+            return entityEntry.State == EntityState.Added;
         }
 
         public bool Update(T entity)
         {
-            Context.Entry(entity).State = EntityState.Modified;
-            return true;
+            EntityEntry entityEntry = Table.Update(entity);
+            return entityEntry.State == EntityState.Modified;
         }
 
         public bool Delete(T entity)
         {
-            Context.Entry(entity).State = EntityState.Deleted;
-            return true;
+            EntityEntry<T> entityEntry = Table.Remove(entity);
+            return entityEntry.State == EntityState.Deleted;
         }
 
         public T? Get(Expression<Func<T, bool>> predicate)

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace E_Commerce.OrderService.Application.Features.Order.Command.CreateOrder
 {
-    public partial class CreateOrderCommand : IRequest<bool>
+    public class CreateOrderCommand : IRequest<bool>
     {
         private readonly List<OrderItemDTO> _orderItems;
         public string UserName { get; private set; }
@@ -34,8 +34,8 @@ namespace E_Commerce.OrderService.Application.Features.Order.Command.CreateOrder
                 PictureUrl = item.PictureUrl,
                 UnitPrice = item.UnitPrice,
                 Units = item.Quantity
-            });
-            _orderItems = dtoList.ToList();
+            }).ToList();
+            _orderItems = dtoList;
 
             UserName = userName;
             City = city;

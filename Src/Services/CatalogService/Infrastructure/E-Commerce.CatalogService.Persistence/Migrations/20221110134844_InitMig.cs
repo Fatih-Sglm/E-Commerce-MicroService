@@ -1,23 +1,25 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace E_Commerce.CatalogService.Persistence.Migrations
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace ECommerce.CatalogService.Persistence.Migrations
 {
+    /// <inheritdoc />
     public partial class InitMig : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
                 name: "catalog");
-
             migrationBuilder.CreateTable(
                 name: "Catalog_Brand",
                 schema: "catalog",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Brand = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -33,7 +35,7 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                 schema: "catalog",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -49,13 +51,13 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                 schema: "catalog",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CatalogBrandId = table.Column<int>(type: "int", nullable: false),
-                    CatalogTypeId = table.Column<int>(type: "int", nullable: false),
+                    CatalogBrandId = table.Column<long>(type: "bigint", nullable: false),
+                    CatalogTypeId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -83,13 +85,13 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                 schema: "catalog",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Genders = table.Column<int>(type: "int", nullable: false),
                     BodySize = table.Column<int>(type: "int", nullable: true),
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AvailableStock = table.Column<int>(type: "int", nullable: false),
-                    CatalogItemId = table.Column<int>(type: "int", nullable: false),
+                    AvailableStock = table.Column<long>(type: "bigint", nullable: false),
+                    CatalogItemId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -110,10 +112,11 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                 schema: "catalog",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PictureFileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CatalogItemId = table.Column<int>(type: "int", nullable: false),
+                    CatalogItemId = table.Column<long>(type: "bigint", nullable: false),
+                    IsHeader = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -135,9 +138,9 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                 columns: new[] { "Id", "Brand", "CreatedDate", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, "Nike", new DateTime(2022, 10, 20, 21, 40, 31, 15, DateTimeKind.Local).AddTicks(1923), null },
-                    { 2, "Adidas", new DateTime(2022, 10, 20, 21, 40, 31, 15, DateTimeKind.Local).AddTicks(1936), null },
-                    { 3, "Puma", new DateTime(2022, 10, 20, 21, 40, 31, 15, DateTimeKind.Local).AddTicks(1937), null }
+                    { 1L, "Nike", new DateTime(2022, 11, 10, 16, 48, 44, 627, DateTimeKind.Local).AddTicks(7574), null },
+                    { 2L, "Adidas", new DateTime(2022, 11, 10, 16, 48, 44, 627, DateTimeKind.Local).AddTicks(7591), null },
+                    { 3L, "Puma", new DateTime(2022, 11, 10, 16, 48, 44, 627, DateTimeKind.Local).AddTicks(7592), null }
                 });
 
             migrationBuilder.InsertData(
@@ -146,28 +149,21 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                 columns: new[] { "Id", "CreatedDate", "Type", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 10, 20, 21, 40, 31, 16, DateTimeKind.Local).AddTicks(8696), "Shoes", null },
-                    { 2, new DateTime(2022, 10, 20, 21, 40, 31, 16, DateTimeKind.Local).AddTicks(8700), "T-Shirt", null },
-                    { 3, new DateTime(2022, 10, 20, 21, 40, 31, 16, DateTimeKind.Local).AddTicks(8701), "tracksuit", null }
+                    { 1L, new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(8497), "Shoes", null },
+                    { 2L, new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(8504), "T-Shirt", null },
+                    { 3L, new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(8505), "tracksuit", null }
                 });
 
             migrationBuilder.InsertData(
                 schema: "catalog",
                 table: "Catalog_Item",
                 columns: new[] { "Id", "CatalogBrandId", "CatalogTypeId", "CreatedDate", "Description", "Name", "Price", "UpdatedDate" },
-                values: new object[] { 1, 1, 1, new DateTime(2022, 10, 20, 21, 40, 31, 16, DateTimeKind.Local).AddTicks(7374), "Nike'ın günlük giyim için tasarlanmış ilk Air Max modeli olan Nike Air Max 270, dikkat çeken stili rahatlıkla buluşturuyor. Air Max ikonlarından ilham alan tasarım, büyük penceresi ve yeni renkleriyle Nike'ın en büyük yeniliğini sergiliyor.", "Nike Air Max 270", 1499.99m, null });
-
-            migrationBuilder.InsertData(
-                schema: "catalog",
-                table: "Catalog_Item",
-                columns: new[] { "Id", "CatalogBrandId", "CatalogTypeId", "CreatedDate", "Description", "Name", "Price", "UpdatedDate" },
-                values: new object[] { 2, 1, 2, new DateTime(2022, 10, 20, 21, 40, 31, 16, DateTimeKind.Local).AddTicks(7385), "Her takımın onu ligdeki diğer takımlardan ayıran gerçek renkleri ve eşsiz bir kimliği bulunur. Zengin basketbol mirasını onurlandıran bu Golden State Warriors Forma, takım ayrıntılarından ter tutmayan hafif fileye kadar profesyonellerin sahada giydiği formalardan ilham alır. Favori oyuncunu ve sevdiğin oyunu temsil ederken hem sahada hem de saha dışında kuru ve serin kalmana yardımcı olur", "Golden State Warriors Icon Edition 2022/23", 1849.90m, null });
-
-            migrationBuilder.InsertData(
-                schema: "catalog",
-                table: "Catalog_Item",
-                columns: new[] { "Id", "CatalogBrandId", "CatalogTypeId", "CreatedDate", "Description", "Name", "Price", "UpdatedDate" },
-                values: new object[] { 3, 1, 2, new DateTime(2022, 10, 20, 21, 40, 31, 16, DateTimeKind.Local).AddTicks(7386), "Önden mütevazi. Arkadan nefes kesici. Bu adidas tişört, bir süper kahraman gibi sürprizlerle dolu. Marvel'in Kara Panter karakterinden ilham alan bu tişört, kalın pamuklu kumaştan üretilmiştir. Gardırobundaki her parça ile mükemmel biçimde eşleşen model, serin havalarda hem sıcak kalmanı hem şık görünmeni sağlar.\r\n\r\nPamuklu ürünlerimiz, sürdürülebilir pamuk çiftçiliğini destekler.", "BLACK PANTHER GRAPHİC TİŞÖRT", 1499.99m, null });
+                values: new object[,]
+                {
+                    { 1L, 1L, 1L, new DateTime(2022, 11, 10, 16, 48, 44, 630, DateTimeKind.Local).AddTicks(6445), "Nike'ın günlük giyim için tasarlanmış ilk Air Max modeli olan Nike Air Max 270, dikkat çeken stili rahatlıkla buluşturuyor. Air Max ikonlarından ilham alan tasarım, büyük penceresi ve yeni renkleriyle Nike'ın en büyük yeniliğini sergiliyor.", "Nike Air Max 270", 1499.99m, null },
+                    { 2L, 1L, 2L, new DateTime(2022, 11, 10, 16, 48, 44, 630, DateTimeKind.Local).AddTicks(6458), "Her takımın onu ligdeki diğer takımlardan ayıran gerçek renkleri ve eşsiz bir kimliği bulunur. Zengin basketbol mirasını onurlandıran bu Golden State Warriors Forma, takım ayrıntılarından ter tutmayan hafif fileye kadar profesyonellerin sahada giydiği formalardan ilham alır. Favori oyuncunu ve sevdiğin oyunu temsil ederken hem sahada hem de saha dışında kuru ve serin kalmana yardımcı olur", "Golden State Warriors Icon Edition 2022/23", 1849.90m, null },
+                    { 3L, 1L, 2L, new DateTime(2022, 11, 10, 16, 48, 44, 630, DateTimeKind.Local).AddTicks(6460), "Önden mütevazi. Arkadan nefes kesici. Bu adidas tişört, bir süper kahraman gibi sürprizlerle dolu. Marvel'in Kara Panter karakterinden ilham alan bu tişört, kalın pamuklu kumaştan üretilmiştir. Gardırobundaki her parça ile mükemmel biçimde eşleşen model, serin havalarda hem sıcak kalmanı hem şık görünmeni sağlar.\r\n\r\nPamuklu ürünlerimiz, sürdürülebilir pamuk çiftçiliğini destekler.", "BLACK PANTHER GRAPHİC TİŞÖRT", 1499.99m, null }
+                });
 
             migrationBuilder.InsertData(
                 schema: "catalog",
@@ -175,20 +171,20 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                 columns: new[] { "Id", "AvailableStock", "BodySize", "CatalogItemId", "CreatedDate", "Genders", "Size", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, 100, null, 1, new DateTime(2022, 10, 20, 21, 40, 31, 17, DateTimeKind.Local).AddTicks(6186), 2, "43", null },
-                    { 2, 100, 1, 2, new DateTime(2022, 10, 20, 21, 40, 31, 17, DateTimeKind.Local).AddTicks(6193), 0, null, null },
-                    { 3, 50, 2, 3, new DateTime(2022, 10, 20, 21, 40, 31, 17, DateTimeKind.Local).AddTicks(6195), 2, null, null }
+                    { 1L, 100L, null, 1L, new DateTime(2022, 11, 10, 16, 48, 44, 631, DateTimeKind.Local).AddTicks(6878), 2, "43", null },
+                    { 2L, 100L, 1, 2L, new DateTime(2022, 11, 10, 16, 48, 44, 631, DateTimeKind.Local).AddTicks(6887), 0, null, null },
+                    { 3L, 50L, 2, 3L, new DateTime(2022, 11, 10, 16, 48, 44, 631, DateTimeKind.Local).AddTicks(6890), 2, null, null }
                 });
 
             migrationBuilder.InsertData(
                 schema: "catalog",
                 table: "Catalog_Item_Image",
-                columns: new[] { "Id", "CatalogItemId", "CreatedDate", "PictureFileName", "UpdatedDate" },
+                columns: new[] { "Id", "CatalogItemId", "CreatedDate", "IsHeader", "PictureFileName", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2022, 10, 20, 21, 40, 31, 17, DateTimeKind.Local).AddTicks(9850), "Airmax270.png", null },
-                    { 2, 2, new DateTime(2022, 10, 20, 21, 40, 31, 17, DateTimeKind.Local).AddTicks(9856), "GoldenState2022/23_uniform.png", null },
-                    { 3, 3, new DateTime(2022, 10, 20, 21, 40, 31, 17, DateTimeKind.Local).AddTicks(9857), "black_panther_Tshirt.png", null }
+                    { 1L, 1L, new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(2413), false, "Airmax270.png", null },
+                    { 2L, 2L, new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(2422), false, "GoldenState2022/23_uniform.png", null },
+                    { 3L, 3L, new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(2423), false, "black_panther_Tshirt.png", null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -217,6 +213,7 @@ namespace E_Commerce.CatalogService.Persistence.Migrations
                 column: "CatalogItemId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

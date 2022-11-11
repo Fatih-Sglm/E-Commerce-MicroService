@@ -1,11 +1,10 @@
 ﻿using E_Commerce.CatalogService.Domain.Entity;
-using E_Commerce.CatalogService.Persistence.EntityConfiguration;
-using E_Commerce.OrderService.Domain.SeedWork;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace E_Commerce.CatalogService.Persistence.Context
 {
-    public class CatalogContext : DbContext, IUnitOfWork
+    public class CatalogContext : DbContext
     {
         public const string DEFAULT_SCHEMA = "catalog";
 
@@ -22,19 +21,10 @@ namespace E_Commerce.CatalogService.Persistence.Context
         public DbSet<CatalogItemFeature> CatalogItemFeatures { get; set; }
 
         public DbSet<CatalogItemImage> CatalogItemImages { get; set; }
-
-        public Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new CatalogBrandEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new CatalogItemEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new CatalogTypeEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new CatalogItemFeatureEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new CatalogItemImageEntityConfiguration());
+            modelBuilder.HasDefaultSchema(DEFAULT_SCHEMA);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         }
     }

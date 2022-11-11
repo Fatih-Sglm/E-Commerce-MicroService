@@ -2,12 +2,12 @@
 
 namespace E_Commerce.CatalogService.Domain.Entity
 {
-    public class CatalogItemImage : BaseEntity<int>
+    public class CatalogItemImage : BaseEntity<uint>
     {
         public string? PictureFileName { get; set; }
         public string? PictureUrl { get; set; }
         public CatalogItem? CatalogItem { get; set; }
-        public int CatalogItemId { get; set; }
+        public uint CatalogItemId { get; set; }
         public bool IsHeader { get; set; } = false;
     }
 }

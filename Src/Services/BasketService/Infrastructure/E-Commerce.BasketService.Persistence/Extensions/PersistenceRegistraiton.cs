@@ -10,9 +10,10 @@ namespace E_Commerce.BasketService.Persistence.Extensions
     {
         public static void AddPersistenceRegistraiton(this IServiceCollection services)
         {
-            services.AddScoped<IBasketRepository, BasketRepository>();
-            services.AddScoped<IRedisConfig, RedisConfig>();
-            services.AddScoped<IBasketService, Concrete.Services.BasketService>();
+
+            services.AddTransient<IBasketRepository, BasketRepository>();
+            services.AddTransient<IRedisConfig, RedisConfig>();
+            services.AddTransient<IBasketService, Concrete.Services.BasketService>();
         }
     }
 }

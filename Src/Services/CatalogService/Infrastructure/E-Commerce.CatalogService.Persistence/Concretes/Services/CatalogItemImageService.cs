@@ -14,7 +14,7 @@ namespace E_Commerce.CatalogService.Persistence.Concretes.Services
             _catalogItemImageRepoitory = catalogItemImageRepoitory;
         }
 
-        public async Task CreateCatalogItemImage(int catalogItemId, IList<IFormFile> files)
+        public async Task CreateCatalogItemImage(uint catalogItemId, IList<IFormFile> files)
         {
             if (files.Count > 0)
             {

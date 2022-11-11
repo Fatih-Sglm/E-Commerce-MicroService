@@ -9,10 +9,9 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
     {
         public void Configure(EntityTypeBuilder<OrderStatus> builder)
         {
-            builder.ToTable("orderstatus", OrderContext.DEFAULT_SCHEMA);
+            builder.ToTable("orderstatus", OrderDbContext.DEFAULT_SCHEMA);
 
             builder.HasKey(o => o.Id);
-            builder.Property(i => i.Id);
 
             builder.Property(o => o.Id)
                 .HasDefaultValue(1)
@@ -22,6 +21,17 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
             builder.Property(o => o.Name)
                 .HasMaxLength(200)
                 .IsRequired();
+
+            OrderStatus[] orderStatuses = new OrderStatus[]
+            {
+                new OrderStatus(1,"Submitted"),
+                new OrderStatus(2,"AwaitingValidation"),
+                new OrderStatus(3,"StockConfirmed"),
+                new OrderStatus(4,"Paid"),
+                new OrderStatus(5,"Shipped"),
+                new OrderStatus(6,"Cancelled"),
+            };
+            builder.HasData(orderStatuses);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
     {
         public void Configure(EntityTypeBuilder<PaymentMethod> paymentConfiguration)
         {
-            paymentConfiguration.ToTable("paymentmethods", OrderContext.DEFAULT_SCHEMA);
+            paymentConfiguration.ToTable("paymentmethods", OrderDbContext.DEFAULT_SCHEMA);
 
             paymentConfiguration.Ignore(b => b.DomainEvents);
 

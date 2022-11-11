@@ -20,6 +20,7 @@ namespace E_Commerce.OrderService.Application.DomainEventHandlers
             Order? orderToUpdate = await _orderRepository.GetById(buyerPaymentMethodVerifiedEvent.OrderId);
             orderToUpdate!.SetBuyerId(buyerPaymentMethodVerifiedEvent.Buyer.Id);
             orderToUpdate.SetPaymentMethodId(buyerPaymentMethodVerifiedEvent.Payment.Id);
+
         }
     }
 }
