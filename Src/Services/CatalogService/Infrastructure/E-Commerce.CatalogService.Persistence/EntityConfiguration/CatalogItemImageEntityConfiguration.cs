@@ -13,7 +13,7 @@ namespace E_Commerce.CatalogService.Persistence.EntityConfiguration
             builder.Property(x => x.CreatedDate).IsRequired();
             builder.Property(x => x.UpdatedDate).IsRequired(false);
             builder.Property(x => x.PictureFileName).IsRequired(false);
-            builder.Ignore(x => x.PictureUrl);
+            builder.Property(x => x.FolderName).IsRequired(false);
             builder.HasOne(x => x.CatalogItem).WithMany(x => x.CatalogItemImages).HasForeignKey(x => x.CatalogItemId);
 
 
@@ -22,16 +22,19 @@ namespace E_Commerce.CatalogService.Persistence.EntityConfiguration
             Id = 1,
             CatalogItemId = 1,
             CreatedDate= DateTime.Now,
+            FolderName = "Product//Shoes",
             PictureFileName = "Airmax270.png"},
             new CatalogItemImage() {
             Id = 2,
             CatalogItemId = 2,
             CreatedDate= DateTime.Now,
+            FolderName = "Product//T-Shirt",
             PictureFileName = "GoldenState2022/23_uniform.png" } ,
             new CatalogItemImage() {
             Id = 3,
             CatalogItemId = 3,
             CreatedDate= DateTime.Now,
+            FolderName = "Product//T-Shirt",
             PictureFileName = "black_panther_Tshirt.png"}};
 
             builder.HasData(catalogItemImages);

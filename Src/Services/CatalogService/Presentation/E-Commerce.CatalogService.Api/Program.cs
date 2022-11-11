@@ -1,5 +1,7 @@
 using E_Commerce.CatalogService.Api.Extensions;
 using E_Commerce.CatalogService.Application.Extensions;
+using E_Commerce.CatalogService.Infrastructure.Extensions;
+using E_Commerce.CatalogService.Infrastructure.Services.Storage.Local;
 using E_Commerce.CatalogService.Persistence.Extension;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContextServices(builder.Configuration);
+builder.Services.AddStorage<LocalStorage>();
 builder.Services.ConfigureConsul(builder.Configuration);
 builder.Services.AddPersistenceServiceRegistraiton();
 builder.Services.AddApplicationServiceRegistraiton();

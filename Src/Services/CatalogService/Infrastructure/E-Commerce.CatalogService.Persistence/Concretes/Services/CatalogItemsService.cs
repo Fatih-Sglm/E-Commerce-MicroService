@@ -53,9 +53,10 @@ namespace E_Commerce.CatalogService.Persistence.Concretes.Services
                     c => c.Include(x => x.CatalogBrand).Include(c => c.CatalogType).Include(x => x.CatalogItemFeature).Include(x => x.CatalogItemImages));
 
             await _catalogItemBusinessRule.CannotNull(catalogItem, "");
+
             // _mapper.ProjectTo<GetCatalogItemDto>();
             GetCatalogItemDto getCatalogItemDto = _mapper.Map<GetCatalogItemDto>(catalogItem);
-            SetWebRoothImage(getCatalogItemDto.CatalogItemsImages);
+            getCatalogItemDto.CatalogItemsImagesPath = _catalogItemImageService.GetCatalogItemImage(catalogItem.CatalogItemImages.ToArray());
             return getCatalogItemDto;
         }
 

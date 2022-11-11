@@ -20,9 +20,11 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\Product\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\E-Commerce.CatalogService.Infrastructure\E-Commerce.CatalogService.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\E-Commerce.CatalogService.Persistence\E-Commerce.CatalogService.Persistence.csproj" />
   </ItemGroup>
 

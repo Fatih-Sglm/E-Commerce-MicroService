@@ -23,8 +23,8 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Queries.Ge
 
             public async Task<ResponseDto<CatalogItemListModel>> Handle(GetCatalogItemsByBrandQuery request, CancellationToken cancellationToken)
             {
-                CatalogItemListModel model = await _catalogItemsService.GetListCatalogItemByBrand(request.PageRequest, request.BrandId);
-                return ResponseDto<CatalogItemListModel>(model);
+                CatalogItemListModel? model = await _catalogItemsService.GetListCatalogItemByBrand(request.PageRequest, request.BrandId);
+                return ResponseDto<CatalogItemListModel>.SuccesWithData(model);
             }
         }
     }

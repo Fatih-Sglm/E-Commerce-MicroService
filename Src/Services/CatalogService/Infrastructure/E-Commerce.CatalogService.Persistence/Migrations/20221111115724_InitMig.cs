@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -14,6 +15,7 @@ namespace ECommerce.CatalogService.Persistence.Migrations
         {
             migrationBuilder.EnsureSchema(
                 name: "catalog");
+
             migrationBuilder.CreateTable(
                 name: "Catalog_Brand",
                 schema: "catalog",
@@ -115,6 +117,7 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PictureFileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FolderName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CatalogItemId = table.Column<long>(type: "bigint", nullable: false),
                     IsHeader = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -138,9 +141,9 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                 columns: new[] { "Id", "Brand", "CreatedDate", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1L, "Nike", new DateTime(2022, 11, 10, 16, 48, 44, 627, DateTimeKind.Local).AddTicks(7574), null },
-                    { 2L, "Adidas", new DateTime(2022, 11, 10, 16, 48, 44, 627, DateTimeKind.Local).AddTicks(7591), null },
-                    { 3L, "Puma", new DateTime(2022, 11, 10, 16, 48, 44, 627, DateTimeKind.Local).AddTicks(7592), null }
+                    { 1L, "Nike", new DateTime(2022, 11, 11, 14, 57, 24, 637, DateTimeKind.Local).AddTicks(8851), null },
+                    { 2L, "Adidas", new DateTime(2022, 11, 11, 14, 57, 24, 637, DateTimeKind.Local).AddTicks(8875), null },
+                    { 3L, "Puma", new DateTime(2022, 11, 11, 14, 57, 24, 637, DateTimeKind.Local).AddTicks(8876), null }
                 });
 
             migrationBuilder.InsertData(
@@ -149,9 +152,9 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                 columns: new[] { "Id", "CreatedDate", "Type", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(8497), "Shoes", null },
-                    { 2L, new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(8504), "T-Shirt", null },
-                    { 3L, new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(8505), "tracksuit", null }
+                    { 1L, new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(4012), "Shoes", null },
+                    { 2L, new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(4019), "T-Shirt", null },
+                    { 3L, new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(4020), "tracksuit", null }
                 });
 
             migrationBuilder.InsertData(
@@ -160,9 +163,9 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                 columns: new[] { "Id", "CatalogBrandId", "CatalogTypeId", "CreatedDate", "Description", "Name", "Price", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1L, 1L, 1L, new DateTime(2022, 11, 10, 16, 48, 44, 630, DateTimeKind.Local).AddTicks(6445), "Nike'ın günlük giyim için tasarlanmış ilk Air Max modeli olan Nike Air Max 270, dikkat çeken stili rahatlıkla buluşturuyor. Air Max ikonlarından ilham alan tasarım, büyük penceresi ve yeni renkleriyle Nike'ın en büyük yeniliğini sergiliyor.", "Nike Air Max 270", 1499.99m, null },
-                    { 2L, 1L, 2L, new DateTime(2022, 11, 10, 16, 48, 44, 630, DateTimeKind.Local).AddTicks(6458), "Her takımın onu ligdeki diğer takımlardan ayıran gerçek renkleri ve eşsiz bir kimliği bulunur. Zengin basketbol mirasını onurlandıran bu Golden State Warriors Forma, takım ayrıntılarından ter tutmayan hafif fileye kadar profesyonellerin sahada giydiği formalardan ilham alır. Favori oyuncunu ve sevdiğin oyunu temsil ederken hem sahada hem de saha dışında kuru ve serin kalmana yardımcı olur", "Golden State Warriors Icon Edition 2022/23", 1849.90m, null },
-                    { 3L, 1L, 2L, new DateTime(2022, 11, 10, 16, 48, 44, 630, DateTimeKind.Local).AddTicks(6460), "Önden mütevazi. Arkadan nefes kesici. Bu adidas tişört, bir süper kahraman gibi sürprizlerle dolu. Marvel'in Kara Panter karakterinden ilham alan bu tişört, kalın pamuklu kumaştan üretilmiştir. Gardırobundaki her parça ile mükemmel biçimde eşleşen model, serin havalarda hem sıcak kalmanı hem şık görünmeni sağlar.\r\n\r\nPamuklu ürünlerimiz, sürdürülebilir pamuk çiftçiliğini destekler.", "BLACK PANTHER GRAPHİC TİŞÖRT", 1499.99m, null }
+                    { 1L, 1L, 1L, new DateTime(2022, 11, 11, 14, 57, 24, 639, DateTimeKind.Local).AddTicks(5431), "Nike'ın günlük giyim için tasarlanmış ilk Air Max modeli olan Nike Air Max 270, dikkat çeken stili rahatlıkla buluşturuyor. Air Max ikonlarından ilham alan tasarım, büyük penceresi ve yeni renkleriyle Nike'ın en büyük yeniliğini sergiliyor.", "Nike Air Max 270", 1499.99m, null },
+                    { 2L, 1L, 2L, new DateTime(2022, 11, 11, 14, 57, 24, 639, DateTimeKind.Local).AddTicks(5444), "Her takımın onu ligdeki diğer takımlardan ayıran gerçek renkleri ve eşsiz bir kimliği bulunur. Zengin basketbol mirasını onurlandıran bu Golden State Warriors Forma, takım ayrıntılarından ter tutmayan hafif fileye kadar profesyonellerin sahada giydiği formalardan ilham alır. Favori oyuncunu ve sevdiğin oyunu temsil ederken hem sahada hem de saha dışında kuru ve serin kalmana yardımcı olur", "Golden State Warriors Icon Edition 2022/23", 1849.90m, null },
+                    { 3L, 1L, 2L, new DateTime(2022, 11, 11, 14, 57, 24, 639, DateTimeKind.Local).AddTicks(5446), "Önden mütevazi. Arkadan nefes kesici. Bu adidas tişört, bir süper kahraman gibi sürprizlerle dolu. Marvel'in Kara Panter karakterinden ilham alan bu tişört, kalın pamuklu kumaştan üretilmiştir. Gardırobundaki her parça ile mükemmel biçimde eşleşen model, serin havalarda hem sıcak kalmanı hem şık görünmeni sağlar.\r\n\r\nPamuklu ürünlerimiz, sürdürülebilir pamuk çiftçiliğini destekler.", "BLACK PANTHER GRAPHİC TİŞÖRT", 1499.99m, null }
                 });
 
             migrationBuilder.InsertData(
@@ -171,20 +174,20 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                 columns: new[] { "Id", "AvailableStock", "BodySize", "CatalogItemId", "CreatedDate", "Genders", "Size", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1L, 100L, null, 1L, new DateTime(2022, 11, 10, 16, 48, 44, 631, DateTimeKind.Local).AddTicks(6878), 2, "43", null },
-                    { 2L, 100L, 1, 2L, new DateTime(2022, 11, 10, 16, 48, 44, 631, DateTimeKind.Local).AddTicks(6887), 0, null, null },
-                    { 3L, 50L, 2, 3L, new DateTime(2022, 11, 10, 16, 48, 44, 631, DateTimeKind.Local).AddTicks(6890), 2, null, null }
+                    { 1L, 100L, null, 1L, new DateTime(2022, 11, 11, 14, 57, 24, 640, DateTimeKind.Local).AddTicks(6360), 2, "43", null },
+                    { 2L, 100L, 1, 2L, new DateTime(2022, 11, 11, 14, 57, 24, 640, DateTimeKind.Local).AddTicks(6374), 0, null, null },
+                    { 3L, 50L, 2, 3L, new DateTime(2022, 11, 11, 14, 57, 24, 640, DateTimeKind.Local).AddTicks(6377), 2, null, null }
                 });
 
             migrationBuilder.InsertData(
                 schema: "catalog",
                 table: "Catalog_Item_Image",
-                columns: new[] { "Id", "CatalogItemId", "CreatedDate", "IsHeader", "PictureFileName", "UpdatedDate" },
+                columns: new[] { "Id", "CatalogItemId", "CreatedDate", "FolderName", "IsHeader", "PictureFileName", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1L, 1L, new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(2413), false, "Airmax270.png", null },
-                    { 2L, 2L, new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(2422), false, "GoldenState2022/23_uniform.png", null },
-                    { 3L, 3L, new DateTime(2022, 11, 10, 16, 48, 44, 632, DateTimeKind.Local).AddTicks(2423), false, "black_panther_Tshirt.png", null }
+                    { 1L, 1L, new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(841), "Product//Shoes", false, "Airmax270.png", null },
+                    { 2L, 2L, new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(851), "Product//T-Shirt", false, "GoldenState2022/23_uniform.png", null },
+                    { 3L, 3L, new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(852), "Product//T-Shirt", false, "black_panther_Tshirt.png", null }
                 });
 
             migrationBuilder.CreateIndex(

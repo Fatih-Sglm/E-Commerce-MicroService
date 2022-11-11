@@ -120,6 +120,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.IdentityService.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.BasketService.Infrastructure", "Src\Services\BasketService\Infrastructure\E-Commerce.BasketService.Infrastructure\E-Commerce.BasketService.Infrastructure.csproj", "{FC291412-9F27-4106-8574-FE0878C33DBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.CatalogService.Infrastructure", "Src\Services\CatalogService\Infrastructure\E-Commerce.CatalogService.Infrastructure\E-Commerce.CatalogService.Infrastructure.csproj", "{1CE2E067-4151-4780-8233-1700A532249C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -234,6 +236,10 @@ Global
 		{FC291412-9F27-4106-8574-FE0878C33DBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC291412-9F27-4106-8574-FE0878C33DBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC291412-9F27-4106-8574-FE0878C33DBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CE2E067-4151-4780-8233-1700A532249C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CE2E067-4151-4780-8233-1700A532249C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CE2E067-4151-4780-8233-1700A532249C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CE2E067-4151-4780-8233-1700A532249C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -293,6 +299,7 @@ Global
 		{18D2A78A-F9FC-454F-8B5F-DC0C7CB50715} = {871089B4-1C8F-4FD2-B5FE-A55779692F9A}
 		{FDA67A17-7C96-4AC4-879E-530993DC2496} = {9DC0F8AC-F608-4543-807E-0FCDDDFD11E6}
 		{FC291412-9F27-4106-8574-FE0878C33DBC} = {702CB53D-3457-464C-A106-251DD92C1FC2}
+		{1CE2E067-4151-4780-8233-1700A532249C} = {11B821A2-3453-4835-86D5-E14996C7DF57}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {670FAD18-C484-4E9E-AF98-2A1C7DB3A5E9}
