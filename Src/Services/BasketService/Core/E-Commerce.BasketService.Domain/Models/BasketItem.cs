@@ -4,8 +4,6 @@ namespace E_Commerce.BasketService.Domain.Models
 {
     public class BasketItem : IValidatableObject
     {
-        public string Id { get; set; }
-
         public int ProductId { get; set; }
 
         public string ProductName { get; set; }

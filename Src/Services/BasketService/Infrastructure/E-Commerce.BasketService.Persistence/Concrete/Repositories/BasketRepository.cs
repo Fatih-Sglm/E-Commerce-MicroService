@@ -1,6 +1,7 @@
-﻿using E_Commerce.BasketService.Application.Abstractions.Repository;
+﻿using E_Commerce.BasketService.Application.Abstractions.Configuration;
+using E_Commerce.BasketService.Application.Abstractions.Repository;
 using E_Commerce.BasketService.Domain.Models;
-using E_Commerce.BasketService.Persistence.Configuration;
+using JsonNet.PrivateSettersContractResolvers;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using StackExchange.Redis;
@@ -28,7 +29,8 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Repositories
         public async Task<CustomerBasket?> GetBasketAsync(string customerId)
         {
             var basket = await _database.StringGetAsync(customerId);
-            return !basket.IsNullOrEmpty ? JsonConvert.DeserializeObject<CustomerBasket>(basket) : null;
+            return !basket.IsNullOrEmpty ? JsonConvert.DeserializeObject<CustomerBasket>(basket,
+                new JsonSerializerSettings() { ContractResolver = new PrivateSetterContractResolver() }) : null;
         }
 
         public IEnumerable<string> GetUsers()

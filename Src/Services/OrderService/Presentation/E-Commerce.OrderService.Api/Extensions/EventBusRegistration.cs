@@ -1,8 +1,8 @@
 ﻿using E_Commerce.EventBus.Base.Abstraction;
 using E_Commerce.EventBus.Base.EventBus.Base;
 using E_Commerce.EventBus.Factory;
-using E_Commerce.OrderService.Api.IntegrationEvents.Events;
-using E_Commerce.OrderService.Api.IntegrationEvents.EventsHandlers;
+using E_Commerce.OrderService.Application.IntegrationEvents.Events;
+using E_Commerce.OrderService.Application.IntegrationEvents.EventsHandlers;
 
 namespace E_Commerce.OrderService.Api.Extensions
 {

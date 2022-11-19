@@ -1,7 +1,7 @@
 ﻿using E_Commerce.EventBus.Base.Abstraction;
 using E_Commerce.OrderService.Application.Abstractions.Repostories;
 using E_Commerce.OrderService.Application.Abstractions.Services;
-using E_Commerce.OrderService.Application.Features.Order.Command.CreateOrder;
+using E_Commerce.OrderService.Application.Features.Orders.Command.CreateOrder;
 using E_Commerce.OrderService.Application.IntegrationEvents.Events;
 using E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate;
 
@@ -26,10 +26,10 @@ namespace E_Commerce.OrderService.Persistence.Concrete.Services
         {
             Address addr = new(request.Street, request.City, request.State, request.Country, request.ZipCode);
             Order dbOrder = new(request.UserName,
-            addr, request.CardTypeId, request.CardNumber, request.CardSecurityNumber, request.CardHolderName, request.CardExpiration, request.OrderItems.Count(), null);
+            addr, request.CreditCardInformation, request.CardTypeId, request.OrderItems.Count(), null);
             foreach (var orderItem in request.OrderItems)
             {
-                dbOrder.AddOrderItem(orderItem.ProductId, orderItem.ProductName, orderItem.UnitPrice, orderItem.PictureUrl, orderItem.Units);
+                dbOrder.AddOrderItem(orderItem.ProductId, orderItem.ProductName, orderItem.UnitPrice, orderItem.PictureUrl, orderItem.Quantity);
             }
 
             await _orderRepository.AddAsync(dbOrder);

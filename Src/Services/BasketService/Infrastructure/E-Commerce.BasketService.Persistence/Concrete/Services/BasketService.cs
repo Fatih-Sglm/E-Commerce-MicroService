@@ -24,19 +24,17 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
 
         public async Task AddItemToBasket(BasketItem basketItem)
         {
-            var userId = _identityService.GetUserName();
+            var userId = _identityService.GetUserId();
+            var userName = _identityService.GetUserName();
             var basket = await _basketRepository.GetBasketAsync(userId);
-            if (basket is null)
-            {
-                basket = new CustomerBasket(userId);
-            }
+            basket ??= new CustomerBasket(userId, userName);
             basket.Items.Add(basketItem);
             await _basketRepository.UpdateBasketAsync(basket);
         }
 
         public async Task CheckOutAsync(BasketCheckout basketCheckout)
         {
-            var userId = basketCheckout.Buyer;
+            var userId = _identityService.GetUserId();
             var basket = await _basketRepository.GetBasketAsync(userId);
 
             if (basket is null)
@@ -49,8 +47,8 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
             var eventmessage = new OrderCreatedIntegrationEvent
                 (userId, username, basketCheckout.City, basketCheckout.Street,
             basketCheckout.Street, basketCheckout.Country, basketCheckout.ZipCode, basketCheckout.CardNumber, basketCheckout.CardHolderName,
-            basketCheckout.CardExpiration, basketCheckout.CardSecurityNumber, basketCheckout.CardTypeId, basketCheckout.Buyer,
-            basket);
+            basketCheckout.CardExpiration, basketCheckout.CardSecurityNumber, basketCheckout.CardTypeId,
+            basket, basketCheckout.WillPaymentRecorded);
 
             try
             {
@@ -62,11 +60,7 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
 
                 return;
             }
-
-
-
         }
-
         public Task DeleteBasketByIdAsync(string id)
         {
             throw new NotImplementedException();
@@ -75,8 +69,9 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
         public async Task<CustomerBasket> GetBasketById(string id)
         {
             var basket = await _basketRepository.GetBasketAsync(id);
-
-            return basket ?? new CustomerBasket(id);
+            var userId = _identityService.GetUserId();
+            var userName = _identityService.GetUserName();
+            return basket ?? new CustomerBasket(userId, userName);
         }
 
         public async Task<CustomerBasket?> UpdateBasketAsync(CustomerBasket customerBasket)

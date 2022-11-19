@@ -1,5 +1,5 @@
 ﻿using E_Commerce.CatalogService.Application.Paging;
-using E_Commerce.CatalogService.Domain.Entity.Base;
+using E_Commerce.CatalogService.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
@@ -32,5 +32,7 @@ namespace E_Commerce.CatalogService.Application.Abstractions.Repositories.Generi
         Task AddRangeAsync(List<T> datas);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
+
+        Task<int> SaveChangesAsync();
     }
 }

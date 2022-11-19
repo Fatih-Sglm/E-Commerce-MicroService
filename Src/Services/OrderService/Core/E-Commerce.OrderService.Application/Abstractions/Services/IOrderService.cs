@@ -1,4 +1,4 @@
-﻿using E_Commerce.OrderService.Application.Features.Order.Command.CreateOrder;
+﻿using E_Commerce.OrderService.Application.Features.Orders.Command.CreateOrder;
 
 namespace E_Commerce.OrderService.Application.Abstractions.Services
 {

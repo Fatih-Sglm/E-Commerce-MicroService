@@ -3,5 +3,6 @@
     public interface IIdentityService
     {
         string GetUserName();
+        string GetUserId();
     }
 }

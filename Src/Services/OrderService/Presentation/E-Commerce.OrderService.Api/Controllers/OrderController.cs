@@ -1,5 +1,5 @@
-﻿using E_Commerce.OrderService.Application.Features.Order.Command.CreateOrder;
-using E_Commerce.OrderService.Application.Features.Order.Queries.GetOrderById;
+﻿using E_Commerce.OrderService.Application.Features.Orders.Command.CreateOrder;
+using E_Commerce.OrderService.Application.Features.Orders.Queries.GetOrderById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

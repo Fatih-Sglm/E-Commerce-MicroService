@@ -26,7 +26,6 @@ namespace E_Commerce.PaymentService.Api.IntegrationEvents.EventHandler
                 $"Payment service is fired with paymentsucces:{payment} , orderId: {@event.OrderId}");
 
             _eventBus.Publish(paymentevent);
-
             return Task.CompletedTask;
         }
     }

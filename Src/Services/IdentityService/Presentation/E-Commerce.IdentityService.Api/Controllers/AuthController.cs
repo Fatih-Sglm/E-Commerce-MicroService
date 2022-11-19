@@ -1,31 +1,32 @@
-﻿using E_Commerce.IdentityService.Application.Abstractions.Services.AuthService;
-using E_Commerce.IdentityService.Application.Features.Auths.Dtos;
+﻿using E_Commerce.IdentityService.Application.Features.Admin.Command.CreateAdmin;
+using E_Commerce.IdentityService.Application.Features.Auths.Command.Login.User;
+using E_Commerce.IdentityService.Application.Features.Auths.Command.Register;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerce.IdentityService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController
     {
-        private readonly IAuthService _authService;
-        public AuthController(IAuthService authService)
-        {
-            _authService = authService;
-        }
-
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginUserDto loginUserDto)
+        public async Task<IActionResult> Login(LoginUserCommand login)
         {
-            return Ok(await _authService.Login(loginUserDto));
+            return Ok(await _mediator.Send(login));
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> REgister(RegisterDto registerDto)
+        public async Task<IActionResult> Register(RegisterUserCommand register)
         {
-            await _authService.Register(registerDto);
-            return Ok();
+            return Ok(await _mediator.Send(register));
+        }
+
+        [HttpPost("AdminRegister")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> AdminRegister(CreateAdminCommand register)
+        {
+            return Ok(await _mediator.Send(register));
         }
     }
 }

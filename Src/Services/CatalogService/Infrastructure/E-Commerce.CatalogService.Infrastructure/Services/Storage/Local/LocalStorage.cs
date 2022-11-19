@@ -13,20 +13,20 @@ namespace E_Commerce.CatalogService.Infrastructure.Services.Storage.Local
             WebRootPath = _env.WebRootPath;
         }
 
-        public Task DeleteAsync(string path, string fileName)
+        public Task DeleteAsync(string path)
         {
-            File.Delete(PathCombine(path, fileName));
+            File.Delete(PathCombine(path));
             return Task.CompletedTask;
         }
 
-        public string? GetFile(string path, string filename)
+        public string? GetFile(string path)
         {
-            DirectoryInfo df = new(PathCombine(path));
-            return df.GetFiles()?.FirstOrDefault(x => x.Name == filename).FullName;
+            FileInfo fileInfo = new(PathCombine(path));
+            return fileInfo.FullName ?? string.Empty;
         }
 
-        public bool HasFile(string path, string fileName)
-         => File.Exists(PathCombine(path, fileName));
+        public bool HasFile(string path)
+         => File.Exists(PathCombine(path));
 
         public async Task<List<(string fileName, string pathOrContainerName)>> UploadAsync(string path, IFormFileCollection files)
         {
@@ -39,7 +39,7 @@ namespace E_Commerce.CatalogService.Infrastructure.Services.Storage.Local
                 //string fileNewName = await FileRenameAsync(path, file.Name, HasFile);
 
                 await CopyFileAsync($"{uploadPath}\\{file.FileName}", file);
-                datas.Add((file.FileName, path));
+                datas.Add((file.FileName, $"{path}\\{file.FileName}"));
             }
 
             return datas;
@@ -62,11 +62,10 @@ namespace E_Commerce.CatalogService.Infrastructure.Services.Storage.Local
             }
         }
 
-        private string PathCombine(string path, string filename = null)
+        private string PathCombine(string path)
         {
-            if (filename is null)
-                return Path.Combine(WebRootPath, path);
-            return Path.Combine(WebRootPath, path, filename);
+
+            return Path.Combine(WebRootPath, path);
         }
     }
 }

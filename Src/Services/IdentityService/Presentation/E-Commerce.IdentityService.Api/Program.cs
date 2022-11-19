@@ -1,4 +1,5 @@
 using E_Commerce.IdentityService.Api.Extensions;
+using E_Commerce.IdentityService.Application.Extensions;
 using E_Commerce.IdentityService.Infrastructure.Extensions;
 using E_Commerce.IdentityService.Persistence.Extensions;
 
@@ -9,8 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.ConfigureConsul(builder.Configuration);
-//builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
+builder.Services.AddAuthServices(builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -25,14 +27,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-//app.UseAuthentication();
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
-
-
 app.Start();
 app.RegisterWithConsul(app.Lifetime);
-
 app.WaitForShutdown();

@@ -12,8 +12,6 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
         public DateTime Expiration { get; set; }
 
         public int CardTypeId { get; set; }
-
-
         public CardType CardType { get; private set; }
 
 

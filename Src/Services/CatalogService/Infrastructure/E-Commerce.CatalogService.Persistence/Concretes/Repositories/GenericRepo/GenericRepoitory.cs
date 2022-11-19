@@ -1,6 +1,6 @@
 ﻿using E_Commerce.CatalogService.Application.Abstractions.Repositories.GenericRepo;
 using E_Commerce.CatalogService.Application.Paging;
-using E_Commerce.CatalogService.Domain.Entity.Base;
+using E_Commerce.CatalogService.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
@@ -71,20 +71,22 @@ namespace E_Commerce.CatalogService.Persistence.Concretes.Repositories.GenericRe
         //}
         public async Task AddAsync(T entity)
         {
+            await Table.AddAsync(entity);
             Context.Entry(entity).State = EntityState.Added;
-            await Context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(T entity)
+        public Task UpdateAsync(T entity)
         {
+            Table.Update(entity);
             Context.Entry(entity).State = EntityState.Modified;
-            await Context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
-        public async Task DeleteAsync(T entity)
+        public Task DeleteAsync(T entity)
         {
+            Table.Remove(entity);
             Context.Entry(entity).State = EntityState.Deleted;
-            await Context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
         public T? Get(Expression<Func<T, bool>> predicate)
@@ -95,7 +97,11 @@ namespace E_Commerce.CatalogService.Persistence.Concretes.Repositories.GenericRe
         public async Task AddRangeAsync(List<T> datas)
         {
             await Context.AddRangeAsync(datas);
-            await Context.SaveChangesAsync();
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await Context.SaveChangesAsync();
         }
     }
 }

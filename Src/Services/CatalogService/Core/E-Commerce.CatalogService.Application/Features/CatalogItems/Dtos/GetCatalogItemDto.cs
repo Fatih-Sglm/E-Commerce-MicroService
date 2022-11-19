@@ -9,9 +9,6 @@
         public string CatalogBrandName { get; set; }
         public string CatalogTypeName { get; set; }
         public IList<string> CatalogItemsImagesPath { get; set; }
-        public string Genders { get; set; }
-        public string? BodySize { get; set; }
-        public string? Size { get; set; }
-        public uint AvailableStock { get; set; }
+        public IList<string>? CatalogItemsVariants { get; set; }
     }
 }

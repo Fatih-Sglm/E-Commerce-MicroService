@@ -120,7 +120,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.IdentityService.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.BasketService.Infrastructure", "Src\Services\BasketService\Infrastructure\E-Commerce.BasketService.Infrastructure\E-Commerce.BasketService.Infrastructure.csproj", "{FC291412-9F27-4106-8574-FE0878C33DBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.CatalogService.Infrastructure", "Src\Services\CatalogService\Infrastructure\E-Commerce.CatalogService.Infrastructure\E-Commerce.CatalogService.Infrastructure.csproj", "{1CE2E067-4151-4780-8233-1700A532249C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.CatalogService.Infrastructure", "Src\Services\CatalogService\Infrastructure\E-Commerce.CatalogService.Infrastructure\E-Commerce.CatalogService.Infrastructure.csproj", "{1CE2E067-4151-4780-8233-1700A532249C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

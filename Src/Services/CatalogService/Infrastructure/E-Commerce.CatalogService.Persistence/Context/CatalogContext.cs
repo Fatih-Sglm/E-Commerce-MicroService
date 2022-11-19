@@ -1,4 +1,4 @@
-﻿using E_Commerce.CatalogService.Domain.Entity;
+﻿using E_Commerce.CatalogService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -18,7 +18,7 @@ namespace E_Commerce.CatalogService.Persistence.Context
 
         public DbSet<CatalogItem> CatalogItems { get; set; }
 
-        public DbSet<CatalogItemFeature> CatalogItemFeatures { get; set; }
+        public DbSet<CatalogItemVariant> CatalogItemVariants { get; set; }
 
         public DbSet<CatalogItemImage> CatalogItemImages { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

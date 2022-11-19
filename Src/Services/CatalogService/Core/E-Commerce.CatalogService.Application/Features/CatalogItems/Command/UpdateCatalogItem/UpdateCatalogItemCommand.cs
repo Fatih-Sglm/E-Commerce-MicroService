@@ -8,7 +8,7 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Command.Up
 {
     public class UpdateCatalogItemCommand : IRequest<ResponseDto<NoContent>>
     {
-        public UpdateCatalogItemDto updateCatalogItemDto { get; set; }
+        public UpdateCatalogItemDto updateCatalogItem { get; set; }
         public class UpdateCatalogItemCommandHandler : IRequestHandler<UpdateCatalogItemCommand, ResponseDto<NoContent>>
         {
             private readonly ICatalogItemsService _catalogItemsService;
@@ -24,7 +24,7 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Command.Up
 
             public async Task<ResponseDto<NoContent>> Handle(UpdateCatalogItemCommand request, CancellationToken cancellationToken)
             {
-                await _catalogItemsService.UpdateProduct(request.updateCatalogItemDto);
+                await _catalogItemsService.UpdateProduct(request.updateCatalogItem);
                 return ResponseDto<NoContent>.SuccesWithOutData("Ürün Güncellendi");
             }
         }

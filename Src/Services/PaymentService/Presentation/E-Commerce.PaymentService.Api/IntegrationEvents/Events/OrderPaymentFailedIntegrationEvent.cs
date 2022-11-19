@@ -4,11 +4,11 @@ namespace E_Commerce.PaymentService.Api.IntegrationEvents.Events
 {
     public class OrderPaymentFailedIntegrationEvent : IntegrationEvent
     {
-        public int OrderId { get; set; }
+        public Guid OrderId { get; set; }
 
         public string ErrorMessage { get; set; }
 
-        public OrderPaymentFailedIntegrationEvent(int orderId, string errorMessage)
+        public OrderPaymentFailedIntegrationEvent(Guid orderId, string errorMessage)
         {
             OrderId = orderId;
             ErrorMessage = errorMessage;

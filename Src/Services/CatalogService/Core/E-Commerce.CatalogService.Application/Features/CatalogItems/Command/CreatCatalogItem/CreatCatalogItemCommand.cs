@@ -8,7 +8,6 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Command.Cr
     public class CreatCatalogItemCommand : IRequest<ResponseDto<NoContent>>
     {
         public CreateCatalogItemDto CreateCatalogItemDto { get; set; }
-        public CreateCatalogItemFeaturesDto CreateCatalogItemFeaturesDto { get; set; }
 
 
         public class CreatCatalogItemCommandHandler : IRequestHandler<CreatCatalogItemCommand, ResponseDto<NoContent>>
@@ -22,7 +21,7 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Command.Cr
 
             public async Task<ResponseDto<NoContent>> Handle(CreatCatalogItemCommand request, CancellationToken cancellationToken)
             {
-                await _catalogItemsService.CreateProduct(request.CreateCatalogItemDto, request.CreateCatalogItemFeaturesDto);
+                await _catalogItemsService.CreateProduct(request.CreateCatalogItemDto);
                 return ResponseDto<NoContent>.SuccesWithOutData("ürün Eklendi");
             }
         }

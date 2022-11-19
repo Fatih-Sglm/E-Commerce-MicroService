@@ -23,7 +23,22 @@ namespace ECommerce.CatalogService.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogBrand", b =>
+            modelBuilder.Entity("CatalogItemCatalogItemVariant", b =>
+                {
+                    b.Property<long>("CatalogItemVariantsId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CatalogItemsId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("CatalogItemVariantsId", "CatalogItemsId");
+
+                    b.HasIndex("CatalogItemsId");
+
+                    b.ToTable("CatalogItemsVariants", "catalog");
+                });
+
+            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entities.CatalogBrand", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,13 +46,13 @@ namespace ECommerce.CatalogService.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Brand")
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -50,24 +65,24 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            Brand = "Nike",
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 637, DateTimeKind.Local).AddTicks(8851)
+                            CreatedDate = new DateTime(2022, 11, 19, 12, 40, 10, 364, DateTimeKind.Local).AddTicks(108),
+                            Name = "Nike"
                         },
                         new
                         {
                             Id = 2L,
-                            Brand = "Adidas",
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 637, DateTimeKind.Local).AddTicks(8875)
+                            CreatedDate = new DateTime(2022, 11, 19, 12, 40, 10, 364, DateTimeKind.Local).AddTicks(121),
+                            Name = "Adidas"
                         },
                         new
                         {
                             Id = 3L,
-                            Brand = "Puma",
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 637, DateTimeKind.Local).AddTicks(8876)
+                            CreatedDate = new DateTime(2022, 11, 19, 12, 40, 10, 364, DateTimeKind.Local).AddTicks(123),
+                            Name = "Puma"
                         });
                 });
 
-            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogItem", b =>
+            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entities.CatalogItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,7 +128,7 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                             Id = 1L,
                             CatalogBrandId = 1L,
                             CatalogTypeId = 1L,
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 639, DateTimeKind.Local).AddTicks(5431),
+                            CreatedDate = new DateTime(2022, 11, 19, 12, 40, 10, 364, DateTimeKind.Local).AddTicks(8775),
                             Description = "Nike'ın günlük giyim için tasarlanmış ilk Air Max modeli olan Nike Air Max 270, dikkat çeken stili rahatlıkla buluşturuyor. Air Max ikonlarından ilham alan tasarım, büyük penceresi ve yeni renkleriyle Nike'ın en büyük yeniliğini sergiliyor.",
                             Name = "Nike Air Max 270",
                             Price = 1499.99m
@@ -123,90 +138,14 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                             Id = 2L,
                             CatalogBrandId = 1L,
                             CatalogTypeId = 2L,
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 639, DateTimeKind.Local).AddTicks(5444),
+                            CreatedDate = new DateTime(2022, 11, 19, 12, 40, 10, 364, DateTimeKind.Local).AddTicks(8786),
                             Description = "Her takımın onu ligdeki diğer takımlardan ayıran gerçek renkleri ve eşsiz bir kimliği bulunur. Zengin basketbol mirasını onurlandıran bu Golden State Warriors Forma, takım ayrıntılarından ter tutmayan hafif fileye kadar profesyonellerin sahada giydiği formalardan ilham alır. Favori oyuncunu ve sevdiğin oyunu temsil ederken hem sahada hem de saha dışında kuru ve serin kalmana yardımcı olur",
                             Name = "Golden State Warriors Icon Edition 2022/23",
                             Price = 1849.90m
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            CatalogBrandId = 1L,
-                            CatalogTypeId = 2L,
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 639, DateTimeKind.Local).AddTicks(5446),
-                            Description = "Önden mütevazi. Arkadan nefes kesici. Bu adidas tişört, bir süper kahraman gibi sürprizlerle dolu. Marvel'in Kara Panter karakterinden ilham alan bu tişört, kalın pamuklu kumaştan üretilmiştir. Gardırobundaki her parça ile mükemmel biçimde eşleşen model, serin havalarda hem sıcak kalmanı hem şık görünmeni sağlar.\r\n\r\nPamuklu ürünlerimiz, sürdürülebilir pamuk çiftçiliğini destekler.",
-                            Name = "BLACK PANTHER GRAPHİC TİŞÖRT",
-                            Price = 1499.99m
                         });
                 });
 
-            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogItemFeature", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("AvailableStock")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("BodySize")
-                        .HasColumnType("int");
-
-                    b.Property<long>("CatalogItemId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Genders")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Size")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CatalogItemId")
-                        .IsUnique();
-
-                    b.ToTable("Catalog_Item_Feature", "catalog");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            AvailableStock = 100L,
-                            CatalogItemId = 1L,
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 640, DateTimeKind.Local).AddTicks(6360),
-                            Genders = 2,
-                            Size = "43"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            AvailableStock = 100L,
-                            BodySize = 1,
-                            CatalogItemId = 2L,
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 640, DateTimeKind.Local).AddTicks(6374),
-                            Genders = 0
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            AvailableStock = 50L,
-                            BodySize = 2,
-                            CatalogItemId = 3L,
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 640, DateTimeKind.Local).AddTicks(6377),
-                            Genders = 2
-                        });
-                });
-
-            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogItemImage", b =>
+            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entities.CatalogItemImage", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -220,13 +159,15 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FolderName")
+                    b.Property<string>("FileName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsHeader")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PictureFileName")
+                    b.Property<string>("Path")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
@@ -243,32 +184,23 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                         {
                             Id = 1L,
                             CatalogItemId = 1L,
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(841),
-                            FolderName = "Product//Shoes",
+                            CreatedDate = new DateTime(2022, 11, 19, 12, 40, 10, 365, DateTimeKind.Local).AddTicks(2386),
+                            FileName = "Airmax270.png",
                             IsHeader = false,
-                            PictureFileName = "Airmax270.png"
+                            Path = "Product//Shoes//Airmax270.png"
                         },
                         new
                         {
                             Id = 2L,
                             CatalogItemId = 2L,
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(851),
-                            FolderName = "Product//T-Shirt",
+                            CreatedDate = new DateTime(2022, 11, 19, 12, 40, 10, 365, DateTimeKind.Local).AddTicks(2393),
+                            FileName = "GoldenState2022/23_uniform.png",
                             IsHeader = false,
-                            PictureFileName = "GoldenState2022/23_uniform.png"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            CatalogItemId = 3L,
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(852),
-                            FolderName = "Product//T-Shirt",
-                            IsHeader = false,
-                            PictureFileName = "black_panther_Tshirt.png"
+                            Path = "Product//T-Shirt//GoldenState2022/23_uniform.png"
                         });
                 });
 
-            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogType", b =>
+            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entities.CatalogItemVariant", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -279,7 +211,33 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Type")
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("VariantDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VariantName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CatalogItemVariant", "catalog");
+                });
+
+            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entities.CatalogType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -295,32 +253,47 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(4012),
-                            Type = "Shoes"
+                            CreatedDate = new DateTime(2022, 11, 19, 12, 40, 10, 365, DateTimeKind.Local).AddTicks(8597),
+                            Name = "Shoes"
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(4019),
-                            Type = "T-Shirt"
+                            CreatedDate = new DateTime(2022, 11, 19, 12, 40, 10, 365, DateTimeKind.Local).AddTicks(8603),
+                            Name = "T-Shirt"
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedDate = new DateTime(2022, 11, 11, 14, 57, 24, 641, DateTimeKind.Local).AddTicks(4020),
-                            Type = "tracksuit"
+                            CreatedDate = new DateTime(2022, 11, 19, 12, 40, 10, 365, DateTimeKind.Local).AddTicks(8604),
+                            Name = "tracksuit"
                         });
                 });
 
-            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogItem", b =>
+            modelBuilder.Entity("CatalogItemCatalogItemVariant", b =>
                 {
-                    b.HasOne("E_Commerce.CatalogService.Domain.Entity.CatalogBrand", "CatalogBrand")
+                    b.HasOne("E_Commerce.CatalogService.Domain.Entities.CatalogItemVariant", null)
+                        .WithMany()
+                        .HasForeignKey("CatalogItemVariantsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_Commerce.CatalogService.Domain.Entities.CatalogItem", null)
+                        .WithMany()
+                        .HasForeignKey("CatalogItemsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entities.CatalogItem", b =>
+                {
+                    b.HasOne("E_Commerce.CatalogService.Domain.Entities.CatalogBrand", "CatalogBrand")
                         .WithMany("CatalogItems")
                         .HasForeignKey("CatalogBrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_Commerce.CatalogService.Domain.Entity.CatalogType", "CatalogType")
+                    b.HasOne("E_Commerce.CatalogService.Domain.Entities.CatalogType", "CatalogType")
                         .WithMany("CatalogItems")
                         .HasForeignKey("CatalogTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -331,20 +304,9 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                     b.Navigation("CatalogType");
                 });
 
-            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogItemFeature", b =>
+            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entities.CatalogItemImage", b =>
                 {
-                    b.HasOne("E_Commerce.CatalogService.Domain.Entity.CatalogItem", "CatalogItem")
-                        .WithOne("CatalogItemFeature")
-                        .HasForeignKey("E_Commerce.CatalogService.Domain.Entity.CatalogItemFeature", "CatalogItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CatalogItem");
-                });
-
-            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogItemImage", b =>
-                {
-                    b.HasOne("E_Commerce.CatalogService.Domain.Entity.CatalogItem", "CatalogItem")
+                    b.HasOne("E_Commerce.CatalogService.Domain.Entities.CatalogItem", "CatalogItem")
                         .WithMany("CatalogItemImages")
                         .HasForeignKey("CatalogItemId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -353,20 +315,17 @@ namespace ECommerce.CatalogService.Persistence.Migrations
                     b.Navigation("CatalogItem");
                 });
 
-            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogBrand", b =>
+            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entities.CatalogBrand", b =>
                 {
                     b.Navigation("CatalogItems");
                 });
 
-            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogItem", b =>
+            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entities.CatalogItem", b =>
                 {
-                    b.Navigation("CatalogItemFeature")
-                        .IsRequired();
-
                     b.Navigation("CatalogItemImages");
                 });
 
-            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entity.CatalogType", b =>
+            modelBuilder.Entity("E_Commerce.CatalogService.Domain.Entities.CatalogType", b =>
                 {
                     b.Navigation("CatalogItems");
                 });

@@ -8,9 +8,9 @@ namespace E_Commerce.PaymentService.Api.IntegrationEvents.Events
         {
         }
 
-        public int OrderId { get; set; }
+        public Guid OrderId { get; set; }
 
-        public OrderStartedIntegrationEvent(int orderId)
+        public OrderStartedIntegrationEvent(Guid orderId)
         {
             OrderId = orderId;
         }

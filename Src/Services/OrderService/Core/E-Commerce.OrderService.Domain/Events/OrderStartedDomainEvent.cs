@@ -1,4 +1,5 @@
-﻿using E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate;
+﻿using E_Commerce.OrderService.Application.Features.Orders.Models;
+using E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate;
 using MediatR;
 
 namespace E_Commerce.OrderService.Domain.Events
@@ -7,24 +8,17 @@ namespace E_Commerce.OrderService.Domain.Events
     {
         public string UserName { get; }
         public int CardTypeId { get; }
-        public string CardNumber { get; }
-        public string CardSecurityNumber { get; }
-        public string CardHolderName { get; }
-        public DateTime CardExpiration { get; }
+        public CreditCardInformation CreditCardInformation { get; }
         public Order Order { get; }
 
+
         public OrderStartedDomainEvent(Order order, string userName,
-                                       int cardTypeId, string cardNumber,
-                                       string cardSecurityNumber, string cardHolderName,
-                                       DateTime cardExpiration)
+                                       int cardTypeId, CreditCardInformation creditCardInformation)
         {
             Order = order;
             UserName = userName;
             CardTypeId = cardTypeId;
-            CardNumber = cardNumber;
-            CardSecurityNumber = cardSecurityNumber;
-            CardHolderName = cardHolderName;
-            CardExpiration = cardExpiration;
+            CreditCardInformation = creditCardInformation;
         }
     }
 }

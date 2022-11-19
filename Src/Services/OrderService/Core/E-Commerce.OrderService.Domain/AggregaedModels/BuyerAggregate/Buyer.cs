@@ -30,7 +30,6 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
 
             if (existingPayment is not null)
             {
-                // raise event 
                 AddDomainEvent(new BuyerAndPaymentMethodVerifiedDomainEvent(this, existingPayment, orderId));
 
                 return existingPayment;

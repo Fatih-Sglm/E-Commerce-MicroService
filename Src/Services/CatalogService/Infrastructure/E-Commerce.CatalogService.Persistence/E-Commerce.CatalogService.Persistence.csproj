@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
@@ -18,9 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\OrderService\Core\E-Commerce.OrderService.Domain\E-Commerce.OrderService.Domain.csproj" />
     <ProjectReference Include="..\..\Core\E-Commerce.CatalogService.Application\E-Commerce.CatalogService.Application.csproj" />
-    <ProjectReference Include="..\..\Core\E-Commerce.CatalogService.Domain\E-Commerce.CatalogService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

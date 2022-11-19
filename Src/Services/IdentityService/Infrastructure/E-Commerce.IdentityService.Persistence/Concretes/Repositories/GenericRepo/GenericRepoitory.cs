@@ -1,18 +1,18 @@
 ﻿using E_Commerce.IdentityService.Application.Abstractions.Repositories.Common;
 using E_Commerce.IdentityService.Domain;
+using E_Commerce.IdentityService.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace E_Commerce.IdentityService.Persistence.Concretes.Repositories.GenericRepo
 {
-    public class GenericRepoitory<T, TContext> : IGenericRepository<T>
+    public class GenericRepoitory<T> : IGenericRepository<T>
     where T : class, IEntity
-    where TContext : DbContext
     {
-        protected TContext Context { get; }
+        protected IdentityContext Context { get; }
 
-        public GenericRepoitory(TContext context)
+        public GenericRepoitory(IdentityContext context)
         {
             Context = context;
         }

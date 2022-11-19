@@ -13,6 +13,11 @@ namespace E_Commerce.BasketService.Infrastructure.Concrete.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
+        public string GetUserId()
+        {
+            return _httpContextAccessor.HttpContext.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
+        }
+
         public string GetUserName()
         {
             return _httpContextAccessor.HttpContext.User.FindFirst(x => x.Type == ClaimTypes.Name)!.Value;

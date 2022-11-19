@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Features\CatalogTypes\Command\" />
+    <Folder Include="Features\CatalogItemVariant\" />
   </ItemGroup>
 
 </Project>
