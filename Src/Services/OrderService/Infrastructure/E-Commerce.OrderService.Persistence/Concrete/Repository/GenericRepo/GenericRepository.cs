@@ -1,4 +1,5 @@
 ﻿using E_Commerce.OrderService.Application.Abstractions.Repostories.GenericRepo;
+using E_Commerce.OrderService.Application.Paging;
 using E_Commerce.OrderService.Domain.SeedWork;
 using E_Commerce.OrderService.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -21,20 +22,19 @@ namespace E_Commerce.OrderService.Persistence.Concrete.Repository.GenericRepo
 
         public DbSet<T> Table => Context.Set<T>();
 
-        public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null)
+        #region GetAsync
+        public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>,
+                                         IIncludableQueryable<T, object>>? include = null, bool enableTracking = true,
+                                         CancellationToken cancellationToken = default)
         {
             IQueryable<T> queryable = Table.AsQueryable();
+            if (!enableTracking) queryable = queryable.AsNoTracking();
             if (include != null) queryable = include(queryable);
-            return await queryable.FirstOrDefaultAsync(predicate);
+            return await queryable.FirstOrDefaultAsync(predicate, cancellationToken);
         }
-
-        public async Task<IQueryable<T>> GetListAsync(Expression<Func<T, bool>>? predicate = null,
-                                                           Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy =
-                                                               null,
-                                                           Func<IQueryable<T>, IIncludableQueryable<T, object>>?
-                                                               include = null,
-                                                           int index = 0, int size = 10, bool enableTracking = true,
-                                                           CancellationToken cancellationToken = default)
+        #endregion
+        #region GetList
+        public async Task<IQueryable<T>> GetListAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, bool enableTracking = true, CancellationToken cancellationToken = default)
         {
             IQueryable<T> queryable = Table.AsQueryable();
             if (!enableTracking) queryable = queryable.AsNoTracking();
@@ -44,6 +44,33 @@ namespace E_Commerce.OrderService.Persistence.Concrete.Repository.GenericRepo
                 return await Task.FromResult(orderBy(queryable));
             return await Task.FromResult(queryable);
         }
+
+
+        public async Task<IPaginate<T>> GetListAsyncWithPaginate(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, int index = 0, int size = 10, bool enableTracking = true, CancellationToken cancellationToken = default)
+        {
+            var queryable = await GetListAsync(predicate, orderBy, include, enableTracking, cancellationToken);
+            return await queryable.ToPaginateAsync(index, size, 0, cancellationToken);
+        }
+
+
+
+        #endregion
+        //#region GetListDynamic
+
+        //public async Task<IQueryable<T>> GetListDynamicAsync(Dynamic dynamic, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, bool enableTracking = true, CancellationToken cancellationToken = default)
+        //{
+        //    IQueryable<T> queryable = Table.AsQueryable().ToDynamic(dynamic);
+        //    if (!enableTracking) queryable = queryable.AsNoTracking();
+        //    if (include != null) queryable = include(queryable);
+        //    return await Task.FromResult(queryable);
+        //}
+
+        //public async Task<IPaginate<T>> GetListDynamicAsyncWithPaginate(Dynamic dynamic, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, int index = 0, int size = 10, bool enableTracking = true, CancellationToken cancellationToken = default)
+        //{
+        //    var queryable = await GetListDynamicAsync(dynamic, include, enableTracking, cancellationToken);
+        //    return await queryable.ToPaginateAsync(index, size, 0, cancellationToken);
+        //}
+        //#endregion
 
 
 
@@ -73,6 +100,11 @@ namespace E_Commerce.OrderService.Persistence.Concrete.Repository.GenericRepo
         public async Task AddRangeAsync(List<T> datas)
         {
             await Context.AddRangeAsync(datas);
+        }
+
+        public Task<IPaginate<T>> GetListAsyncPaginate(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, int index = 0, int size = 10, bool enableTracking = true, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
         }
     }
 }

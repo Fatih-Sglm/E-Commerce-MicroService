@@ -9,6 +9,8 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Dtos
         public decimal Price { get; set; }
         public uint CatalogBrandId { get; set; }
         public uint CatalogTypeId { get; set; }
+        public string FolderPath { get; set; }
         public IFormFileCollection? ImagesPath { get; set; }
+        public List<uint>? Variants { get; set; }
     }
 }

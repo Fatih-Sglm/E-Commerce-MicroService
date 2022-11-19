@@ -1,4 +1,4 @@
-﻿using E_Commerce.CatalogService.Domain.Entity;
+﻿using E_Commerce.CatalogService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,30 +12,22 @@ namespace E_Commerce.CatalogService.Persistence.EntityConfiguration
             builder.HasKey(x => x.Id);
             builder.Property(x => x.CreatedDate).IsRequired();
             builder.Property(x => x.UpdatedDate).IsRequired(false);
-            builder.Property(x => x.PictureFileName).IsRequired(false);
-            builder.Property(x => x.FolderName).IsRequired(false);
-            builder.HasOne(x => x.CatalogItem).WithMany(x => x.CatalogItemImages).HasForeignKey(x => x.CatalogItemId);
-
+            builder.Property(x => x.FileName).IsRequired();
+            builder.Property(x => x.Path).IsRequired();
 
             CatalogItemImage[] catalogItemImages = new[] {
             new CatalogItemImage() {
             Id = 1,
             CatalogItemId = 1,
             CreatedDate= DateTime.Now,
-            FolderName = "Product//Shoes",
-            PictureFileName = "Airmax270.png"},
+            Path = "Product//Shoes//Airmax270.png",
+            FileName = "Airmax270.png"},
             new CatalogItemImage() {
             Id = 2,
             CatalogItemId = 2,
             CreatedDate= DateTime.Now,
-            FolderName = "Product//T-Shirt",
-            PictureFileName = "GoldenState2022/23_uniform.png" } ,
-            new CatalogItemImage() {
-            Id = 3,
-            CatalogItemId = 3,
-            CreatedDate= DateTime.Now,
-            FolderName = "Product//T-Shirt",
-            PictureFileName = "black_panther_Tshirt.png"}};
+            Path = "Product//T-Shirt//GoldenState2022/23_uniform.png",
+            FileName = "GoldenState2022/23_uniform.png" } };
 
             builder.HasData(catalogItemImages);
         }

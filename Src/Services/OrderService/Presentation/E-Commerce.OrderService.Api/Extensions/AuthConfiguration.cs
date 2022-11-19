@@ -19,7 +19,8 @@ namespace E_Commerce.OrderService.Api.Extensions
                   ValidateIssuerSigningKey = true,
                   ValidIssuer = configuration["TokenOptions:Issuer"],
                   ValidAudience = configuration["TokenOptions:Audience"],
-                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenOptions:SecurityKey"]))
+                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenOptions:SecurityKey"])),
+                  LifetimeValidator = (notBefore, expiration, securityToken, validationParameters) => expiration != null ? expiration > DateTime.UtcNow : false,
               };
           });
 

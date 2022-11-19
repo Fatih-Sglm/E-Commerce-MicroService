@@ -20,29 +20,22 @@ namespace E_Commerce.OrderService.Application.DomainEventHandlers
             var cardTypeId = (orderStartedEvent.CardTypeId != 0) ? orderStartedEvent.CardTypeId : 1;
 
             Buyer? buyer = await _buyerRepository.GetAsync(i => i.Name == orderStartedEvent.UserName, i => i.Include(i => i.PaymentMethods));
-
-            bool buyerOriginallyExisted = buyer != null;
-
-            if (!buyerOriginallyExisted)
+            buyer ??= new Buyer(orderStartedEvent.UserName);
             {
-                buyer = new Buyer(orderStartedEvent.UserName);
+                await buyer.VerifyOrAddPaymentMethod(cardTypeId,
+                                           orderStartedEvent.CreditCardInformation.Alias,
+                                           orderStartedEvent.CreditCardInformation.CardNumber,
+                                           orderStartedEvent.CreditCardInformation.CardSecurityNumber,
+                                           orderStartedEvent.CreditCardInformation.CardHolderName,
+                                           orderStartedEvent.CreditCardInformation.CardExpiration,
+                                           orderStartedEvent.Order.Id, orderStartedEvent.WillPaymentRecord);
             }
 
-            buyer.VerifyOrAddPaymentMethod(cardTypeId,
-                                          $"",
-                                          orderStartedEvent.CardNumber,
-                                          orderStartedEvent.CardSecurityNumber,
-                                          orderStartedEvent.CardHolderName,
-                                          orderStartedEvent.CardExpiration,
-                                          orderStartedEvent.Order.Id);
 
-            var buyerUpdated = buyerOriginallyExisted ?
-                _buyerRepository.Update(buyer) :
-                await _buyerRepository.AddAsync(buyer);
+
+            _ = buyer is not null ? _buyerRepository.Update(buyer) : await _buyerRepository.AddAsync(buyer);
 
             await _buyerRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
-
-            // order status changed event may be fired here
         }
     }
 }

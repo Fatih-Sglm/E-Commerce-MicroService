@@ -16,8 +16,8 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
             paymentConfiguration.HasKey(o => o.Id);
             paymentConfiguration.Property(i => i.Id).HasColumnName("Id");
 
-            paymentConfiguration.Property<int>("BuyerId")
-                .IsRequired();
+            //paymentConfiguration.Property<Guid>("BuyerId")
+            //    .IsRequired();
 
             paymentConfiguration
                 .Property(i => i.CardHolderName)

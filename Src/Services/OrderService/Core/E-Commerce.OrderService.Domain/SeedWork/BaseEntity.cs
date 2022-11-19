@@ -6,10 +6,9 @@ namespace E_Commerce.OrderService.Domain.SeedWork
     {
         public virtual Guid Id { get; protected set; }
 
-        public DateTime CreateDate { get; set; }
+        public virtual DateTime CreateDate { get; set; }
 
-
-
+        public virtual DateTime UpdateDate { get; set; }
 
         int? _requestedHashCode;
 

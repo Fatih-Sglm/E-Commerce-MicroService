@@ -12,14 +12,14 @@ namespace E_Commerce.OrderService.Application.DomainEventHandlers
         public UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler(
             IOrderRepository orderRepository)
         {
-            this._orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
         }
 
         public async Task Handle(BuyerAndPaymentMethodVerifiedDomainEvent buyerPaymentMethodVerifiedEvent, CancellationToken cancellationToken)
         {
             Order? orderToUpdate = await _orderRepository.GetById(buyerPaymentMethodVerifiedEvent.OrderId);
             orderToUpdate!.SetBuyerId(buyerPaymentMethodVerifiedEvent.Buyer.Id);
-            orderToUpdate.SetPaymentMethodId(buyerPaymentMethodVerifiedEvent.Payment.Id);
+            orderToUpdate.SetPaymentMethodId(buyerPaymentMethodVerifiedEvent.Payment?.Id);
 
         }
     }

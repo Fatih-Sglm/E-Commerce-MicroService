@@ -1,55 +1,60 @@
-﻿using E_Commerce.CatalogService.Application.Abstractions.Repositories;
-using E_Commerce.CatalogService.Application.Abstractions.Services;
+﻿using E_Commerce.CatalogService.Application.Abstractions.Services;
 using E_Commerce.CatalogService.Application.Abstractions.Storage;
-using E_Commerce.CatalogService.Domain.Entity;
+using E_Commerce.CatalogService.Application.Features.CatalogItems.Rules;
+using E_Commerce.CatalogService.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 
 namespace E_Commerce.CatalogService.Persistence.Concretes.Services
 {
     public class CatalogItemImageService : ICatalogItemImageService
     {
-        private readonly ICatalogItemImageRepoitory _catalogItemImageRepoitory;
         private readonly IStorage _storage;
 
-        public CatalogItemImageService(ICatalogItemImageRepoitory catalogItemImageRepoitory, IStorage storage)
+        public CatalogItemImageService(IStorage storage)
         {
-            _catalogItemImageRepoitory = catalogItemImageRepoitory;
             _storage = storage;
         }
 
-        public async Task CreateCatalogItemImage(uint catalogItemId, IFormFileCollection files)
+        public async Task<List<CatalogItemImage>> CreateCatalogItemImage(CatalogItem catalogItem, string folderName, IFormFileCollection files)
         {
+            await catalogItem.CannotNull("");
+            List<CatalogItemImage> catalogItemImages = new();
             if (files.Count > 0)
             {
-                List<CatalogItemImage> catalogItems = new();
-                var value = await _storage.UploadAsync("Product", files);
-                foreach (var item in value)
+                if (folderName.Contains('/'))
                 {
-
+                    folderName = folderName.Replace("/", "\\");
+                }
+                var value = await _storage.UploadAsync(folderName, files);
+                foreach (var (fileName, pathOrContainerName) in value)
+                {
                     CatalogItemImage catalogItemImage = new()
                     {
-                        CatalogItemId = catalogItemId,
-                        PictureFileName = item.fileName,
-                        FolderName = item.pathOrContainerName,
+                        CatalogItem = catalogItem,
+                        FileName = fileName,
+                        Path = pathOrContainerName
                     };
-
-                    catalogItems.Add(catalogItemImage);
+                    catalogItemImages.Add(catalogItemImage);
                 }
-                await _catalogItemImageRepoitory.AddRangeAsync(catalogItems);
+                return catalogItemImages;
             }
             else
-                return;
+                return null;
+        }
+        public Task<List<string>> GetCatalogItemImage(CatalogItem catalogItem)
+        {
+            return GetCatalogItemImageWithList(catalogItem.CatalogItemImages.ToArray());
         }
 
-        public List<string> GetCatalogItemImage(CatalogItemImage[] catalogItemImages)
+        public Task<List<string>> GetCatalogItemImageWithList(CatalogItemImage[] catalogItemImages)
         {
             List<string> ImagePaths = new();
 
             foreach (var item in catalogItemImages)
             {
-                ImagePaths.Add(_storage.GetFile(item.FolderName, item.PictureFileName));
+                ImagePaths.Add(_storage.GetFile(item.Path));
             }
-            return ImagePaths;
+            return Task.FromResult(ImagePaths);
         }
     }
 }

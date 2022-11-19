@@ -15,6 +15,7 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
 
             builder.Property(i => i.Id);
             builder.Ignore(x => x.DomainEvents);
+            builder.Ignore(x => x.CreateDate);
             builder.OwnsOne(o => o.Address, a =>
             {
                 a.WithOwner();

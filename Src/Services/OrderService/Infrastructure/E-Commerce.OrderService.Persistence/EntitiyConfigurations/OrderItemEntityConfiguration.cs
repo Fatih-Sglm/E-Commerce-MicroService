@@ -17,7 +17,7 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
 
             orderItemConfiguration.Property(o => o.Id);
 
-            orderItemConfiguration.Property<int>("OrderId").IsRequired();
+            orderItemConfiguration.Property<Guid>("OrderId").IsRequired();
         }
     }
 }

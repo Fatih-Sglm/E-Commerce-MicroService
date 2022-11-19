@@ -7,7 +7,7 @@ namespace E_Commerce.BasketService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class BasketController : ControllerBase
     {
         private readonly IBasketService _service;
@@ -17,10 +17,10 @@ namespace E_Commerce.BasketService.Api.Controllers
             _service = service;
         }
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> GetBasket(string Id)
+        [HttpGet("GetBasket")]
+        public async Task<IActionResult> GetBasket()
         {
-            return Ok(await _service.GetBasketById(Id));
+            return Ok(await _service.GetBasket());
         }
 
         [HttpPut("Update")]
@@ -44,9 +44,15 @@ namespace E_Commerce.BasketService.Api.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public async Task CheckOut(string Id)
+        public async Task DeleteBasketAsync(string Id)
         {
             await _service.DeleteBasketByIdAsync(Id);
+        }
+
+        [HttpDelete("DeleteBasketItem/{Id}")]
+        public async Task DeleteBasketItemAsync(string Id)
+        {
+            await _service.DeleteBasketItemAsync(Id);
         }
     }
 }

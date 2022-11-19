@@ -1,5 +1,5 @@
 ﻿using E_Commerce.CatalogService.Application.Abstractions.Repositories.GenericRepo;
-using E_Commerce.CatalogService.Domain.Entity;
+using E_Commerce.CatalogService.Domain.Entities;
 
 namespace E_Commerce.CatalogService.Application.Abstractions.Repositories
 {

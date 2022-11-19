@@ -36,6 +36,9 @@ namespace ECommerce.OrderService.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar");
 
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("buyers", "ordering");
@@ -92,9 +95,6 @@ namespace ECommerce.OrderService.Persistence.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("Alias");
 
-                    b.Property<int>("BuyerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CardHolderName")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -123,6 +123,9 @@ namespace ECommerce.OrderService.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CardTypeId");
@@ -139,11 +142,11 @@ namespace ECommerce.OrderService.Persistence.Migrations
                     b.Property<Guid?>("BuyerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("OrderAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -151,8 +154,8 @@ namespace ECommerce.OrderService.Persistence.Migrations
                     b.Property<Guid?>("PaymentMethodId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("orderStatusId")
                         .HasColumnType("int")
@@ -176,32 +179,32 @@ namespace ECommerce.OrderService.Persistence.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("OrderId1")
+                    b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PictureUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("Quantity")
+                        .HasColumnType("bigint");
+
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Units")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId1");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("orderItems", "ordering");
                 });
@@ -283,7 +286,7 @@ namespace ECommerce.OrderService.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate.Order.Address#E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate.Address", "Address", b1 =>
+                    b.OwnsOne("E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("OrderId")
                                 .HasColumnType("uniqueidentifier");
@@ -323,7 +326,9 @@ namespace ECommerce.OrderService.Persistence.Migrations
                 {
                     b.HasOne("E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate.Order", null)
                         .WithMany("OrderItems")
-                        .HasForeignKey("OrderId1");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate.Buyer", b =>

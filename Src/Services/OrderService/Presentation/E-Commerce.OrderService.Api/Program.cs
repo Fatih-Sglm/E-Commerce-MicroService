@@ -18,6 +18,7 @@ builder.Services.AddApplicationServiceRegistration();
 builder.Services.AddPersistenceServiceRegistration(builder.Configuration);
 builder.Services.AddAuthServices(builder.Configuration);
 builder.Services.ConfigureEventHandlers();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddLogging(cfg => cfg.AddConsole());
 builder.Services.ConfigureConsul(builder.Configuration);
 builder.Services.AddSingleton(sp => sp.EventBusRegister());

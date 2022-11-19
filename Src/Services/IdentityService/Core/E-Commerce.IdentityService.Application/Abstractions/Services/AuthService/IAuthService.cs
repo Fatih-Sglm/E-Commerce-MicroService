@@ -5,6 +5,7 @@ namespace E_Commerce.IdentityService.Application.Abstractions.Services.AuthServi
     public interface IAuthService
     {
         Task<AccessToken> Login(LoginUserDto loginUserDto);
-        Task Register(RegisterDto registerDto);
+        Task<string> Register(RegisterDto registerDto);
+        Task<bool> RegisterAdmin(RegisterDto registerDto);
     }
 }

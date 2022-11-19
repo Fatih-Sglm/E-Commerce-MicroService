@@ -1,4 +1,4 @@
-﻿using E_Commerce.CatalogService.Application.Features.CatalogCategory.Dto;
+﻿using E_Commerce.CatalogService.Application.Features.CatalogTypes.Dto;
 
 namespace E_Commerce.CatalogService.Application.Abstractions.Services
 {

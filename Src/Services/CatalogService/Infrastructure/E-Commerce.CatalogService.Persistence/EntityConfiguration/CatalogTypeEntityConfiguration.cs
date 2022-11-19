@@ -1,4 +1,4 @@
-﻿using E_Commerce.CatalogService.Domain.Entity;
+﻿using E_Commerce.CatalogService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,13 +12,13 @@ namespace E_Commerce.CatalogService.Persistence.EntityConfiguration
             builder.HasKey(x => x.Id);
             builder.Property(x => x.CreatedDate).IsRequired();
             builder.Property(x => x.UpdatedDate).IsRequired(false);
-            builder.Property(x => x.Type).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
 
             builder.HasMany(x => x.CatalogItems).WithOne(x => x.CatalogType).HasForeignKey(x => x.CatalogTypeId);
 
 
             CatalogType[] catalogTypes = new[] {
-                new CatalogType() { Id= 1 , Type = "Shoes" ,CreatedDate = DateTime.Now } , new (){ Id=2 , Type= "T-Shirt" ,CreatedDate = DateTime.Now } , new (){  Id = 3 , Type = "tracksuit" , CreatedDate = DateTime.Now} };
+                new CatalogType() { Id= 1 , Name = "Shoes" ,CreatedDate = DateTime.Now } , new (){ Id=2 , Name= "T-Shirt" ,CreatedDate = DateTime.Now } , new (){  Id = 3 , Name = "tracksuit" , CreatedDate = DateTime.Now} };
 
             builder.HasData(catalogTypes);
         }
