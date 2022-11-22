@@ -27,27 +27,26 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Repositories
 
         public async Task DeleteBasketItemAsync(string buyerUserName, string id)
         {
-            CustomerBasket basket = await GetBasketWithKey(buyerUserName);
+            var basketkey = await _database.StringGetAsync(buyerUserName);
+            var basket = JsonConvert.DeserializeObject<CustomerBasket>(basketkey);
             if (basket is not null)
             {
                 BasketItem? basketItem = basket.Items.FirstOrDefault(x => x.Id == Guid.Parse(id));
-                if (basketItem is null)
-                    throw new Exception(nameof(basketItem));
-
                 basket.Items.Remove(basketItem);
                 await UpdateBasketAsync(basket);
             }
             return;
-        }
 
-        private async Task<CustomerBasket> GetBasketWithKey(string buyerUserName)
-        {
-            var basket = await _database.StringGetAsync(buyerUserName);
-            return !basket.IsNullOrEmpty ? JsonConvert.DeserializeObject<CustomerBasket>(basket) : null;
         }
         public async Task<CustomerBasket?> GetBasketAsync(string buyerUserName)
         {
             return await GetBasketWithKey(buyerUserName);
+        }
+
+        private async Task<CustomerBasket?> GetBasketWithKey(string buyerUserName)
+        {
+            var basket = await _database.StringGetAsync(buyerUserName);
+            return !basket.IsNullOrEmpty ? JsonConvert.DeserializeObject<CustomerBasket>(basket) : null;
         }
 
         public IEnumerable<string> GetUsers()

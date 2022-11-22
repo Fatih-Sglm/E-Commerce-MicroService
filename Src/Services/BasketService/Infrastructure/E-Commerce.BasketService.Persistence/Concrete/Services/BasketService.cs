@@ -33,16 +33,16 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
 
         public async Task CheckOutAsync(BasketCheckout basketCheckout)
         {
-            var username = await _identityService.GetUserName();
-            var basket = await _basketRepository.GetBasketAsync(username);
+            var userName = await _identityService.GetUserName();
+            var basket = await _basketRepository.GetBasketAsync(userName);
 
             if (basket is null)
             {
                 return;
             }
             var eventmessage = new OrderCreatedIntegrationEvent
-                (username, basketCheckout.City, basketCheckout.Street,
-            basketCheckout.Street, basketCheckout.Country, basketCheckout.ZipCode, basketCheckout.Alias!, basketCheckout.CardNumber, basketCheckout.CardHolderName,
+                (userName, basketCheckout.City, basketCheckout.Street,
+            basketCheckout.Street, basketCheckout.Country, basketCheckout.ZipCode, basketCheckout.Alias, basketCheckout.CardNumber, basketCheckout.CardHolderName,
             basketCheckout.CardExpiration, basketCheckout.CardSecurityNumber, basketCheckout.CardTypeId,
             basket, basketCheckout.WillPaymentRecorded);
 
@@ -56,23 +56,26 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
 
                 return;
             }
-        }
-        public async Task DeleteBasketByIdAsync(string id)
-        {
-            await _basketRepository.DeleteBasketAsync(id);
+
+
+
         }
 
-        public async Task DeleteBasketItemAsync(string id)
+        public async Task DeleteBasketByIdAsync(string id)
         {
             var username = await _identityService.GetUserName();
             await _basketRepository.DeleteBasketItemAsync(username, id);
         }
 
+        public Task DeleteBasketItemAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<CustomerBasket> GetBasket()
         {
-            var username = await _identityService.GetUserName();
-            var basket = await _basketRepository.GetBasketAsync(username);
             var userName = await _identityService.GetUserName();
+            var basket = await _basketRepository.GetBasketAsync(userName);
             return basket ?? new CustomerBasket(userName);
         }
 

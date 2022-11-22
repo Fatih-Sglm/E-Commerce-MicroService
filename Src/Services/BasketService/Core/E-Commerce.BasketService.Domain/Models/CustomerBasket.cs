@@ -3,6 +3,7 @@
     public class CustomerBasket
     {
         public string BuyerUserName { get; set; }
+
         public List<BasketItem> Items { get; set; } = new List<BasketItem>();
 
         public decimal TotalPrice => ToltalPrices(Items);
@@ -14,9 +15,10 @@
         {
 
         }
-        public CustomerBasket(string buyerName)
+
+        public CustomerBasket(string buyerUserName)
         {
-            BuyerUserName = buyerName;
+            BuyerUserName = buyerUserName;
         }
     }
 }

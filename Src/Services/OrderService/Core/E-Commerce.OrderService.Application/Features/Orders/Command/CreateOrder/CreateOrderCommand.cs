@@ -8,6 +8,7 @@ namespace E_Commerce.OrderService.Application.Features.Orders.Command.CreateOrde
     public class CreateOrderCommand : IRequest<bool>
     {
         private readonly List<OrderItemDTO> _orderItems;
+        public string UserId { get; private set; }
         public string UserName { get; private set; }
         public string City { get; private set; }
         public string Street { get; private set; }
@@ -36,6 +37,7 @@ namespace E_Commerce.OrderService.Application.Features.Orders.Command.CreateOrde
             }).ToList();
             OrderAmount = orderAmount;
             _orderItems = dtoList;
+
             UserName = userName;
             City = city;
             Street = street;
