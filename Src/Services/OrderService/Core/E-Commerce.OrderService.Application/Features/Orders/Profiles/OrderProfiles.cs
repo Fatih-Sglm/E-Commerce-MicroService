@@ -4,7 +4,6 @@ using E_Commerce.OrderService.Application.Features.Orders.Dtos;
 using E_Commerce.OrderService.Application.Features.Orders.Models;
 using E_Commerce.OrderService.Application.Paging;
 using E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate;
-using Ord = E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate.Order;
 
 namespace E_Commerce.OrderService.Application.Features.Orders.Profiles
 {
@@ -23,7 +22,6 @@ namespace E_Commerce.OrderService.Application.Features.Orders.Profiles
                 .ForMember(x => x.OrderDate, y => y.MapFrom(z => z.OrderDate.ToString("dddd, dd MMMM yyyy HH:mm")))
                 .ForMember(x => x.Ordernumber, y => y.MapFrom(z => z.Id.ToString()))
                 .ForMember(x => x.Status, y => y.MapFrom(z => z.OrderStatus.Name))
-                .ForMember(x => x.Total, y => y.MapFrom(z => z.OrderItems.Sum(i => i.Quantity * i.UnitPrice)))
                 .ReverseMap();
 
 

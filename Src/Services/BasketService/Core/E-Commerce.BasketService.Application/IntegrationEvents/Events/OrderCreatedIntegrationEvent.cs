@@ -6,6 +6,8 @@ namespace E_Commerce.BasketService.Application.IntegrationEvents.Events
     public class OrderCreatedIntegrationEvent : IntegrationEvent
     {
         public string UserName { get; }
+        public string Name { get; }
+        public string Email { get; }
         public int OrderNumber { get; private set; }
         public string City { get; private set; }
         public string Street { get; private set; }
@@ -16,13 +18,15 @@ namespace E_Commerce.BasketService.Application.IntegrationEvents.Events
         public int CardTypeId { get; private set; }
         public bool WillPaymentRecorded { get; private set; }
         public CustomerBasket Basket { get; }
-        public OrderCreatedIntegrationEvent(string userName, string city, string street,
+        public OrderCreatedIntegrationEvent(string userName, string name, string email, string city, string street,
             string state, string country, string zipCode, string Alias, string cardNumber, string cardHolderName,
             DateTime cardExpiration, string cardSecurityNumber, int cardTypeId,
             CustomerBasket basket, bool willPaymentRecorded = false)
         {
             Random rnd = new();
             UserName = userName;
+            Name = name;
+            Email = email;
             City = city;
             WillPaymentRecorded = willPaymentRecorded;
             CreditCardInformation = new(Alias, cardNumber, cardHolderName, cardExpiration, cardSecurityNumber);

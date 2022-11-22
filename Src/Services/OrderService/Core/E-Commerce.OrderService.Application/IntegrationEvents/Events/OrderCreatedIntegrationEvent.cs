@@ -6,10 +6,9 @@ namespace E_Commerce.OrderService.Application.IntegrationEvents.Events
 {
     public class OrderCreatedIntegrationEvent : IntegrationEvent
     {
-        public string UserId { get; }
-
         public string UserName { get; }
-
+        public string Name { get; }
+        public string Email { get; }
         public uint OrderNumber { get; set; }
 
         public string City { get; set; }
@@ -31,11 +30,13 @@ namespace E_Commerce.OrderService.Application.IntegrationEvents.Events
         public string? Alias { get; set; }
         public CustomerBasket Basket { get; }
 
-        public OrderCreatedIntegrationEvent(string userName, string city, string street,
+        public OrderCreatedIntegrationEvent(string userName, string name, string email, string city, string street,
             string state, string country, string zipCode, CreditCardInformation creditCardInformation, int cardTypeId, uint orderNumber,
             CustomerBasket basket, string? alias)
         {
             UserName = userName;
+            Name = name;
+            Email = email;
             City = city;
             OrderNumber = orderNumber;
             Street = street;

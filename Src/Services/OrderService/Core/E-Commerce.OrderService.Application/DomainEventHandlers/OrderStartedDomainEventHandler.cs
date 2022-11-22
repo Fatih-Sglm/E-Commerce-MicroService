@@ -28,13 +28,13 @@ namespace E_Commerce.OrderService.Application.DomainEventHandlers
                 buyer = new Buyer(orderStartedEvent.UserName);
             }
 
-            buyer.VerifyOrAddPaymentMethod(cardTypeId,
-                                          $"",
-                                          orderStartedEvent.CardNumber,
-                                          orderStartedEvent.CardSecurityNumber,
-                                          orderStartedEvent.CardHolderName,
-                                          orderStartedEvent.CardExpiration,
-                                          orderStartedEvent.Order.Id);
+            await buyer.VerifyOrAddPaymentMethod(cardTypeId,
+                                           orderStartedEvent.CreditCardInformation.Alias,
+                                           orderStartedEvent.CreditCardInformation.CardNumber,
+                                           orderStartedEvent.CreditCardInformation.CardSecurityNumber,
+                                           orderStartedEvent.CreditCardInformation.CardHolderName,
+                                           orderStartedEvent.CreditCardInformation.CardExpiration,
+                                           orderStartedEvent.Order.Id);
 
             _ = buyer is not null ? _buyerRepository.Update(buyer) : await _buyerRepository.AddAsync(buyer);
 

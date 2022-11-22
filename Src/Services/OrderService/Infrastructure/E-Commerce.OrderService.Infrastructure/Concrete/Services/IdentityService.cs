@@ -13,7 +13,7 @@ namespace E_Commerce.OrderService.Infrastructure.Concrete.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public Task<(string FullName, string Email)> GetUserInfos(string userName)
+        public Task<(string FullName, string Email)> GetUserInfos()
         {
             string Fullname = _httpContextAccessor.HttpContext.User.FindFirst(x => x.Type == ClaimTypes.Name)!.Value;
             string Email = _httpContextAccessor.HttpContext.User.FindFirst(x => x.Type == ClaimTypes.Email)!.Value;

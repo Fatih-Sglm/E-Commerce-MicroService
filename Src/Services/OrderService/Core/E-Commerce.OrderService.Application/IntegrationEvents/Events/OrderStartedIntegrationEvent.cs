@@ -6,9 +6,9 @@ namespace E_Commerce.OrderService.Application.IntegrationEvents.Events
     public class OrderStartedIntegrationEvent : IntegrationEvent
     {
         public CreditCardInformation CreditCardInformation { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public Guid OrderId { get; set; }
+        public string Name { get; private set; }
+        public string Email { get; private set; }
+        public Guid OrderId { get; private set; }
 
         public OrderStartedIntegrationEvent(CreditCardInformation creditCardInformation, string name, string email, Guid orderId)
         {

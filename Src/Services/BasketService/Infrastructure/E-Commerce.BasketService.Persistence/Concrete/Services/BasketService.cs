@@ -34,6 +34,7 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
         public async Task CheckOutAsync(BasketCheckout basketCheckout)
         {
             var userName = await _identityService.GetUserName();
+            (string fullname, string Email) = await _identityService.GetUserInfos();
             var basket = await _basketRepository.GetBasketAsync(userName);
 
             if (basket is null)
@@ -41,7 +42,7 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
                 return;
             }
             var eventmessage = new OrderCreatedIntegrationEvent
-                (userName, basketCheckout.City, basketCheckout.Street,
+                (userName, fullname, Email, basketCheckout.City, basketCheckout.Street,
             basketCheckout.Street, basketCheckout.Country, basketCheckout.ZipCode, basketCheckout.Alias, basketCheckout.CardNumber, basketCheckout.CardHolderName,
             basketCheckout.CardExpiration, basketCheckout.CardSecurityNumber, basketCheckout.CardTypeId,
             basket, basketCheckout.WillPaymentRecorded);
@@ -67,9 +68,10 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
             await _basketRepository.DeleteBasketItemAsync(username, id);
         }
 
-        public Task DeleteBasketItemAsync(string id)
+        public async Task DeleteBasketItemAsync(string id)
         {
-            throw new NotImplementedException();
+            var username = await _identityService.GetUserName();
+            await _basketRepository.DeleteBasketItemAsync(username, id);
         }
 
         public async Task<CustomerBasket> GetBasket()

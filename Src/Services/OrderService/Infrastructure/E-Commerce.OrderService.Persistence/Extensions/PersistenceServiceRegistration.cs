@@ -21,7 +21,6 @@ namespace E_Commerce.OrderService.Persistence.Extensions
 
             services.AddScoped<IBuyerRepository, BuyerRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IOrderService, Concrete.Services.OrderService>();
             services.AddScoped<IBuyerService, BuyerService>();
         }
     }

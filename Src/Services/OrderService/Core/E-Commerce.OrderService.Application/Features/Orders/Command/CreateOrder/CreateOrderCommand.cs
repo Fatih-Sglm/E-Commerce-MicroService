@@ -8,8 +8,9 @@ namespace E_Commerce.OrderService.Application.Features.Orders.Command.CreateOrde
     public class CreateOrderCommand : IRequest<bool>
     {
         private readonly List<OrderItemDTO> _orderItems;
-        public string UserId { get; private set; }
         public string UserName { get; private set; }
+        public string Name { get; private set; }
+        public string Email { get; private set; }
         public string City { get; private set; }
         public string Street { get; private set; }
         public string State { get; private set; }
