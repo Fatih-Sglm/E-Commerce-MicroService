@@ -6,6 +6,8 @@ namespace E_Commerce.OrderService.Application.IntegrationEvents.Events
 {
     public class OrderCreatedIntegrationEvent : IntegrationEvent
     {
+        public string UserId { get; }
+
         public string UserName { get; }
 
         public uint OrderNumber { get; set; }

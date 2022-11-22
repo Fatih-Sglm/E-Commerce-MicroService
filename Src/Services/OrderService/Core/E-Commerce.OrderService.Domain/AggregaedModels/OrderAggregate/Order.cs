@@ -11,7 +11,6 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate
         public Guid? BuyerId { get; private set; }
         public Buyer Buyer { get; private set; }
         public Address Address { get; private set; }
-
         private int orderStatusId;
         public OrderStatus OrderStatus { get; private set; }
 
@@ -20,6 +19,7 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate
         public Guid? PaymentMethodId { get; private set; }
         public decimal OrderAmount { get; private set; }
         public DateTime OrderDate { get => base.CreateDate; set => base.CreateDate = value; }
+
         protected Order()
         {
             Id = Guid.NewGuid();

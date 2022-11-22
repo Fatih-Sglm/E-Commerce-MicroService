@@ -1,6 +1,7 @@
 ﻿using E_Commerce.BasketService.Application.Abstractions.Configuration;
 using E_Commerce.BasketService.Application.Abstractions.Repository;
 using E_Commerce.BasketService.Domain.Models;
+using E_Commerce.BasketService.Persistence.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using StackExchange.Redis;
@@ -27,22 +28,7 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Repositories
 
         public async Task DeleteBasketItemAsync(string buyerUserName, string id)
         {
-            CustomerBasket basket = await GetBasketWithKey(buyerUserName);
-            if (basket is not null)
-            {
-                BasketItem? basketItem = basket.Items.FirstOrDefault(x => x.Id == Guid.Parse(id));
-                if (basketItem is null)
-                    throw new Exception(nameof(basketItem));
-
-                basket.Items.Remove(basketItem);
-                await UpdateBasketAsync(basket);
-            }
-            return;
-        }
-
-        private async Task<CustomerBasket> GetBasketWithKey(string buyerUserName)
-        {
-            var basket = await _database.StringGetAsync(buyerUserName);
+            var basket = await _database.StringGetAsync(customerId);
             return !basket.IsNullOrEmpty ? JsonConvert.DeserializeObject<CustomerBasket>(basket) : null;
         }
         public async Task<CustomerBasket?> GetBasketAsync(string buyerUserName)

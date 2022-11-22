@@ -20,18 +20,21 @@ namespace E_Commerce.OrderService.Application.DomainEventHandlers
             var cardTypeId = (orderStartedEvent.CardTypeId != 0) ? orderStartedEvent.CardTypeId : 1;
 
             Buyer? buyer = await _buyerRepository.GetAsync(i => i.Name == orderStartedEvent.UserName, i => i.Include(i => i.PaymentMethods));
-            buyer ??= new Buyer(orderStartedEvent.UserName);
+
+            bool buyerOriginallyExisted = buyer != null;
+
+            if (!buyerOriginallyExisted)
             {
-                await buyer.VerifyOrAddPaymentMethod(cardTypeId,
-                                           orderStartedEvent.CreditCardInformation.Alias,
-                                           orderStartedEvent.CreditCardInformation.CardNumber,
-                                           orderStartedEvent.CreditCardInformation.CardSecurityNumber,
-                                           orderStartedEvent.CreditCardInformation.CardHolderName,
-                                           orderStartedEvent.CreditCardInformation.CardExpiration,
-                                           orderStartedEvent.Order.Id, orderStartedEvent.WillPaymentRecord);
+                buyer = new Buyer(orderStartedEvent.UserName);
             }
 
-
+            buyer.VerifyOrAddPaymentMethod(cardTypeId,
+                                          $"",
+                                          orderStartedEvent.CardNumber,
+                                          orderStartedEvent.CardSecurityNumber,
+                                          orderStartedEvent.CardHolderName,
+                                          orderStartedEvent.CardExpiration,
+                                          orderStartedEvent.Order.Id);
 
             _ = buyer is not null ? _buyerRepository.Update(buyer) : await _buyerRepository.AddAsync(buyer);
 

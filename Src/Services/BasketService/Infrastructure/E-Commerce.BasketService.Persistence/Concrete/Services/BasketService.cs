@@ -24,27 +24,30 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
 
         public async Task AddItemToBasket(BasketItem basketItem)
         {
-            var userName = await _identityService.GetUserName();
-            var basket = await _basketRepository.GetBasketAsync(userName);
-            basket ??= new CustomerBasket(userName);
+            var userId = _identityService.GetUserName();
+            var basket = await _basketRepository.GetBasketAsync(userId);
+            if (basket is null)
+            {
+                basket = new CustomerBasket(userId);
+            }
             basket.Items.Add(basketItem);
             await _basketRepository.UpdateBasketAsync(basket);
         }
 
         public async Task CheckOutAsync(BasketCheckout basketCheckout)
         {
-            var username = await _identityService.GetUserName();
-            var basket = await _basketRepository.GetBasketAsync(username);
+            var userId = basketCheckout.Buyer;
+            var basket = await _basketRepository.GetBasketAsync(userId);
 
             if (basket is null)
             {
                 return;
             }
             var eventmessage = new OrderCreatedIntegrationEvent
-                (username, basketCheckout.City, basketCheckout.Street,
-            basketCheckout.Street, basketCheckout.Country, basketCheckout.ZipCode, basketCheckout.Alias!, basketCheckout.CardNumber, basketCheckout.CardHolderName,
-            basketCheckout.CardExpiration, basketCheckout.CardSecurityNumber, basketCheckout.CardTypeId,
-            basket, basketCheckout.WillPaymentRecorded);
+                (userId, username, basketCheckout.City, basketCheckout.Street,
+            basketCheckout.Street, basketCheckout.Country, basketCheckout.ZipCode, basketCheckout.CardNumber, basketCheckout.CardHolderName,
+            basketCheckout.CardExpiration, basketCheckout.CardSecurityNumber, basketCheckout.CardTypeId, basketCheckout.Buyer,
+            basket);
 
             try
             {
@@ -56,13 +59,12 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
 
                 return;
             }
-        }
-        public async Task DeleteBasketByIdAsync(string id)
-        {
-            await _basketRepository.DeleteBasketAsync(id);
+
+
+
         }
 
-        public async Task DeleteBasketItemAsync(string id)
+        public Task DeleteBasketByIdAsync(string id)
         {
             var username = await _identityService.GetUserName();
             await _basketRepository.DeleteBasketItemAsync(username, id);
@@ -70,10 +72,9 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
 
         public async Task<CustomerBasket> GetBasket()
         {
-            var username = await _identityService.GetUserName();
-            var basket = await _basketRepository.GetBasketAsync(username);
-            var userName = await _identityService.GetUserName();
-            return basket ?? new CustomerBasket(userName);
+            var basket = await _basketRepository.GetBasketAsync(id);
+
+            return basket ?? new CustomerBasket(id);
         }
 
         public async Task<CustomerBasket?> UpdateBasketAsync(CustomerBasket customerBasket)
