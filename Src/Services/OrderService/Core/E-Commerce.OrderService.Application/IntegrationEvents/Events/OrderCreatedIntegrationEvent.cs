@@ -10,23 +10,14 @@ namespace E_Commerce.OrderService.Application.IntegrationEvents.Events
         public string Name { get; }
         public string Email { get; }
         public uint OrderNumber { get; set; }
-
         public string City { get; set; }
-
         public string Street { get; set; }
-
         public string State { get; set; }
-
         public string Country { get; set; }
-
         public string ZipCode { get; set; }
-
         public CreditCardInformation CreditCardInformation { get; private set; }
-
         public int CardTypeId { get; set; }
-
         public bool WillPaymentRecorded { get; set; }
-
         public string? Alias { get; set; }
         public CustomerBasket Basket { get; }
 
