@@ -11,15 +11,15 @@ namespace E_Commerce.CatalogService.Persistence.Extension
         public static void AddPersistenceServiceRegistraiton(this IServiceCollection services)
         {
             services.AddScoped<ICatalogBrandRepository, CatalogBrandRepository>();
-            services.AddScoped<ICatalogItemImageRepoitory, CatalogItemImageRepository>();
             services.AddScoped<ICatalogBrandRepository, CatalogBrandRepository>();
             services.AddScoped<ICatalogTypeRepository, CatalogTypeRepository>();
+            services.AddScoped<ICatalogItemVariantRepository, CatalogItemVariantRepository>();
             services.AddScoped<ICatalogItemImageService, CatalogItemImageService>();
             services.AddScoped<ICatalogItemsService, CatalogItemsService>();
             services.AddScoped<ICatalogItemRepository, CatalogItemRepository>();
             services.AddScoped<ICatalogTypeService, CatalogTypeService>();
             services.AddScoped<ICatalogBrandService, CatalogBrandService>();
-
+            services.AddScoped<ICatalogItemVariantService, CatalogItemVariantService>();
         }
     }
 }

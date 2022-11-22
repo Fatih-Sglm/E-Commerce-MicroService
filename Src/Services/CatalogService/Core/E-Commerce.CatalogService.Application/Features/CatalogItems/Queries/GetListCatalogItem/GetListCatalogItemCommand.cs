@@ -8,7 +8,7 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Queries.Ge
 {
     public class GetListCatalogItemQuery : IRequest<ResponseDto<CatalogItemListModel>>
     {
-        public PageRequest PageRequest { get; set; }
+        public PageRequest PageRequest { get; set; } = new PageRequest(0, 5);
 
         public class GetListCatalogItemQueryHandler : IRequestHandler<GetListCatalogItemQuery, ResponseDto<CatalogItemListModel>>
         {

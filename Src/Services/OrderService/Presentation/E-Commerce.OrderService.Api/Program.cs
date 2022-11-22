@@ -14,12 +14,15 @@ builder.Host.UseDefaultServiceProvider((context, options) =>
 
 
 builder.Services.AddControllers();
+
+builder.Services.AddAuthServices(builder.Configuration);
+builder.Services.ConfigureConsul(builder.Configuration);
 builder.Services.AddApplicationServiceRegistration();
 builder.Services.AddPersistenceServiceRegistration(builder.Configuration);
-builder.Services.AddAuthServices(builder.Configuration);
 builder.Services.ConfigureEventHandlers();
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddLogging(cfg => cfg.AddConsole());
-builder.Services.ConfigureConsul(builder.Configuration);
 builder.Services.AddSingleton(sp => sp.EventBusRegister());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

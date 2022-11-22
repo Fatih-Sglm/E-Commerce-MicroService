@@ -1,5 +1,7 @@
-﻿using E_Commerce.OrderService.Application.Features.Order.Command.CreateOrder;
-using E_Commerce.OrderService.Application.Features.Order.Queries.GetOrderById;
+﻿using E_Commerce.OrderService.Application.Features.Orders.Command.CreateOrder;
+using E_Commerce.OrderService.Application.Features.Orders.Queries.GetAllOrdersList;
+using E_Commerce.OrderService.Application.Features.Orders.Queries.GetOrderById;
+using E_Commerce.OrderService.Application.Features.Orders.Queries.GetUserOrdersList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +31,18 @@ namespace E_Commerce.OrderService.Api.Controllers
             CreateOrderCommand createOrderCommand = new() { };
             await _mediator.Send(createOrderCommand);
             return Ok();
+        }
+
+        [HttpGet("GetUserOrders")]
+        public async Task<IActionResult> GetUserOrders([FromQuery] GetUserOrdersListQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
+
+        [HttpGet("GetAllOrders")]
+        public async Task<IActionResult> GetAllOrders([FromQuery] GetAllOrdersQuery query)
+        {
+            return Ok(await _mediator.Send(query));
         }
     }
 }

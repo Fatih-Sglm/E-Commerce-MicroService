@@ -1,4 +1,5 @@
-﻿using StackExchange.Redis;
+﻿using E_Commerce.BasketService.Application.Abstractions.Configuration;
+using StackExchange.Redis;
 
 namespace E_Commerce.BasketService.Persistence.Configuration
 {

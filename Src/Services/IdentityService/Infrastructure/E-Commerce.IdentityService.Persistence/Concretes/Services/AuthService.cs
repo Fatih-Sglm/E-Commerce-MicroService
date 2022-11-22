@@ -1,47 +1,66 @@
-﻿using E_Commerce.IdentityService.Application.Abstractions.Repositories;
+﻿using AutoMapper;
 using E_Commerce.IdentityService.Application.Abstractions.Services.AuthService;
 using E_Commerce.IdentityService.Application.Abstractions.Services.Jwt;
-using E_Commerce.IdentityService.Application.Abstractions.Services.Jwt.Hashing;
+using E_Commerce.IdentityService.Application.Exceptions;
+using E_Commerce.IdentityService.Application.Features.Auths.Constant;
 using E_Commerce.IdentityService.Application.Features.Auths.Dtos;
-using E_Commerce.IdentityService.Domain.Entities;
+using E_Commerce.IdentityService.Application.Features.Auths.Rules;
+using E_Commerce.IdentityService.Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
+using System.Text.Json;
 
 namespace E_Commerce.IdentityService.Persistence.Concretes.Services
 {
     public class AuthService : IAuthService
     {
         private readonly ITokenHelper _tokenHandler;
-        private readonly IUserRepository _userRepository;
-
-        public AuthService(ITokenHelper tokenHandler, IUserRepository userRepository)
+        private readonly UserManager<AppUser> _userManager;
+        //private readonly AuthBusinnesRules _authBusinnesRules;
+        private readonly IMapper _mapper;
+        public AuthService(ITokenHelper tokenHandler, UserManager<AppUser> userManager, /*AuthBusinnesRules authBusinnesRules,*/ IMapper mapper)
         {
             _tokenHandler = tokenHandler;
-            _userRepository = userRepository;
+            _userManager = userManager;
+            //_authBusinnesRules = authBusinnesRules;
+            _mapper = mapper;
         }
 
         public async Task<AccessToken> Login(LoginUserDto loginUserDto)
         {
-            User? user = await _userRepository.GetAsync(x => x.Email == loginUserDto.UserNameOrEmail);
-            if (user is not null)
-            {
-                HashingHelper.VerifyPasswordHash(loginUserDto.Password, user.PasswordHash, user.PasswordSalt);
-                return _tokenHandler.CreateToken(user!);
-            }
-            throw new Exception("User Not Found");
+            AppUser? user = await _userManager.FindByEmailAsync(loginUserDto.UserNameOrEmail);
+            user ??= await _userManager.FindByNameAsync(loginUserDto.UserNameOrEmail);
+
+            // Created extension method for those functions
+            await user.CheckUserIsNull();
+            await _userManager.CheckUserPassword(user, loginUserDto.Password);
+            await _userManager.CheckEmailConfimed(user);
+            //await AuthBusinnesRules.CheckUserIsNull(user!);
+            //await AuthBusinnesRules.CheckEmailConfimed(_userManager, user);
+            //await AuthBusinnesRules.CheckUserPassword(_userManager, user, loginUserDto.Password);
+            return _tokenHandler.CreateToken(user!, await _userManager.GetRolesAsync(user));
+
         }
 
-        public async Task Register(RegisterDto registerDto)
+        public async Task<string> Register(RegisterDto registerDto)
         {
-            HashingHelper.CreatePasswordHash(registerDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            User user = new()
-            {
-                FirstName = registerDto.FirstName,
-                LastName = registerDto.LastName,
-                Email = registerDto.Email,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                IsMailConfirmed = false
-            };
-            await _userRepository.AddAsync(user);
+            AppUser appUser = _mapper.Map<AppUser>(registerDto);
+            return await CreateUser(appUser, registerDto.Password);
+
+        }
+
+        public async Task<bool> RegisterAdmin(RegisterDto registerDto)
+        {
+            AppUser appUser = _mapper.Map<AppUser>(registerDto);
+            await _userManager.AddToRoleAsync(appUser, "Admin");
+            await CreateUser(appUser, registerDto.Password);
+            return true;
+        }
+
+        private async Task<string> CreateUser(AppUser appUser, string password)
+        {
+            IdentityResult result = await _userManager.CreateAsync(appUser, password);
+            if (!result.Succeeded) { throw new IdentityException(JsonSerializer.Serialize(result.Errors)); }
+            return AuthConstantMessage.WelcomeMessage;
         }
     }
 }

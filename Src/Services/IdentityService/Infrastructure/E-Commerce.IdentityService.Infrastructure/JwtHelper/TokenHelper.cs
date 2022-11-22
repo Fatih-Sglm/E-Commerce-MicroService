@@ -1,6 +1,8 @@
 ﻿using E_Commerce.IdentityService.Application.Abstractions.Services.Jwt;
 using E_Commerce.IdentityService.Application.Features.Auths.Dtos;
 using E_Commerce.IdentityService.Domain.Entities;
+using E_Commerce.IdentityService.Domain.Entities.Identity;
+using E_Commerce.IdentityService.Infrastructure.Extensions;
 using E_Commerce.IdentityService.Infrastructure.JwtHelper.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -21,17 +23,17 @@ namespace E_Commerce.IdentityService.Infrastructure.JwtHelper
             Configuration = configuration;
             _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
         }
-        public RefreshToken CreateRefreshToken(User user, string ipAddress, int refresftokenDay)
+        public RefreshToken CreateRefreshToken(AppUser user, string ipAddress, int refresftokenDay)
         {
             throw new NotImplementedException();
         }
 
-        public AccessToken CreateToken(User user)
+        public AccessToken CreateToken(AppUser user, IList<string> roles)
         {
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
             SecurityKey securityKey = CreateSecurityKey(_tokenOptions.SecurityKey);
             SigningCredentials signingCredentials = CreateSigningCredentials(securityKey);
-            JwtSecurityToken jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials);
+            JwtSecurityToken jwt = CreateJwtSecurityToken(_tokenOptions, user, roles, signingCredentials);
             JwtSecurityTokenHandler jwtSecurityTokenHandler = new();
             string? token = jwtSecurityTokenHandler.WriteToken(jwt);
 
@@ -42,7 +44,7 @@ namespace E_Commerce.IdentityService.Infrastructure.JwtHelper
             };
         }
 
-        private JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user,
+        private JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, AppUser user, IList<string> roles,
                                                    SigningCredentials signingCredentials)
         {
             JwtSecurityToken jwt = new(
@@ -50,21 +52,24 @@ namespace E_Commerce.IdentityService.Infrastructure.JwtHelper
                 tokenOptions.Audience,
                 expires: _accessTokenExpiration,
                 notBefore: DateTime.Now,
-                claims: SetClaims(user),
+                claims: SetClaims(user, roles),
                 signingCredentials: signingCredentials
             );
             return jwt;
         }
 
-        private static IEnumerable<Claim> SetClaims(User user)
+        private static IEnumerable<Claim> SetClaims(AppUser user, IList<string> roles)
         {
-            Claim[] claims = new Claim[]
-            {
-                new Claim(ClaimTypes.Name , $"{user.FirstName} {user.LastName}"),
-                new Claim(ClaimTypes.NameIdentifier , user.Id.ToString())
-            };
+            List<Claim> claims = new();
+            claims.AddNameIdentifier(user.Id.ToString());
+            claims.AddEmail(user.Email);
+            claims.AddUserName(user.UserName);
+            claims.AddName($"{user.FirstName} {user.LastName}");
+            claims.AddRoles(roles.ToArray());
             return claims;
         }
+
+
 
         private static SecurityKey CreateSecurityKey(string securityKey)
         {

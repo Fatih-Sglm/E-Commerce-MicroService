@@ -18,8 +18,7 @@ namespace E_Commerce.BasketService.Application.IntegrationEvents.EventsHandler
         public async Task HandleAsync(OrderCreatedIntegrationEvent @event)
         {
             _logger.LogInformation("----- Handling integration event: {IntegrationEventId} at BasketService.Api - ({@IntegrationEvent})", @event.Id, @event);
-
-            await _basketRepository.DeleteBasketAsync(@event.UserId);
+            //await _basketRepository.DeleteBasketAsync(@event.UserName);
         }
     }
 }

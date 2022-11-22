@@ -1,4 +1,4 @@
-﻿namespace E_Commerce.CatalogService.Application.Features.CatalogCategory.Dto
+﻿namespace E_Commerce.CatalogService.Application.Features.CatalogTypes.Dto
 {
     public class GetCatalogTypeDto
     {

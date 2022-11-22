@@ -22,6 +22,8 @@
 
         public int CardTypeId { get; set; }
 
-        public string Buyer { get; set; }
+        public bool WillPaymentRecorded { get; set; }
+
+        public string Alias { get; set; } = null;
     }
 }

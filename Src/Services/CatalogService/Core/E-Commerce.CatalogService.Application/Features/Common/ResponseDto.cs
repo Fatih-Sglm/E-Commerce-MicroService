@@ -4,6 +4,7 @@
     {
         public T Data { get; set; }
 
+
         public string Message { get; set; }
 
         public static ResponseDto<T> SuccesWithData(T data)

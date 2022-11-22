@@ -14,11 +14,11 @@ namespace E_Commerce.CatalogService.Infrastructure.Services.Storage
 
         public string StorageName => _storage.GetType().Name;
 
-        public Task DeleteAsync(string pathOrContainerName, string fileName) => _storage.DeleteAsync(pathOrContainerName, fileName);
+        public Task DeleteAsync(string pathOrContainerName) => _storage.DeleteAsync(pathOrContainerName);
 
-        public string? GetFile(string pathOrContainerName, string fileName) => _storage.GetFile(pathOrContainerName, fileName);
+        public string? GetFile(string pathOrContainerName) => _storage.GetFile(pathOrContainerName);
 
-        public bool HasFile(string pathOrContainerName, string fileName) => _storage.HasFile(pathOrContainerName, fileName);
+        public bool HasFile(string pathOrContainerName) => _storage.HasFile(pathOrContainerName);
 
         public Task<List<(string fileName, string pathOrContainerName)>> UploadAsync(string pathOrContainerName, IFormFileCollection files)
             => _storage.UploadAsync(pathOrContainerName, files);

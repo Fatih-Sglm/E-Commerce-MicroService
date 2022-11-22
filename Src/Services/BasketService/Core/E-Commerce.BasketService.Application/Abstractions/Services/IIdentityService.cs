@@ -2,6 +2,7 @@
 {
     public interface IIdentityService
     {
-        string GetUserName();
+        Task<(string FullName, string Email)> GetUserInfos();
+        Task<string> GetUserName();
     }
 }

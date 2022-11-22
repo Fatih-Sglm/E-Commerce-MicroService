@@ -4,6 +4,7 @@ using E_Commerce.OrderService.Domain.SeedWork;
 using E_Commerce.OrderService.Persistence.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Reflection;
 
 namespace E_Commerce.OrderService.Persistence.Contexts
@@ -29,6 +30,23 @@ namespace E_Commerce.OrderService.Persistence.Contexts
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {
+            var entries = ChangeTracker.Entries();
+            foreach (var entry in entries)
+            {
+                if (entry.Entity is not BaseEntity entity) continue;
+                var now = DateTime.Now;
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entity.CreateDate = now;
+                        break;
+
+                    case EntityState.Modified:
+                        entity.UpdateDate = now;
+                        break;
+                }
+            }
+
             await _mediator.DispatchDomainEventAsync(this);
             return await SaveChangesAsync(cancellationToken) > 1;
         }

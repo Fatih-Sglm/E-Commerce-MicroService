@@ -9,16 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <Compile Remove="Controllers\**" />
+    <Content Remove="Controllers\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <None Remove="Controllers\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\BuildingBlocks\EventBus\E-Commerce.EventBus.Base\E-Commerce.EventBus.Base.csproj" />
     <ProjectReference Include="..\..\..\..\BuildingBlocks\EventBus\E-Commerce.EventBus.Factory\E-Commerce.EventBus.Factory.csproj" />
+    <ProjectReference Include="..\..\..\OrderService\Core\E-Commerce.OrderService.Application\E-Commerce.OrderService.Application.csproj" />
   </ItemGroup>
 
 </Project>

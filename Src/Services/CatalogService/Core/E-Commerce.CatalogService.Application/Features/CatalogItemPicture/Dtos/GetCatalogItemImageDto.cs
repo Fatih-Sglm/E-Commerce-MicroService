@@ -4,5 +4,7 @@
     {
         public uint Id { get; set; }
         public string path { get; set; }
+
+        public uint CatalogItemId { get; set; }
     }
 }

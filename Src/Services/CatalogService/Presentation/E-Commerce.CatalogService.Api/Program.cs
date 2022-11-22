@@ -28,11 +28,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Start();
 app.RegisterWithConsul(app.Lifetime);
 app.WaitForShutdown();

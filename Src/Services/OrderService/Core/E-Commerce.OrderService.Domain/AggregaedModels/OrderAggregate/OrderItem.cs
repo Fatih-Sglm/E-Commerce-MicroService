@@ -5,7 +5,7 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate
 {
     public class OrderItem : BaseEntity, IValidatableObject
     {
-        public int ProductId { get; set; }
+        public uint ProductId { get; set; }
 
         public string ProductName { get; set; }
 
@@ -13,20 +13,20 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate
 
         public decimal UnitPrice { get; set; }
 
-        public int Units { get; set; }
+        public uint Quantity { get; set; }
 
         protected OrderItem()
         {
 
         }
 
-        public OrderItem(int productId, string productName, decimal unitPrice, string pictureUrl, int units = 1)
+        public OrderItem(uint productId, string productName, decimal unitPrice, string pictureUrl, uint quantity = 1)
         {
             ProductId = productId;
 
             ProductName = productName;
             UnitPrice = unitPrice;
-            Units = units;
+            Quantity = quantity;
             PictureUrl = pictureUrl;
         }
 
@@ -34,7 +34,7 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate
         {
             var results = new List<ValidationResult>();
 
-            if (Units <= 0)
+            if (Quantity <= 0)
                 results.Add(new ValidationResult("Invalid number of units", new[] { "Units" }));
 
             return results;
