@@ -1,4 +1,4 @@
-﻿namespace E_Commerce.PaymentService.Api.Models
+﻿namespace E_Commerce.PaymentService.Application.Models
 {
     public class CreditCardInformation
     {

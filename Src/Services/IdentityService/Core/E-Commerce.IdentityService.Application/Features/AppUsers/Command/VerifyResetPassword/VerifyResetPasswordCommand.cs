@@ -1,5 +1,5 @@
 ﻿using E_Commerce.IdentityService.Application.Abstractions.Services;
-using E_Commerce.IdentityService.Application.Features.Common;
+using E_Commerce.IdentityService.Application.Models;
 using MediatR;
 
 namespace E_Commerce.IdentityService.Application.Features.AppUsers.Command.VerifyResetPassword

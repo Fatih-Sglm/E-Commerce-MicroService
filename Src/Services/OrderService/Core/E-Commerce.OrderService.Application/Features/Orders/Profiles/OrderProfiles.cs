@@ -2,7 +2,7 @@
 using E_Commerce.OrderService.Application.Features.Orders.Command.CreateOrder;
 using E_Commerce.OrderService.Application.Features.Orders.Dtos;
 using E_Commerce.OrderService.Application.Features.Orders.Models;
-using E_Commerce.OrderService.Application.Paging;
+using E_Commerce.OrderService.Application.Models.Paging;
 using E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate;
 
 namespace E_Commerce.OrderService.Application.Features.Orders.Profiles
@@ -26,7 +26,7 @@ namespace E_Commerce.OrderService.Application.Features.Orders.Profiles
 
 
             CreateMap<Order, GetOrderList>().ForMember(x => x.OrderStatus, y => y.MapFrom(z => z.OrderStatus.Name))
-                .ForMember(x => x.BuyerName, y => y.MapFrom(z => z.Buyer.Name))
+                .ForMember(x => x.BuyerName, y => y.MapFrom(z => z.Buyer.UserName))
                 .ForMember(x => x.PaymentMethod, y => y.MapFrom(z => z.Buyer.PaymentMethods.FirstOrDefault(t => t.Id == z.PaymentMethodId)));
 
             CreateMap<IPaginate<Order>, UserOrderListModel>();

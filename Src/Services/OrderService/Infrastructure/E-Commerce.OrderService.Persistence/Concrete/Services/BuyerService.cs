@@ -15,7 +15,7 @@ namespace E_Commerce.OrderService.Persistence.Concrete.Services
 
         public async Task<Guid> FindBuyerIdWithUserName(string userName)
         {
-            Buyer? buyer = await _buyerRepository.GetAsync(x => x.Name == userName);
+            Buyer? buyer = await _buyerRepository.GetAsync(x => x.UserName == userName);
             return buyer.Id;
         }
     }

@@ -1,4 +1,4 @@
-﻿using E_Commerce.NotificationService.MailModels;
+﻿using E_Commerce.NotificationService.Models.MailModels;
 using E_Commerce.NotificationService.Services.Abstract;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;

@@ -25,11 +25,12 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
             OrderStatus[] orderStatuses = new OrderStatus[]
             {
                 new OrderStatus(1,"Submitted"),
-                new OrderStatus(2,"AwaitingValidation"),
-                new OrderStatus(3,"StockConfirmed"),
-                new OrderStatus(4,"Paid"),
-                new OrderStatus(5,"Shipped"),
-                new OrderStatus(6,"Cancelled"),
+                new OrderStatus(2 ,"AwaitingPayment"),
+                new OrderStatus(3,"AwaitingValidation"),
+                new OrderStatus(4,"StockConfirmed"),
+                new OrderStatus(5,"Paid"),
+                new OrderStatus(6,"Shipped"),
+                new OrderStatus(7,"Cancelled"),
             };
             builder.HasData(orderStatuses);
         }

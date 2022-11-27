@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Net;
 using System.Reflection;
 using TechBuddy.Extension.Validation.Extensions;
@@ -18,17 +19,23 @@ namespace E_Commerce.IdentityService.Application.Extensions
             var assembly = Assembly.GetExecutingAssembly();
             services.AddMediatR(assembly);
             services.AddAutoMapper(assembly);
-            services.AddTechBuddyValidator();
+            services.AddTechBuddyValidator(opt =>
+            {
+                opt.UseModelProvider<CustomeErrorProvider>();
+            });
 
         }
         public static void AddWebApplicaitonService(this WebApplication app)
         {
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var isDevelopment = environment == Environments.Development;
+
             app.ConfigureTechBuddyExceptionHandling(opt =>
             {
 
-                AddCustomErroHandler<Exception>(opt, HttpStatusCode.InternalServerError, true);
-                AddCustomErroHandler<IdentityException>(opt, HttpStatusCode.BadRequest, true);
-                AddCustomErroHandler<NotFoundException>(opt, HttpStatusCode.NotFound, true);
+                AddCustomErroHandler<Exception>(opt, HttpStatusCode.InternalServerError, isDevelopment);
+                AddCustomErroHandler<IdentityException>(opt, HttpStatusCode.BadRequest, isDevelopment);
+                AddCustomErroHandler<NotFoundException>(opt, HttpStatusCode.NotFound, isDevelopment);
             });
         }
 
@@ -36,12 +43,10 @@ namespace E_Commerce.IdentityService.Application.Extensions
         {
             opt.AddCustomHandler<T>((context, ex, logger) =>
             {
-                ErrorResponseModel model = new()
-                {
-                    Errors = isDevelopment ? new List<string> { ex.ToString() } : new List<string> { ex.Message }
-                };
+
+                var obj = ResponseDto<NoContent>.Failed(isDevelopment ? ex.ToString() : ex.Message);
                 context.Response.StatusCode = (int)httpStatusCode;
-                return context.Response.WriteAsJsonAsync(model);
+                return context.Response.WriteAsJsonAsync(obj);
             });
         }
     }

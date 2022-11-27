@@ -1,5 +1,4 @@
 ﻿using E_Commerce.EventBus.Base.Events;
-using E_Commerce.OrderService.Application.Features.Orders.Models;
 using E_Commerce.OrderService.Domain.Models;
 
 namespace E_Commerce.OrderService.Application.IntegrationEvents.Events

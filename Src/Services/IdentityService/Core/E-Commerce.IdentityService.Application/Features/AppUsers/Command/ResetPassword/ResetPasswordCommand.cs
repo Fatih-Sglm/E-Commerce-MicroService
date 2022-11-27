@@ -1,6 +1,6 @@
 ﻿using E_Commerce.IdentityService.Application.Abstractions.Services;
 using E_Commerce.IdentityService.Application.Features.Auths.Constant;
-using E_Commerce.IdentityService.Application.Features.Common;
+using E_Commerce.IdentityService.Application.Models;
 using MediatR;
 
 namespace E_Commerce.IdentityService.Application.Features.AppUsers.Command.ResetPassword
@@ -20,8 +20,8 @@ namespace E_Commerce.IdentityService.Application.Features.AppUsers.Command.Reset
             public async Task<ResponseDto<NoContent>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
             {
 
-                string message = await _appUserService.ResetPassword(request) ? AuthConstantMessage.WelcomeMessage : AuthConstantMessage.ErrorMessage;
-                return ResponseDto<NoContent>.SuccesWithOutData(message);
+                await _appUserService.ResetPassword(request);
+                return ResponseDto<NoContent>.SuccesWithOutData(AuthConstantMessage.WelcomeMessage);
             }
         }
     }

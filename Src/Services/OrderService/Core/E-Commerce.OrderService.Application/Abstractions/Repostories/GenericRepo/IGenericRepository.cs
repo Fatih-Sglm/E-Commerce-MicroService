@@ -1,4 +1,4 @@
-﻿using E_Commerce.OrderService.Application.Paging;
+﻿using E_Commerce.OrderService.Application.Models.Paging;
 using E_Commerce.OrderService.Domain.SeedWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
@@ -39,6 +39,8 @@ namespace E_Commerce.OrderService.Application.Abstractions.Repostories.GenericRe
         //                                                     CancellationToken cancellationToken = default);
         Task<bool> AddAsync(T entity);
 
+
+        Task<bool> SaveChangesAsync();
         Task AddRangeAsync(List<T> datas);
         bool Update(T entity);
         bool Delete(T entity);

@@ -41,7 +41,7 @@ namespace E_Commerce.IdentityService.Persistence.Concretes.Services
             await CreateConfirmUserEmailMessageAsync(appUser);
         }
 
-        public async Task<bool> ResetPassword(ResetPasswordCommand command)
+        public async Task ResetPassword(ResetPasswordCommand command)
         {
             AppUser? appUser = await _userManager.FindByEmailAsync(command.Email);
             appUser.CheckUserIsNull();
@@ -51,14 +51,7 @@ namespace E_Commerce.IdentityService.Persistence.Concretes.Services
             string message = SystemMailMessages.ResetPasswordMailMessageAsync
                   (_configuration, "reset-password", appUser.FullName, appUser.Id.ToString(), resetToken.UrlEncode());
 
-            return await _mailService.SendMailAsync(new()
-            {
-                IsHtml = true,
-                Subject = "Reset Password",
-                TextBody = message,
-                ToEmail = appUser.Email,
-                ToFullName = appUser.FullName,
-            });
+            await CreateMailMesage(appUser, "Reset Password", message);
         }
 
         public async Task UpdadePassword(UpdateUserPassworResetCommand command)
@@ -82,16 +75,19 @@ namespace E_Commerce.IdentityService.Persistence.Concretes.Services
         {
             await appUser!.CheckUserIsNull();
             string resetToken = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-
             byte[] tokenBytes = Encoding.UTF8.GetBytes(resetToken);
             resetToken = WebEncoders.Base64UrlEncode(tokenBytes);
             string message = SystemMailMessages.ConfirmMailMessageAsync(_configuration, "/Confirm-Email", $"{appUser.FirstName} + {appUser.LastName}",
                 appUser.Id.ToString(), resetToken);
+            await CreateMailMesage(appUser, "Confirm Email", message);
+        }
 
-            await _mailService.SendMailAsync(new()
+        private async Task CreateMailMesage(AppUser appUser, string subject, string message)
+        {
+            await _mailService.AddQueue(new()
             {
                 IsHtml = true,
-                Subject = "Confirm Email",
+                Subject = subject,
                 TextBody = message,
                 ToEmail = appUser.Email,
                 ToFullName = appUser.FullName,

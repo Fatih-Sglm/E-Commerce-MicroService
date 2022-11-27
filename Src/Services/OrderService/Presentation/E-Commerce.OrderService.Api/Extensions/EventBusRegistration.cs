@@ -11,6 +11,7 @@ namespace E_Commerce.OrderService.Api.Extensions
         public static void ConfigureEventHandlers(this IServiceCollection services)
         {
             services.AddTransient<OrderCreatedIntegrationEventHandler>();
+            services.AddTransient<OrderStatusChangedIntegrationEventIntegrationEventHandler>();
         }
         public static IEventBus EventBusRegister(this IServiceProvider provider)
         {
@@ -19,7 +20,7 @@ namespace E_Commerce.OrderService.Api.Extensions
                 ConnectionRetryCount = 5,
                 EventNameSuffix = "IntegrationEvent",
                 SubscriberClientAppName = "OrderService",
-                EventBusType = EventBusType.RabbitMQ
+                EventBusType = EventBusType.RabbitMQ,
             };
             return EventBusFactory.Create(config, provider);
         }
@@ -27,6 +28,7 @@ namespace E_Commerce.OrderService.Api.Extensions
         {
             var eventbus = application.Services.GetRequiredService<IEventBus>();
             eventbus.Subscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
+            eventbus.Subscribe<OrderStatusChangedIntegrationEvent, OrderStatusChangedIntegrationEventIntegrationEventHandler>();
         }
     }
 }

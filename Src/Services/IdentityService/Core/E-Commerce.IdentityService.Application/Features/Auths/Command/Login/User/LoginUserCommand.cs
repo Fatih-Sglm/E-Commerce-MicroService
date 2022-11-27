@@ -1,6 +1,6 @@
 ﻿using E_Commerce.IdentityService.Application.Abstractions.Services.AuthService;
 using E_Commerce.IdentityService.Application.Features.Auths.Dtos;
-using E_Commerce.IdentityService.Application.Features.Common;
+using E_Commerce.IdentityService.Application.Models;
 using MediatR;
 
 namespace E_Commerce.IdentityService.Application.Features.Auths.Command.Login.User

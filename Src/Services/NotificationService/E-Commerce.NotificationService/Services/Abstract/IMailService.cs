@@ -1,4 +1,4 @@
-﻿using E_Commerce.NotificationService.MailModels;
+﻿using E_Commerce.NotificationService.Models.MailModels;
 
 namespace E_Commerce.NotificationService.Services.Abstract
 {

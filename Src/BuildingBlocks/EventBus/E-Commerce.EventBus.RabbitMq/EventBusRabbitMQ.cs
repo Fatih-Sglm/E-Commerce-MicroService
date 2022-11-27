@@ -12,15 +12,15 @@ namespace E_Commerce.EventBus.RabbitMq
 {
     public class EventBusRabbitMQ : BaseEventBus
     {
-        RabbitMqConfig _conneciton;
+        readonly RabbitMqConfig _conneciton;
         private readonly IConnectionFactory _connectionFactory;
         private readonly IModel _consumerChannel;
         public EventBusRabbitMQ(EventBusConfig config, IServiceProvider serviceProvider) : base(config, serviceProvider)
         {
             if (config.Connection != null)
             {
-                var connjson = JsonConvert.SerializeObject(EventBusConfig.Connection, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
-                _connectionFactory = JsonConvert.DeserializeObject<ConnectionFactory>(connjson);
+                var connjson = JsonConvert.SerializeObject(EventBusConfig!.Connection, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+                _connectionFactory = JsonConvert.DeserializeObject<ConnectionFactory>(connjson)!;
             }
             else
                 _connectionFactory = new ConnectionFactory();
@@ -37,7 +37,7 @@ namespace E_Commerce.EventBus.RabbitMq
                 _conneciton.TryConnect();
 
 
-            _consumerChannel.QueueUnbind(eventName, EventBusConfig.DefaultTopicName, eventName);
+            _consumerChannel.QueueUnbind(eventName, EventBusConfig!.DefaultTopicName, eventName);
 
             if (SubsManager.IsEmpty)
                 _consumerChannel.Close();
@@ -52,7 +52,7 @@ namespace E_Commerce.EventBus.RabbitMq
 
             var policy = Policy.Handle<BrokerUnreachableException>()
                 .Or<SocketException>()
-                .WaitAndRetry(EventBusConfig.ConnectionRetryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                .WaitAndRetry(EventBusConfig!.ConnectionRetryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
                 {
                     // log
                 });
@@ -67,18 +67,7 @@ namespace E_Commerce.EventBus.RabbitMq
             policy.Execute(() =>
             {
                 var properties = _consumerChannel.CreateBasicProperties();
-                properties.DeliveryMode = 2; // persistent
-
-                //_consumerChannel.QueueDeclare(queue: GetSubName(eventName), // Ensure queue exists while publishing
-                //                     durable: true,
-                //                     exclusive: false,
-                //                     autoDelete: false,
-                //                     arguments: null);
-
-                //_consumerChannel.QueueBind(queue: GetSubName(eventName),
-                //                  exchange: EventBusConfig.DefaultTopicName,
-                //                  routingKey: eventName);
-
+                properties.DeliveryMode = 2;
                 _consumerChannel.BasicPublish(
                     exchange: EventBusConfig.DefaultTopicName,
                     routingKey: eventName,

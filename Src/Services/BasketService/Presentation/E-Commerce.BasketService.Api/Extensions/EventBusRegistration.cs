@@ -15,14 +15,14 @@ namespace E_Commerce.BasketService.Api.Extensions
                 ConnectionRetryCount = 5,
                 EventNameSuffix = "IntegrationEvent",
                 SubscriberClientAppName = "BasketService",
-                EventBusType = EventBusType.RabbitMQ
+                EventBusType = EventBusType.RabbitMQ,
             };
             return EventBusFactory.Create(config, service);
         }
         public static void EventConfig(this WebApplication application)
         {
             var eventbus = application.Services.GetRequiredService<IEventBus>();
-            eventbus.Subscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
+            eventbus.Subscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventEventEventHandler>();
         }
     }
 }

@@ -17,7 +17,7 @@ builder.Services.AddInfratructureRegistration();
 builder.Services.AddSingleton(sp => sp.RegisConfiguration(builder.Configuration));
 builder.Services.AddSingleton(sp => sp.EventBusRegister());
 builder.Services.AddApplicationServiceRegistration();
-builder.Services.AddTransient<OrderCreatedIntegrationEventHandler>();
+builder.Services.AddTransient<OrderCreatedIntegrationEventEventEventHandler>();
 builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

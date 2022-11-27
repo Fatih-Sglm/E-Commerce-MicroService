@@ -19,13 +19,13 @@ namespace E_Commerce.OrderService.Application.DomainEventHandlers
         {
             var cardTypeId = (orderStartedEvent.CardTypeId != 0) ? orderStartedEvent.CardTypeId : 1;
 
-            Buyer? buyer = await _buyerRepository.GetAsync(i => i.Name == orderStartedEvent.UserName, i => i.Include(i => i.PaymentMethods));
+            Buyer? buyer = await _buyerRepository.GetAsync(i => i.UserName == orderStartedEvent.UserName, i => i.Include(i => i.PaymentMethods));
 
             bool buyerOriginallyExisted = buyer != null;
 
             if (!buyerOriginallyExisted)
             {
-                buyer = new Buyer(orderStartedEvent.UserName);
+                buyer = new Buyer(orderStartedEvent.UserName, orderStartedEvent.FullName, orderStartedEvent.Email);
             }
 
             await buyer.VerifyOrAddPaymentMethod(cardTypeId,

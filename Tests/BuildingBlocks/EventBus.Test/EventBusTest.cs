@@ -11,7 +11,7 @@ namespace EventBus.Test
     public class EventBusTest
     {
 
-        private ServiceCollection services;
+        private readonly ServiceCollection services;
 
         public EventBusTest()
         {
@@ -19,23 +19,23 @@ namespace EventBus.Test
             services.AddLogging(cfg => cfg.AddConsole());
         }
 
-        //[Fact]
-        //public void Subscribe_event_on_rabbitmq_test()
-        //{
+        [Fact]
+        public void Subscribe_event_on_rabbitmq_test()
+        {
 
-        //    services.AddSingleton(sp =>
-        //    {
-        //        return EventBusFactory.Create(RabbitMq(), sp);
-        //    });
-        //    ServiceProvider sp = services.BuildServiceProvider();
+            services.AddSingleton(sp =>
+            {
+                return EventBusFactory.Create(RabbitMq(), sp);
+            });
+            ServiceProvider sp = services.BuildServiceProvider();
 
-        //    var eventBus = sp.GetRequiredService<IEventBus>();
+            var eventBus = sp.GetRequiredService<IEventBus>();
 
-        //    eventBus.Subscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
+            eventBus.Subscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
 
-        //    //eventBus.UnSubscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
+            //eventBus.UnSubscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
 
-        //}
+        }
 
         [Fact]
         public void Subscribe_event_on_azure_test()
@@ -54,19 +54,19 @@ namespace EventBus.Test
             Task.Delay(2000).Wait();
         }
 
-        //[Fact]
-        //public void SendMessageToRabbitMq_test()
-        //{
-        //    services.AddSingleton<IEventBus>(sp =>
-        //    {
-        //        return EventBusFactory.Create(RabbitMq(), sp);
-        //    });
-        //    ServiceProvider sp = services.BuildServiceProvider();
+        [Fact]
+        public void SendMessageToRabbitMq_test()
+        {
+            services.AddSingleton<IEventBus>(sp =>
+            {
+                return EventBusFactory.Create(RabbitMq(), sp);
+            });
+            ServiceProvider sp = services.BuildServiceProvider();
 
-        //    var eventBus = sp.GetRequiredService<IEventBus>();
+            var eventBus = sp.GetRequiredService<IEventBus>();
 
-        //    eventBus.Publish(new OrderCreatedIntegrationEvent(61));
-        //}
+            eventBus.Publish(new OrderCreatedIntegrationEvent(61));
+        }
 
         [Fact]
         public void SendMessageToAzure_test()
@@ -96,19 +96,19 @@ namespace EventBus.Test
         //    eventBus.Publish(new OrderCreatedIntegrationEvent(61));
         //}
 
-        //[Fact]
-        //public void ConsumeMessageAzure_test()
-        //{
-        //    services.AddSingleton<IEventBus>(sp =>
-        //    {
-        //        return EventBusFactory.Create(Azure(), sp);
-        //    });
-        //    ServiceProvider sp = services.BuildServiceProvider();
+        [Fact]
+        public void ConsumeMessageAzure_test()
+        {
+            services.AddSingleton<IEventBus>(sp =>
+            {
+                return EventBusFactory.Create(Azure(), sp);
+            });
+            ServiceProvider sp = services.BuildServiceProvider();
 
-        //    var eventBus = sp.GetRequiredService<IEventBus>();
+            var eventBus = sp.GetRequiredService<IEventBus>();
 
-        //    eventBus.Publish(new OrderCreatedIntegrationEvent(61));
-        //}
+            eventBus.Publish(new OrderCreatedIntegrationEvent(61));
+        }
 
         private static EventBusConfig Azure()
         {
@@ -119,8 +119,7 @@ namespace EventBus.Test
                 DefaultTopicName = "e_commerce_eventbus",
                 EventBusType = EventBusType.AzureServiceBus,
                 EventNameSuffix = "IntegrationEvent",
-                EventBusConnectionString = "Endpoint=sb://e-commerce-microservice.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=3tfk8FZWIlc0XAbORaUlDXDh8oNve+wn7iMIDKjQtUY="
-
+                EventBusConnectionString = "Endpoint=sb://e-commerce.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=E9PxfHb2gwhyLTfN81w6KEZClazyb8MNLREjuUw86J8="
             };
         }
 

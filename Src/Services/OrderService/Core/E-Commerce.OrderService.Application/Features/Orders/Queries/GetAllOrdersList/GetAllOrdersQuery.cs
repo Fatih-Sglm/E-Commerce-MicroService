@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using E_Commerce.OrderService.Application.Abstractions.Repostories;
-using E_Commerce.OrderService.Application.Features.Common;
 using E_Commerce.OrderService.Application.Features.Orders.Models;
-using E_Commerce.OrderService.Application.Paging;
+using E_Commerce.OrderService.Application.Models.Paging;
+using E_Commerce.OrderService.Application.Models.ResponseModels;
 using E_Commerce.OrderService.Domain.AggregaedModels.OrderAggregate;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

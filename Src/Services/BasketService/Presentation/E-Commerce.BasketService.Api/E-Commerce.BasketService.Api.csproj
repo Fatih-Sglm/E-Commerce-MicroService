@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\BuildingBlocks\EventBus\E-Commerce.EventBus.Base\E-Commerce.EventBus.Base.csproj" />
     <ProjectReference Include="..\..\..\..\BuildingBlocks\EventBus\E-Commerce.EventBus.Factory\E-Commerce.EventBus.Factory.csproj" />
     <ProjectReference Include="..\..\Infrastructure\E-Commerce.BasketService.Infrastructure\E-Commerce.BasketService.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\E-Commerce.BasketService.Persistence\E-Commerce.BasketService.Persistence.csproj" />

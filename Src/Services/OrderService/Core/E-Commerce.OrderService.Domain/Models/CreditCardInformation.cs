@@ -1,4 +1,4 @@
-﻿namespace E_Commerce.OrderService.Application.Features.Orders.Models
+﻿namespace E_Commerce.OrderService.Domain.Models
 {
     public class CreditCardInformation
     {

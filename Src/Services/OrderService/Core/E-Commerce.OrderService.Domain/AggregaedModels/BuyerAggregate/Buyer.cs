@@ -5,7 +5,10 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
 {
     public class Buyer : BaseEntity, IAggregateRoot
     {
-        public string Name { get; set; }
+        public string UserName { get; set; }
+        public string Fullname { get; set; }
+        public string Email { get; set; }
+
 
         private readonly List<PaymentMethod> _paymentMethods;
         public IEnumerable<PaymentMethod> PaymentMethods => _paymentMethods.AsReadOnly();
@@ -15,9 +18,11 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
             _paymentMethods = new List<PaymentMethod>();
         }
 
-        public Buyer(string name) : this()
+        public Buyer(string name, string fullname, string email) : this()
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            UserName = name ?? throw new ArgumentNullException(nameof(name));
+            Fullname = fullname ?? throw new ArgumentNullException(nameof(fullname));
+            Email = email ?? throw new ArgumentNullException(nameof(email));
         }
 
 
@@ -53,7 +58,7 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
             return base.Equals(obj) ||
                    (obj is Buyer buyer &&
                    Id.Equals(buyer.Id) &&
-                   Name == buyer.Name);
+                   UserName == buyer.UserName);
         }
 
 

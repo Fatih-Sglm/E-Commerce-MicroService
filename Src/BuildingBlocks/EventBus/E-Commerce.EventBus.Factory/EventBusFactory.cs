@@ -1,4 +1,5 @@
-﻿using E_Commerce.EventBus.Base.Abstraction;
+﻿using E_Commerce.EventBus.AzureServiceBus;
+using E_Commerce.EventBus.Base.Abstraction;
 using E_Commerce.EventBus.Base.EventBus.Base;
 using E_Commerce.EventBus.RabbitMq;
 
@@ -10,7 +11,7 @@ namespace E_Commerce.EventBus.Factory
         {
             return config.EventBusType switch
             {
-                //EventBusType.AzureServiceBus => new Class1(config, serviceProvider),
+                EventBusType.AzureServiceBus => new EventBusServiceBusNew(config, serviceProvider),
                 _ => new EventBusRabbitMQ(config, serviceProvider)
             };
         }

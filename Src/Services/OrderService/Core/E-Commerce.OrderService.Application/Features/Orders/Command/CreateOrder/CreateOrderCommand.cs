@@ -1,5 +1,4 @@
 ﻿using E_Commerce.OrderService.Application.Features.Orders.Dtos;
-using E_Commerce.OrderService.Application.Features.Orders.Models;
 using E_Commerce.OrderService.Domain.Models;
 using MediatR;
 

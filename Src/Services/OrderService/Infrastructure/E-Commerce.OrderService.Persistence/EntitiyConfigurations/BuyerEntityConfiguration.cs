@@ -16,7 +16,7 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
             buyerConfiguration.Ignore(b => b.DomainEvents);
             buyerConfiguration.Property(b => b.Id).ValueGeneratedOnAdd();
 
-            buyerConfiguration.Property(b => b.Name).HasColumnType("name").HasColumnType("varchar").HasMaxLength(100);
+            buyerConfiguration.Property(b => b.UserName).HasColumnType("name").HasColumnType("varchar").HasMaxLength(100);
 
             buyerConfiguration.HasMany(b => b.PaymentMethods)
                .WithOne()

@@ -233,26 +233,31 @@ namespace ECommerce.OrderService.Persistence.Migrations
                         new
                         {
                             Id = 2,
-                            Name = "AwaitingValidation"
+                            Name = "AwaitingPayment"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "StockConfirmed"
+                            Name = "AwaitingValidation"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Paid"
+                            Name = "StockConfirmed"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Shipped"
+                            Name = "Paid"
                         },
                         new
                         {
                             Id = 6,
+                            Name = "Shipped"
+                        },
+                        new
+                        {
+                            Id = 7,
                             Name = "Cancelled"
                         });
                 });

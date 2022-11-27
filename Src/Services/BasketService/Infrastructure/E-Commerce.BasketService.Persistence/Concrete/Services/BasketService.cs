@@ -41,6 +41,7 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
             {
                 return;
             }
+
             var eventmessage = new OrderCreatedIntegrationEvent
                 (userName, fullname, Email, basketCheckout.City, basketCheckout.Street,
             basketCheckout.Street, basketCheckout.Country, basketCheckout.ZipCode, basketCheckout.Alias, basketCheckout.CardNumber, basketCheckout.CardHolderName,

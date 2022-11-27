@@ -1,8 +1,9 @@
 using E_Commerce.EventBus.Base.Abstraction;
 using E_Commerce.EventBus.Base.EventBus.Base;
 using E_Commerce.EventBus.Factory;
-using E_Commerce.PaymentService.Api.IntegrationEvents.EventHandler;
-using E_Commerce.PaymentService.Api.IntegrationEvents.Events;
+using E_Commerce.PaymentService.Application.IntegrationEvents.EventHandler;
+using E_Commerce.PaymentService.Application.IntegrationEvents.Events;
+using E_Commerce.PaymentService.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddLogging(cfg => cfg.AddConsole());
 builder.Services.AddTransient<OrderStartedIntegrationEventHandler>();
-builder.Services.AddSingleton<IEventBus>(sp =>
+builder.Services.AddPaymentServiceInfrasturctureExtension();
+builder.Services.AddSingleton(sp =>
 {
     EventBusConfig eventBusConfig = new()
     {
@@ -36,16 +38,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 IEventBus eventBus = app.Services.GetRequiredService<IEventBus>();
 eventBus.Subscribe<OrderStartedIntegrationEvent, OrderStartedIntegrationEventHandler>();
-
 app.Run();
 
 
