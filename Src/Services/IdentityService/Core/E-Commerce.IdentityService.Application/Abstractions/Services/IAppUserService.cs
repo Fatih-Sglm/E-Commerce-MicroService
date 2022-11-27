@@ -7,7 +7,7 @@ namespace E_Commerce.IdentityService.Application.Abstractions.Services
     public interface IAppUserService
     {
         Task CreateUser(CreateUserCommand request);
-        Task<bool> ResetPassword(ResetPasswordCommand command);
+        Task ResetPassword(ResetPasswordCommand command);
         Task UpdadePassword(UpdateUserPassworResetCommand command);
     }
 }

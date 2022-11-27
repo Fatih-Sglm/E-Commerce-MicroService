@@ -1,8 +1,8 @@
 ﻿using E_Commerce.IdentityService.Application.Abstractions.Services.Jwt;
 using E_Commerce.IdentityService.Application.Features.Auths.Dtos;
 using E_Commerce.IdentityService.Domain.Entities.Identity;
+using E_Commerce.IdentityService.Infrastructure.Concretes.Services.JwtHelper.Configuration;
 using E_Commerce.IdentityService.Infrastructure.Extensions;
-using E_Commerce.IdentityService.Infrastructure.Services.JwtHelper.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace E_Commerce.IdentityService.Infrastructure.Services.JwtHelper
+namespace E_Commerce.IdentityService.Infrastructure.Concretes.Services.JwtHelper
 {
     internal class TokenHelper : ITokenHelper
     {

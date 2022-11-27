@@ -20,8 +20,8 @@ namespace E_Commerce.IdentityService.Application.Features.AppUsers.Command.Reset
             public async Task<ResponseDto<NoContent>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
             {
 
-                string message = await _appUserService.ResetPassword(request) ? AuthConstantMessage.WelcomeMessage : AuthConstantMessage.ErrorMessage;
-                return ResponseDto<NoContent>.SuccesWithOutData(message);
+                await _appUserService.ResetPassword(request);
+                return ResponseDto<NoContent>.SuccesWithOutData(AuthConstantMessage.WelcomeMessage);
             }
         }
     }

@@ -2,8 +2,8 @@
 
 namespace E_Commerce.IdentityService.Application.Abstractions.Services
 {
-    public interface IMailService
+    public interface IMailService : IQueueService<Mail>
     {
-        Task<bool> SendMailAsync(Mail mail);
+        //Task<bool> SendMailAsync(Mail mail);
     }
 }
