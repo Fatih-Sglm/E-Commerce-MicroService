@@ -11,6 +11,13 @@ namespace E_Commerce.IdentityService.Application.Features.Admin.Command.CreateAd
         {
             public Task<bool> Handle(CreateAdminCommand request, CancellationToken cancellationToken)
             {
+                //public async Task<bool> RegisterAdmin(RegisterDto registerDto)
+                //{
+                //    AppUser appUser = _mapper.Map<AppUser>(registerDto);
+                //    await _userManager.AddToRoleAsync(appUser, "Admin");
+                //    await CreateUser(appUser, registerDto.Password);
+                //    return true;
+                //}
                 throw new NotImplementedException();
             }
         }

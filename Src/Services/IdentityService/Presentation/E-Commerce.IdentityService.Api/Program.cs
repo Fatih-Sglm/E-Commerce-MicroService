@@ -5,6 +5,7 @@ using E_Commerce.IdentityService.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var val = Environment.GetEnvironmentVariable("MailPass");
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -26,6 +27,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.AddWebApplicaitonService();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

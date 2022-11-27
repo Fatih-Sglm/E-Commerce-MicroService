@@ -1,4 +1,5 @@
 ﻿using E_Commerce.IdentityService.Application.Abstractions.Repositories.Common;
+using E_Commerce.IdentityService.Application.Abstractions.Services;
 using E_Commerce.IdentityService.Application.Abstractions.Services.AuthService;
 using E_Commerce.IdentityService.Domain.Entities.Identity;
 using E_Commerce.IdentityService.Persistence.Concretes.Repositories.GenericRepo;
@@ -18,6 +19,9 @@ namespace E_Commerce.IdentityService.Persistence.Extensions
             services.AddDbContext<IdentityContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("MSS")));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepoitory<>));
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+            services.AddScoped<IAppUserService, AppUserService>();
+            services.AddScoped<IVeriyService, VeriyService>();
             //services.AddScoped<AuthBusinnesRules>();
             AddIdenTity(services);
 

@@ -1,4 +1,4 @@
-﻿namespace E_Commerce.IdentityService.Infrastructure.JwtHelper.Configuration
+﻿namespace E_Commerce.IdentityService.Infrastructure.Services.JwtHelper.Configuration
 {
     public class TokenOptions
     {

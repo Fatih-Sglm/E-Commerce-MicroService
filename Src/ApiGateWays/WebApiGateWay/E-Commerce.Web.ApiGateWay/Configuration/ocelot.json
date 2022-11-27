@@ -23,6 +23,17 @@
     },
     {
       "UseServiceDiscovery": true,
+      "ServiceName": "IdentityService",
+
+      "DownstreamPathTemplate": "/api/user/{everything}",
+      "DownstreamScheme": "https",
+
+      "UpstreamPathTemplate": "/user/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "Put" ],
+      "UpstreamScheme": "https"
+    },
+    {
+      "UseServiceDiscovery": true,
       "ServiceName": "BasketService",
 
       "DownstreamPathTemplate": "/api/basket/{everything}",
@@ -40,7 +51,7 @@
       "DownstreamScheme": "https",
 
       "UpstreamPathTemplate": "/order/{everything}",
-      "UpstreamHttpMethod": [ "Get"],
+      "UpstreamHttpMethod": [ "Get" ],
       "UpstreamScheme": "https"
     }
   ],

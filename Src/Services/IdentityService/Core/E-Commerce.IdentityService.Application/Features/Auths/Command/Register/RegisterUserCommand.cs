@@ -1,14 +1,18 @@
 ﻿using E_Commerce.IdentityService.Application.Abstractions.Services.AuthService;
-using E_Commerce.IdentityService.Application.Features.Auths.Dtos;
+using E_Commerce.IdentityService.Application.Features.Common;
 using MediatR;
 
 namespace E_Commerce.IdentityService.Application.Features.Auths.Command.Register
 {
-    public class RegisterUserCommand : IRequest<string>
+    public class RegisterUserCommand : IRequest<ResponseDto<NoContent>>
     {
-        public RegisterDto RegisterDto { get; set; }
+        public required string FirstName { get; set; }
+        public required string LastName { get; set; }
+        public required string Email { get; set; }
+        public required string UserName { get; set; }
+        public required string Password { get; set; }
 
-        public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, string>
+        public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, ResponseDto<NoContent>>
         {
             private readonly IAuthService _authService;
 
@@ -17,9 +21,9 @@ namespace E_Commerce.IdentityService.Application.Features.Auths.Command.Register
                 _authService = authService;
             }
 
-            public async Task<string> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+            public async Task<ResponseDto<NoContent>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
             {
-                return await _authService.Register(request.RegisterDto);
+                return ResponseDto<NoContent>.SuccesWithOutData(await _authService.Register(request));
             }
         }
     }

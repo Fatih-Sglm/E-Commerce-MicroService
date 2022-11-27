@@ -1,18 +1,18 @@
 ﻿using E_Commerce.IdentityService.Application.Abstractions.Services.Jwt;
 using E_Commerce.IdentityService.Application.Features.Auths.Dtos;
-using E_Commerce.IdentityService.Domain.Entities;
 using E_Commerce.IdentityService.Domain.Entities.Identity;
 using E_Commerce.IdentityService.Infrastructure.Extensions;
-using E_Commerce.IdentityService.Infrastructure.JwtHelper.Configuration;
+using E_Commerce.IdentityService.Infrastructure.Services.JwtHelper.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
-namespace E_Commerce.IdentityService.Infrastructure.JwtHelper
+namespace E_Commerce.IdentityService.Infrastructure.Services.JwtHelper
 {
-    public class TokenHelper : ITokenHelper
+    internal class TokenHelper : ITokenHelper
     {
         public IConfiguration Configuration { get; }
         private readonly TokenOptions _tokenOptions;
@@ -23,9 +23,12 @@ namespace E_Commerce.IdentityService.Infrastructure.JwtHelper
             Configuration = configuration;
             _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
         }
-        public RefreshToken CreateRefreshToken(AppUser user, string ipAddress, int refresftokenDay)
+        public string CreateRefreshToken()
         {
-            throw new NotImplementedException();
+            byte[] number = new byte[64];
+            using RandomNumberGenerator generator = RandomNumberGenerator.Create();
+            generator.GetBytes(number);
+            return Convert.ToBase64String(number);
         }
 
         public AccessToken CreateToken(AppUser user, IList<string> roles)
