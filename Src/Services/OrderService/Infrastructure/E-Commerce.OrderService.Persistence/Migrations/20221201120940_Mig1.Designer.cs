@@ -4,6 +4,7 @@ using E_Commerce.OrderService.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerce.OrderService.Persistence.Migrations
 {
     [DbContext(typeof(OrderDbContext))]
-    partial class OrderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221201120940_Mig1")]
+    partial class Mig1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,17 +125,10 @@ namespace ECommerce.OrderService.Persistence.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ExpirationMonth")
-                        .IsRequired()
+                    b.Property<DateTime>("Expiration")
                         .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)")
-                        .HasColumnName("ExpirationMonth");
-
-                    b.Property<string>("ExpirationYear")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)")
-                        .HasColumnName("ExpirationYear");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Expiration");
 
                     b.Property<string>("SecurityNumber")
                         .IsRequired()
@@ -160,8 +156,8 @@ namespace ECommerce.OrderService.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("OrderAmount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("OrderAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");

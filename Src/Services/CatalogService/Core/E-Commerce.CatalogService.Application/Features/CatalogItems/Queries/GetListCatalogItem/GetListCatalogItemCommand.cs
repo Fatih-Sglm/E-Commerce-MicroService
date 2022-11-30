@@ -6,10 +6,8 @@ using MediatR;
 
 namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Queries.GetListCatalogItem
 {
-    public class GetListCatalogItemQuery : IRequest<ResponseDto<CatalogItemListModel>>
+    public class GetListCatalogItemQuery : PageRequest, IRequest<ResponseDto<CatalogItemListModel>>
     {
-        public PageRequest PageRequest { get; set; } = new PageRequest(0, 5);
-
         public class GetListCatalogItemQueryHandler : IRequestHandler<GetListCatalogItemQuery, ResponseDto<CatalogItemListModel>>
         {
             private readonly ICatalogItemsService _catalogItemsService;
@@ -22,7 +20,7 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Queries.Ge
             public async Task<ResponseDto<CatalogItemListModel>> Handle(GetListCatalogItemQuery request, CancellationToken cancellationToken)
             {
 
-                return ResponseDto<CatalogItemListModel>.SuccesWithData(await _catalogItemsService.GetListCatalogItem(request.PageRequest));
+                return ResponseDto<CatalogItemListModel>.SuccesWithData(await _catalogItemsService.GetListCatalogItem(new() { Page = request.Page, PageSize = request.PageSize }));
             }
         }
     }

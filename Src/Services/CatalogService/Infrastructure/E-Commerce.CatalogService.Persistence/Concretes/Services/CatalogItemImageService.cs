@@ -21,10 +21,6 @@ namespace E_Commerce.CatalogService.Persistence.Concretes.Services
             List<CatalogItemImage> catalogItemImages = new();
             if (files.Count > 0)
             {
-                if (folderName.Contains('/'))
-                {
-                    folderName = folderName.Replace("/", "\\");
-                }
                 var value = await _storage.UploadAsync(folderName, files);
                 foreach (var (fileName, pathOrContainerName) in value)
                 {

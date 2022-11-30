@@ -22,18 +22,18 @@ namespace E_Commerce.PaymentService.Application.IntegrationEvents.EventHandler
 
         public async Task HandleAsync(OrderStartedIntegrationEvent @event)
         {
-            bool payment = await _paymentService.Payment(@event.CreditCardInformation);
+            var payment = await _paymentService.Payment(new(@event.Name, @event.Email, "USD", @event.Amount, @event.CreditCard), default);
 
-            IntegrationEvent paymentevent = payment ? new OrderPaymentSuccesIntegrationEvent(@event.OrderId, @event.UserName)
-                : new OrderPaymentFailedIntegrationEvent(@event.OrderId, @event.UserName, "Error");
+            IntegrationEvent paymentevent = payment.IsPaid ? new OrderPaymentSuccesIntegrationEvent(@event.OrderId, @event.Name, @event.Email, @event.OrderNumber, @event.OrderDate)
+                : new OrderPaymentFailedIntegrationEvent(@event.OrderId, @event.Name, @event.Email, @event.OrderNumber, "Error", @event.OrderDate);
 
 
-            IntegrationEvent orderStatusEvent = payment ? new OrderStatusChangedIntegrationEvent(@event.OrderId, OrderStatus.Paid.ToString()) :
+            IntegrationEvent orderStatusEvent = payment.IsPaid ? new OrderStatusChangedIntegrationEvent(@event.OrderId, OrderStatus.Paid.ToString()) :
                 new OrderStatusChangedIntegrationEvent(@event.OrderId, OrderStatus.AwaitingPayment.ToString());
 
 
             _logger.LogInformation($"OrderStartedIntegrationEventHandler in " +
-                $"Payment service is fired with paymentsucces:{payment} , orderId: {@event.OrderId}");
+                $"Payment service is fired with paymentsucces:{payment.IsPaid} , orderId: {@event.OrderId}");
 
             _eventBus.Publish(paymentevent);
             _eventBus.Publish(orderStatusEvent);

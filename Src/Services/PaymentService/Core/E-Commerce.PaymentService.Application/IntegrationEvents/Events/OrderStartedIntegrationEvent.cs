@@ -6,19 +6,23 @@ namespace E_Commerce.PaymentService.Application.IntegrationEvents.Events
     public class OrderStartedIntegrationEvent : IntegrationEvent
     {
 
-        public CreditCardInformation CreditCardInformation { get; set; }
-        public string UserName { get; set; }
+        public CreditCard CreditCard { get; set; }
+        public string OrderNumber { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public Guid OrderId { get; set; }
+        public DateTime OrderDate { get; set; }
+        public decimal Amount { get; set; }
 
-        public OrderStartedIntegrationEvent(CreditCardInformation creditCardInformation, string userName, string name, string email, Guid orderId)
+        public OrderStartedIntegrationEvent(CreditCard creditCard, string orderNumber, string name, string email, Guid orderId, DateTime orderDate, decimal amount)
         {
-            CreditCardInformation = creditCardInformation;
-            UserName = userName;
+            CreditCard = creditCard;
+            OrderNumber = orderNumber;
             Name = name;
             Email = email;
             OrderId = orderId;
+            OrderDate = orderDate;
+            Amount = amount;
         }
     }
 }

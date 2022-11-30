@@ -12,9 +12,10 @@ namespace E_Commerce.IdentityService.Application.Features.Auths.Rules
             return appUser is null ? throw new NotFoundException(AuthConstantMessage.ErrorMessage) : Task.CompletedTask;
         }
 
-        public static async Task CheckUserPassword(this UserManager<AppUser> userManager, AppUser appUser, string password)
+        public static async Task CheckUserPassword(this SignInManager<AppUser> signInManager, AppUser appUser, string password)
         {
-            if (!await userManager.CheckPasswordAsync(appUser, password))
+            var result = await signInManager.CheckPasswordSignInAsync(appUser, password, true);
+            if (!result.Succeeded)
             {
                 throw new IdentityException(AuthConstantMessage.ErrorMessage);
             }
@@ -27,6 +28,8 @@ namespace E_Commerce.IdentityService.Application.Features.Auths.Rules
                 throw new IdentityException(AuthConstantMessage.ErrorMessage);
             }
         }
+
+
 
 
     }

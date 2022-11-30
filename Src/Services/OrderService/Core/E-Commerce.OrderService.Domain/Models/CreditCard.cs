@@ -1,22 +1,19 @@
 ﻿namespace E_Commerce.OrderService.Domain.Models
 {
-    public class CreditCardInformation
+    public class CreditCard
     {
-        public string Alias { get; private set; } = null;
         public string CardNumber { get; private set; }
-
         public string CardHolderName { get; private set; }
-
-        public DateTime CardExpiration { get; private set; }
+        public string ExpirationYear { get; private set; }
+        public string ExpirationMonth { get; private set; }
         public string CardSecurityNumber { get; set; }
 
-        public CreditCardInformation(string alias, string cardNumber, string cardHolderName, DateTime cardExpiration, string cardSecurityNumber)
+        public CreditCard(string cardHolderName, string cardNumber, string expirationMonth, string expirationYear, string cardSecurityNumber)
         {
-
-            Alias = alias;
             CardNumber = cardNumber;
             CardHolderName = cardHolderName;
-            CardExpiration = cardExpiration;
+            ExpirationYear = expirationYear;
+            ExpirationMonth = expirationMonth;
             CardSecurityNumber = cardSecurityNumber;
         }
     }

@@ -41,9 +41,16 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
                 .IsRequired();
 
             paymentConfiguration
-                .Property(i => i.Expiration)
+                .Property(i => i.ExpirationMonth)
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
-                .HasColumnName("Expiration")
+                .HasColumnName("ExpirationMonth")
+                .HasMaxLength(25)
+                .IsRequired();
+
+            paymentConfiguration
+                .Property(i => i.ExpirationYear)
+                .UsePropertyAccessMode(PropertyAccessMode.Field)
+                .HasColumnName("ExpirationYear")
                 .HasMaxLength(25)
                 .IsRequired();
 

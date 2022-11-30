@@ -44,8 +44,9 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
 
             var eventmessage = new OrderCreatedIntegrationEvent
                 (userName, fullname, Email, basketCheckout.City, basketCheckout.Street,
-            basketCheckout.Street, basketCheckout.Country, basketCheckout.ZipCode, basketCheckout.Alias, basketCheckout.CardNumber, basketCheckout.CardHolderName,
-            basketCheckout.CardExpiration, basketCheckout.CardSecurityNumber, basketCheckout.CardTypeId,
+            basketCheckout.Street, basketCheckout.Country, basketCheckout.ZipCode, basketCheckout.Alias,
+            basketCheckout.CardNumber, basketCheckout.CardHolderName,
+            basketCheckout.ExpirationMonth, basketCheckout.ExpirationYear, basketCheckout.CardSecurityNumber, basketCheckout.CardTypeId,
             basket, basketCheckout.WillPaymentRecorded);
 
             try

@@ -18,15 +18,18 @@ namespace E_Commerce.IdentityService.Persistence.Concretes.Services
         private readonly UserManager<AppUser> _userManager;
         private readonly IRefreshTokenService _refreshTokenService;
         private readonly IAppUserService _appUserService;
+        private readonly SignInManager<AppUser> _signInManager;
         //private readonly AuthBusinnesRules _authBusinnesRules;
 
         public AuthService(ITokenHelper tokenHandler,
             UserManager<AppUser> userManager,
-            IRefreshTokenService refreshTokenService)
+            IRefreshTokenService refreshTokenService,
+            SignInManager<AppUser> signInManager)
         {
             _tokenHandler = tokenHandler;
             _userManager = userManager;
             _refreshTokenService = refreshTokenService;
+            _signInManager = signInManager;
         }
         public async Task<LoginResponseDto> LoginAsync(LoginUserCommand command)
         {
@@ -34,8 +37,8 @@ namespace E_Commerce.IdentityService.Persistence.Concretes.Services
             user ??= await _userManager.FindByNameAsync(command.UserNameOrEmail);
             // Created extension method for those functions
             await user.CheckUserIsNull();
-            await _userManager.CheckUserPassword(user, command.Password);
             await _userManager.CheckEmailConfimed(user);
+            await _signInManager.CheckUserPassword(user, command.Password);
             //await AuthBusinnesRules.CheckUserIsNull(user!);
             //await AuthBusinnesRules.CheckEmailConfimed(_userManager, user);
             //await AuthBusinnesRules.CheckUserPassword(_userManager, user, loginUserDto.Password);
@@ -52,7 +55,7 @@ namespace E_Commerce.IdentityService.Persistence.Concretes.Services
             {
                 Token = accessToken.Token,
                 RefreshToken = refreshtoken,
-                Expiration = accessToken.Expiration,
+                Expiration = accessToken.Expiration.ToString(),
             };
         }
 

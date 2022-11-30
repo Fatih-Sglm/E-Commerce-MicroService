@@ -26,9 +26,8 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
         }
 
 
-        public Task VerifyOrAddPaymentMethod(
-            int cardTypeId, string alias, string cardNumber,
-            string securityNumber, string cardHolderName, DateTime expiration, Guid orderId, bool willPaymentRecord = false)
+        public Task VerifyOrAddPaymentMethod(string alias, string cardNumber, string cardHolderName,
+             string expirationMonth, string expirationYear, string securityNumber, int cardTypeId, Guid orderId, bool willPaymentRecord = false)
         {
 
             if (!willPaymentRecord)
@@ -37,7 +36,8 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
             }
             else
             {
-                var payment = _paymentMethods.SingleOrDefault(p => p.IsEqualTo(cardTypeId, cardNumber, expiration));
+                var payment = _paymentMethods.SingleOrDefault(p => p.IsEqualTo(cardNumber, cardHolderName,
+                     expirationMonth, expirationYear, securityNumber, cardTypeId));
 
                 if (payment is not null)
                 {
@@ -45,7 +45,7 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
                 }
                 else
                 {
-                    payment = new PaymentMethod(cardTypeId, alias, cardNumber, securityNumber, cardHolderName, expiration);
+                    payment = new PaymentMethod(alias, cardNumber, cardHolderName, expirationMonth, expirationYear, securityNumber, cardTypeId);
                     _paymentMethods.Add(payment);
                     AddDomainEvent(new BuyerAndPaymentMethodVerifiedDomainEvent(this, payment, orderId));
                 }

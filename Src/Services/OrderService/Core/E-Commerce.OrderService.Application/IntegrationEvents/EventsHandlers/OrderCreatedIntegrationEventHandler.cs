@@ -28,11 +28,10 @@ namespace E_Commerce.OrderService.Application.IntegrationEvents.EventsHandlers
                 @event);
 
                 CreateOrderCommand createOrderCommand = new(
-                            @event.Basket.Items,
-                            @event.Basket.TotalPrice,
-                            @event.UserName,
-                            @event.City, @event.Street,
-                            @event.State, @event.Country, @event.ZipCode, @event.CreditCardInformation, @event.CardTypeId, @event.WillPaymentRecorded);
+                            @event.Basket.Items, @event.Basket.TotalPrice,
+                            @event.UserName, @event.Name, @event.Email,
+                            @event.City, @event.Street, @event.State, @event.Country, @event.ZipCode,
+                            @event.Alias, @event.CreditCard, @event.CardTypeId, @event.WillPaymentRecorded);
 
                 await _mediator.Send(createOrderCommand);
 

@@ -28,7 +28,7 @@ namespace E_Commerce.OrderService.Application.IntegrationEvents.EventsHandlers
             //    ExecuteUpdateAsync(s => s.SetProperty(x => x.GetType().GetField("orderStatusId", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(x), orderStatus.Id));
             var message = result /*> 0*/ ? $"The Order Status column of the item with id {@event.Id} has been successfully updated to {@event.OrderStatus}." :
                 $"An error occurred while updating the order status column of the order with id {@event.Id}.";
-            _logger.LogInformation(message);
+            _logger.LogInformation(message: message);
         }
     }
 }

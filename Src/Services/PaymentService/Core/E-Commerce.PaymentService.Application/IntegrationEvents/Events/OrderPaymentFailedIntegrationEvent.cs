@@ -4,16 +4,21 @@ namespace E_Commerce.PaymentService.Application.IntegrationEvents.Events
 {
     public class OrderPaymentFailedIntegrationEvent : IntegrationEvent
     {
-        public Guid OrderId { get; set; }
+        public Guid OrderId { get; private set; }
+        public string Name { get; private set; }
+        public string Email { get; private set; }
+        public string OrderNumber { get; private set; }
+        public string ErrorMessage { get; private set; }
+        public DateTime OrderDate { get; private set; }
 
-        public string UserName { get; set; }
-        public string ErrorMessage { get; set; }
-
-        public OrderPaymentFailedIntegrationEvent(Guid orderId, string userName, string errorMessage)
+        public OrderPaymentFailedIntegrationEvent(Guid orderId, string name, string email, string orderNumber, string errorMessage, DateTime orderDate)
         {
             OrderId = orderId;
+            Name = name;
+            Email = email;
+            OrderNumber = orderNumber;
             ErrorMessage = errorMessage;
-            UserName = userName;
+            OrderDate = orderDate;
         }
     }
 }

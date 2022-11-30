@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddLogging(cfg => cfg.AddConsole());
 builder.Services.AddTransient<OrderStartedIntegrationEventHandler>();
-builder.Services.AddPaymentServiceInfrasturctureExtension();
+builder.Services.AddPaymentServiceInfrasturctureExtension(builder.Configuration);
 builder.Services.AddSingleton(sp =>
 {
     EventBusConfig eventBusConfig = new()
