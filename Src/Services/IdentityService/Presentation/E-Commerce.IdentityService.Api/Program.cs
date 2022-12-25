@@ -33,7 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
+app.AddWebApplicaitonService();
 app.AddWebApplicaitonService();
 app.UseHttpsRedirection();
 app.UseAuthentication();

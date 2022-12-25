@@ -30,7 +30,7 @@ public static class IQueryableDynamicFilterExtensions
         this IQueryable<T> query, Dynamic dynamic)
     {
         if (dynamic.Filter is not null) query = Filter(query, dynamic.Filter);
-        if (dynamic.Sort is not null && dynamic.Sort.Any()) query = Sort(query, dynamic.Sort);
+        if (dynamic.Sort is not null) query = Sort(query, dynamic.Sort);
         return query;
     }
 
@@ -46,17 +46,16 @@ public static class IQueryableDynamicFilterExtensions
     }
 
     private static IQueryable<T> Sort<T>(
-        IQueryable<T> queryable, IEnumerable<Sort> sort)
+        IQueryable<T> queryable, Sort sort)
     {
-        foreach (var item in sort)
+
+        if (string.IsNullOrEmpty(sort.Field)) throw new ArgumentException("Invalid Field");
+        if (string.IsNullOrEmpty(sort.Dir) || !_orders.Contains(sort.Dir)) throw new ArgumentException("Invalid Order Type");
+
+        if (sort is not null)
         {
-            if (string.IsNullOrEmpty(item.Field)) throw new ArgumentException("Invalid Field");
-            if (string.IsNullOrEmpty(item.Dir) || !_orders.Contains(item.Dir)) throw new ArgumentException("Invalid Order Type");
-        }
-        if (sort.Any())
-        {
-            string ordering = string.Join(",", sort.Select(s => $"{s.Field} {s.Dir}"));
-            return queryable.OrderBy(ordering);
+            //string ordering = string.Join(",", sort.Select(s => $"{s.Field} {s.Dir}"));
+            return queryable.OrderBy($"{sort.Field} {sort.Dir}");
         }
 
         return queryable;

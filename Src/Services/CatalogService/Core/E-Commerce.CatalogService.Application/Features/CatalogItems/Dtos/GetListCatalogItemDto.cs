@@ -7,6 +7,6 @@
         public decimal Price { get; set; }
         public string CatalogBrandName { get; set; }
         public string CatalogTypeName { get; set; }
-        public IList<string> CatalogItemsHeaderImages { get; set; }
+        public IList<string>? CatalogItemsHeaderImages { get; set; }
     }
 }

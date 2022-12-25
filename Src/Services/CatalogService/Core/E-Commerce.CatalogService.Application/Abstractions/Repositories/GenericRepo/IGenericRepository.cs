@@ -20,10 +20,11 @@ namespace E_Commerce.CatalogService.Application.Abstractions.Repositories.Generi
                                         bool enableTracking = true,
                                         CancellationToken cancellationToken = default);
 
-        Task<IQueryable<T>> GetListDynamicAsync(Dynamic dynamic, Func<IQueryable<T>,
-                                                  IIncludableQueryable<T, object>>? include = null,
-                                                  bool enableTracking = true,
-                                                  CancellationToken cancellationToken = default);
+        Task<IQueryable<T>> GetListDynamicAsync(Dynamic dynamic,
+                                                Expression<Func<T, bool>>? predicate = null,
+                                                Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+                                                bool enableTracking = true,
+                                                CancellationToken cancellationToken = default);
 
 
 
@@ -35,9 +36,10 @@ namespace E_Commerce.CatalogService.Application.Abstractions.Repositories.Generi
 
 
         Task<IPaginate<T>> GetListDynamicAsyncWithPaginate(Dynamic dynamic,
-                                                             Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
-                                                             int index = 0, int size = 10, bool enableTracking = true,
-                                                             CancellationToken cancellationToken = default);
+                                                           Expression<Func<T, bool>>? predicate = null,
+                                                           Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+                                                           int index = 0, int size = 10, bool enableTracking = true,
+                                                           CancellationToken cancellationToken = default);
 
         Task AddAsync(T entity);
 

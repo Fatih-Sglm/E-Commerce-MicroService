@@ -44,7 +44,7 @@ namespace E_Commerce.IdentityService.Application.Extensions
             opt.AddCustomHandler<T>((context, ex, logger) =>
             {
 
-                var obj = ResponseDto<NoContent>.Failed(isDevelopment ? ex.ToString() : ex.Message);
+                var obj = ResponseDto<NoContent>.Failed(/*isDevelopment ? ex.ToString() :*/ ex.Message);
                 context.Response.StatusCode = (int)httpStatusCode;
                 return context.Response.WriteAsJsonAsync(obj);
             });

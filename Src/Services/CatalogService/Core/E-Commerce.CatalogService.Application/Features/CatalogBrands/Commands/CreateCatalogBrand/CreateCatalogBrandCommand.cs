@@ -1,6 +1,6 @@
 ﻿using E_Commerce.CatalogService.Application.Abstractions.Repositories;
 using E_Commerce.CatalogService.Application.Features.CatalogBrands.Rules;
-using E_Commerce.CatalogService.Application.Features.Common;
+using E_Commerce.CatalogService.Application.Models;
 using MediatR;
 
 namespace E_Commerce.CatalogService.Application.Features.CatalogBrands.Commands.CreateCatalogBrand

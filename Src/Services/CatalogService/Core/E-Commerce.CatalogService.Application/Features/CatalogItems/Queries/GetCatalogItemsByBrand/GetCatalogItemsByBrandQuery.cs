@@ -1,6 +1,6 @@
-﻿using E_Commerce.CatalogService.Application.Abstractions.Services;
+﻿using E_Commerce.CatalogService.Application.Abstractions.Services.CatalogItems;
 using E_Commerce.CatalogService.Application.Features.CatalogItems.Models;
-using E_Commerce.CatalogService.Application.Features.Common;
+using E_Commerce.CatalogService.Application.Models;
 using E_Commerce.CatalogService.Application.Paging;
 using MediatR;
 
@@ -14,9 +14,9 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Queries.Ge
 
         public class GetCatalogItemsByBrandQueryHandler : IRequestHandler<GetCatalogItemsByBrandQuery, ResponseDto<CatalogItemListModel>>
         {
-            private readonly ICatalogItemsService _catalogItemsService;
+            private readonly ICatalogItemReadService _catalogItemsService;
 
-            public GetCatalogItemsByBrandQueryHandler(ICatalogItemsService catalogItemsService)
+            public GetCatalogItemsByBrandQueryHandler(ICatalogItemReadService catalogItemsService)
             {
                 _catalogItemsService = catalogItemsService;
             }

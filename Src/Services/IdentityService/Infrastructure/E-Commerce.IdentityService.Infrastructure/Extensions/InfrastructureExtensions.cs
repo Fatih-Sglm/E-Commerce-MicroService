@@ -1,8 +1,8 @@
 ﻿using E_Commerce.IdentityService.Application.Abstractions.Services;
 using E_Commerce.IdentityService.Application.Abstractions.Services.Jwt;
 using E_Commerce.IdentityService.Infrastructure.Concretes.HostedService;
+using E_Commerce.IdentityService.Infrastructure.Concretes.Services;
 using E_Commerce.IdentityService.Infrastructure.Concretes.Services.JwtHelper;
-using E_Commerce.IdentityService.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace E_Commerce.IdentityService.Infrastructure.Extensions

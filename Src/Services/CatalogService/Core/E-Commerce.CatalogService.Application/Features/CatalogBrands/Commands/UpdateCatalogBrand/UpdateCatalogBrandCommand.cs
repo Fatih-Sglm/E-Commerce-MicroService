@@ -1,6 +1,6 @@
 ﻿using E_Commerce.CatalogService.Application.Abstractions.Repositories;
 using E_Commerce.CatalogService.Application.Features.CatalogBrands.Rules;
-using E_Commerce.CatalogService.Application.Features.Common;
+using E_Commerce.CatalogService.Application.Models;
 using E_Commerce.CatalogService.Domain.Entities;
 using MediatR;
 

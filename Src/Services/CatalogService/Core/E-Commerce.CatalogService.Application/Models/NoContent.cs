@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.CatalogService.Application.Features.Common
+namespace E_Commerce.CatalogService.Application.Models
 {
     public class NoContent
     {

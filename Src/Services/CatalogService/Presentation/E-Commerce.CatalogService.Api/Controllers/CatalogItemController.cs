@@ -1,4 +1,5 @@
-﻿using E_Commerce.CatalogService.Application.Features.CatalogItems.Command.CreatCatalogItem;
+﻿using E_Commerce.CatalogService.Application.Abstractions.Services;
+using E_Commerce.CatalogService.Application.Features.CatalogItems.Command.CreatCatalogItem;
 using E_Commerce.CatalogService.Application.Features.CatalogItems.Command.DeleteCatalogItem;
 using E_Commerce.CatalogService.Application.Features.CatalogItems.Command.UpdateCatalogItem;
 using E_Commerce.CatalogService.Application.Features.CatalogItems.Queries.GetCatalogItem;
@@ -13,6 +14,15 @@ namespace E_Commerce.CatalogService.Api.Controllers
     [ApiController]
     public class CatalogItemController : BaseController
     {
+        private readonly ICatalogBrandService _brandService;
+        private readonly ICatalogTypeService _typeService;
+
+        public CatalogItemController(ICatalogBrandService brandService, ICatalogTypeService typeService)
+        {
+            _brandService = brandService;
+            _typeService = typeService;
+        }
+
         [HttpPost("AddCatalogItem")]
         public async Task<IActionResult> Create([FromForm] CreatCatalogItemCommand creatCatalogItemCommand)
         {
@@ -42,6 +52,18 @@ namespace E_Commerce.CatalogService.Api.Controllers
         public async Task<IActionResult> GetCatalogItemsByType([FromQuery] GetCatalogItemsByTypeQuery query)
         {
             return Ok(await Mediator.Send(query));
+        }
+
+
+
+        [HttpGet("GetCatalogBrandsAndTypes")]
+        public async Task<IActionResult> GetCatalogBrandsAndTypes()
+        {
+            return Ok(new
+            {
+                Brands = await _brandService.GetBrands(),
+                Types = await _typeService.GetCatalogTypes()
+            });
         }
 
         [HttpGet("GetCatalogItemsByBrand")]

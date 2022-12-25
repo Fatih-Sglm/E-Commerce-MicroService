@@ -50,7 +50,6 @@ namespace E_Commerce.EventBus.RabbitMq
 
                 policy.Execute(() =>
                 {
-
                     _connection = _connectionFactory.CreateConnection();
                     _logger.LogInformation("Rabbit MQ Connection is Succesfull");
                 });
