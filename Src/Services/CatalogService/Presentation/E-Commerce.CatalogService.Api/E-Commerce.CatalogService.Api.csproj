@@ -17,6 +17,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.ServiceFabric.Services.Remoting" Version="6.1.1390" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,11 +1,9 @@
-﻿using E_Commerce.IdentityService.Application.Features.Auths.Dtos;
+﻿using E_Commerce.IdentityService.Application.Features.Auths.Command.Register;
 
 namespace E_Commerce.IdentityService.Application.Abstractions.Services.AuthService
 {
-    public interface IAuthService
+    public interface IAuthService : IExternalAuthentication, IInternalAuthentication
     {
-        Task<AccessToken> Login(LoginUserDto loginUserDto);
-        Task<string> Register(RegisterDto registerDto);
-        Task<bool> RegisterAdmin(RegisterDto registerDto);
+        Task<string> Register(RegisterUserCommand command);
     }
 }

@@ -6,7 +6,7 @@
         public string BuyerName { get; set; }
         public List<BasketItem> Items { get; set; } = new List<BasketItem>();
 
-        public decimal TotalPrice { get; set; }
+        public double TotalPrice { get; set; }
         public CustomerBasket()
         {
 

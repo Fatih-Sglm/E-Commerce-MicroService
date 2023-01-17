@@ -1,5 +1,5 @@
 ﻿using E_Commerce.OrderService.Application.Abstractions.Repostories.GenericRepo;
-using E_Commerce.OrderService.Application.Paging;
+using E_Commerce.OrderService.Application.Models.Paging;
 using E_Commerce.OrderService.Domain.SeedWork;
 using E_Commerce.OrderService.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -105,6 +105,11 @@ namespace E_Commerce.OrderService.Persistence.Concrete.Repository.GenericRepo
         public Task<IPaginate<T>> GetListAsyncPaginate(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, int index = 0, int size = 10, bool enableTracking = true, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return await Context.SaveChangesAsync() > 0;
         }
     }
 }

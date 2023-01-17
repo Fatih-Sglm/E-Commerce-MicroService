@@ -5,7 +5,10 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
 {
     public class Buyer : BaseEntity, IAggregateRoot
     {
-        public string Name { get; set; }
+        public string UserName { get; set; }
+        public string Fullname { get; set; }
+        public string Email { get; set; }
+
 
         private readonly List<PaymentMethod> _paymentMethods;
         public IEnumerable<PaymentMethod> PaymentMethods => _paymentMethods.AsReadOnly();
@@ -15,15 +18,16 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
             _paymentMethods = new List<PaymentMethod>();
         }
 
-        public Buyer(string name) : this()
+        public Buyer(string name, string fullname, string email) : this()
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            UserName = name ?? throw new ArgumentNullException(nameof(name));
+            Fullname = fullname ?? throw new ArgumentNullException(nameof(fullname));
+            Email = email ?? throw new ArgumentNullException(nameof(email));
         }
 
 
-        public Task VerifyOrAddPaymentMethod(
-            int cardTypeId, string alias, string cardNumber,
-            string securityNumber, string cardHolderName, DateTime expiration, Guid orderId, bool willPaymentRecord = false)
+        public Task VerifyOrAddPaymentMethod(string alias, string cardNumber, string cardHolderName,
+             string expirationMonth, string expirationYear, string securityNumber, int cardTypeId, Guid orderId, bool willPaymentRecord = false)
         {
 
             if (!willPaymentRecord)
@@ -32,7 +36,8 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
             }
             else
             {
-                var payment = _paymentMethods.SingleOrDefault(p => p.IsEqualTo(cardTypeId, cardNumber, expiration));
+                var payment = _paymentMethods.SingleOrDefault(p => p.IsEqualTo(cardNumber, cardHolderName,
+                     expirationMonth, expirationYear, securityNumber, cardTypeId));
 
                 if (payment is not null)
                 {
@@ -40,7 +45,7 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
                 }
                 else
                 {
-                    payment = new PaymentMethod(cardTypeId, alias, cardNumber, securityNumber, cardHolderName, expiration);
+                    payment = new PaymentMethod(alias, cardNumber, cardHolderName, expirationMonth, expirationYear, securityNumber, cardTypeId);
                     _paymentMethods.Add(payment);
                     AddDomainEvent(new BuyerAndPaymentMethodVerifiedDomainEvent(this, payment, orderId));
                 }
@@ -53,7 +58,7 @@ namespace E_Commerce.OrderService.Domain.AggregaedModels.BuyerAggregate
             return base.Equals(obj) ||
                    (obj is Buyer buyer &&
                    Id.Equals(buyer.Id) &&
-                   Name == buyer.Name);
+                   UserName == buyer.UserName);
         }
 
 

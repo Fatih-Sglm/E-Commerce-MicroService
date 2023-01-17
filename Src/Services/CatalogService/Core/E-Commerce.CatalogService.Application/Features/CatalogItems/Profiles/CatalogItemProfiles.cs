@@ -20,7 +20,8 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Profiles
 
             CreateMap<CatalogItem, GetCatalogItemDto>().
                 ForMember(x => x.CatalogTypeName, y => y.MapFrom(z => z.CatalogType.Name)).
-                ForMember(x => x.CatalogBrandName, y => y.MapFrom(z => z.CatalogBrand.Name));
+                ForMember(x => x.CatalogBrandName, y => y.MapFrom(z => z.CatalogBrand.Name))
+                .ForMember(x => x.Price, y => y.MapFrom(x => x.Price));
 
         }
     }

@@ -1,4 +1,5 @@
 using E_Commerce.BasketService.Api.Extensions;
+using E_Commerce.BasketService.Application.Extensions;
 using E_Commerce.BasketService.Application.IntegrationEvents.EventsHandler;
 using E_Commerce.BasketService.Infrastructure.Extensions;
 using E_Commerce.BasketService.Persistence.Extensions;
@@ -15,7 +16,8 @@ builder.Services.AddPersistenceRegistraiton();
 builder.Services.AddInfratructureRegistration();
 builder.Services.AddSingleton(sp => sp.RegisConfiguration(builder.Configuration));
 builder.Services.AddSingleton(sp => sp.EventBusRegister());
-builder.Services.AddTransient<OrderCreatedIntegrationEventHandler>();
+builder.Services.AddApplicationServiceRegistration();
+builder.Services.AddTransient<OrderCreatedIntegrationEventEventEventHandler>();
 builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

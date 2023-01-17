@@ -15,16 +15,12 @@ namespace E_Commerce.CatalogService.Persistence.Concretes.Services
             _storage = storage;
         }
 
-        public async Task<List<CatalogItemImage>> CreateCatalogItemImage(CatalogItem catalogItem, string folderName, IFormFileCollection files)
+        public async Task<List<CatalogItemImage>> CreateCatalogItemImage(CatalogItem catalogItem, string folderName, IFormFileCollection? files)
         {
             await catalogItem.CannotNull("");
             List<CatalogItemImage> catalogItemImages = new();
-            if (files.Count > 0)
+            if (files is not null)
             {
-                if (folderName.Contains('/'))
-                {
-                    folderName = folderName.Replace("/", "\\");
-                }
                 var value = await _storage.UploadAsync(folderName, files);
                 foreach (var (fileName, pathOrContainerName) in value)
                 {

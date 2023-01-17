@@ -1,4 +1,5 @@
-﻿using E_Commerce.IdentityService.Application.Features.Auths.Constant;
+﻿using E_Commerce.IdentityService.Application.Exceptions;
+using E_Commerce.IdentityService.Application.Features.Auths.Constant;
 using E_Commerce.IdentityService.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -8,14 +9,15 @@ namespace E_Commerce.IdentityService.Application.Features.Auths.Rules
     {
         public static Task CheckUserIsNull(this AppUser appUser)
         {
-            return appUser is null ? throw new ArgumentNullException(AuthConstantMessage.ErrorMessage) : Task.CompletedTask;
+            return appUser is null ? throw new NotFoundException(AuthConstantMessage.ErrorMessage) : Task.CompletedTask;
         }
 
-        public static async Task CheckUserPassword(this UserManager<AppUser> userManager, AppUser appUser, string password)
+        public static async Task CheckUserPassword(this SignInManager<AppUser> signInManager, AppUser appUser, string password)
         {
-            if (!await userManager.CheckPasswordAsync(appUser, password))
+            var result = await signInManager.CheckPasswordSignInAsync(appUser, password, true);
+            if (!result.Succeeded)
             {
-                throw new Exception(AuthConstantMessage.ErrorMessage);
+                throw new IdentityException(AuthConstantMessage.ErrorMessage);
             }
         }
 
@@ -23,9 +25,11 @@ namespace E_Commerce.IdentityService.Application.Features.Auths.Rules
         {
             if (!await userManager.IsEmailConfirmedAsync(appUser))
             {
-                throw new Exception(AuthConstantMessage.ErrorMessage);
+                throw new IdentityException(AuthConstantMessage.ErrorMessage);
             }
         }
+
+
 
 
     }

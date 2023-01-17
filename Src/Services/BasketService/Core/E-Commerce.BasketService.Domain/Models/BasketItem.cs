@@ -9,9 +9,9 @@ namespace E_Commerce.BasketService.Domain.Models
 
         public string ProductName { get; set; }
 
-        public decimal UnitPrice { get; set; }
+        public double UnitPrice { get; set; }
 
-        public decimal OldUnitPrice { get; set; }
+        public double OldUnitPrice { get; set; }
 
         public int Quantity { get; set; }
 

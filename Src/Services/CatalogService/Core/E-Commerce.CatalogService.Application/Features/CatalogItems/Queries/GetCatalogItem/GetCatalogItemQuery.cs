@@ -1,6 +1,6 @@
-﻿using E_Commerce.CatalogService.Application.Abstractions.Services;
+﻿using E_Commerce.CatalogService.Application.Abstractions.Services.CatalogItems;
 using E_Commerce.CatalogService.Application.Features.CatalogItems.Dtos;
-using E_Commerce.CatalogService.Application.Features.Common;
+using E_Commerce.CatalogService.Application.Models;
 using MediatR;
 
 namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Queries.GetCatalogItem
@@ -11,9 +11,9 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Queries.Ge
 
         public class GetCatalogItemQueryHandler : IRequestHandler<GetCatalogItemQuery, ResponseDto<GetCatalogItemDto>>
         {
-            private readonly ICatalogItemsService _catalogItemsService;
+            private readonly ICatalogItemReadService _catalogItemsService;
 
-            public GetCatalogItemQueryHandler(ICatalogItemsService catalogItemsService)
+            public GetCatalogItemQueryHandler(ICatalogItemReadService catalogItemsService)
             {
                 _catalogItemsService = catalogItemsService;
             }

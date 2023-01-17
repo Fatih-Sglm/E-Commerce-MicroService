@@ -19,7 +19,7 @@ namespace E_Commerce.CatalogService.Api.Extensions
                   ValidIssuer = configuration["TokenOptions:Issuer"],
                   ValidAudience = configuration["TokenOptions:Audience"],
                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenOptions:SecurityKey"])),
-                  LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.Now : false,
+                  LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null && expires > DateTime.UtcNow,
               };
           });
 

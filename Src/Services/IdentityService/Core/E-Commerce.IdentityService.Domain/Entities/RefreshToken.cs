@@ -10,7 +10,6 @@ namespace E_Commerce.IdentityService.Domain.Entities
         public DateTime Expires { get; set; }
         public required string CreatedByIp { get; set; }
         public required AppUser User { get; set; }
-
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
     }

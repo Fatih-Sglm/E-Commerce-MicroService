@@ -1,5 +1,6 @@
 ﻿using E_Commerce.CatalogService.Application.Abstractions.Storage;
 using E_Commerce.CatalogService.Infrastructure.Enums;
+using E_Commerce.CatalogService.Infrastructure.Services.Storage.CloudinaryStorage;
 using E_Commerce.CatalogService.Infrastructure.Services.Storage.Local;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,12 +20,17 @@ namespace E_Commerce.CatalogService.Infrastructure.Extensions
                 case StorageType.Local:
                     serviceCollection.AddScoped<IStorage, LocalStorage>();
                     break;
+
+                case StorageType.Cloudinary:
+                    serviceCollection.AddScoped<IStorage, CloudinaryStorage>();
+                    break;
                 //case StorageType.Azure:
                 //    serviceCollection.AddScoped<IStorage, AzureStorage>();
                 //    break;
                 //case StorageType.AWS:
 
                 //    break;
+
                 default:
                     serviceCollection.AddScoped<IStorage, LocalStorage>();
                     break;

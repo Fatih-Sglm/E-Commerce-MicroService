@@ -1,21 +1,26 @@
 ﻿using E_Commerce.EventBus.Base.Events;
-using E_Commerce.OrderService.Application.Features.Orders.Models;
+using E_Commerce.OrderService.Domain.Models;
 
 namespace E_Commerce.OrderService.Application.IntegrationEvents.Events
 {
     public class OrderStartedIntegrationEvent : IntegrationEvent
     {
-        public CreditCardInformation CreditCardInformation { get; set; }
-        public string Name { get; private set; }
-        public string Email { get; private set; }
-        public Guid OrderId { get; private set; }
-
-        public OrderStartedIntegrationEvent(CreditCardInformation creditCardInformation, string name, string email, Guid orderId)
+        public CreditCard CreditCard { get; set; }
+        public string OrderNumber { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public Guid OrderId { get; set; }
+        public DateTime OderDate { get; set; }
+        public double Amount { get; set; }
+        public OrderStartedIntegrationEvent(CreditCard creditCard, string orderNumber, string name, string email, Guid orderId, DateTime oderDate, double amount)
         {
-            CreditCardInformation = creditCardInformation;
+            CreditCard = creditCard;
+            OrderNumber = orderNumber;
             Name = name;
             Email = email;
             OrderId = orderId;
+            OderDate = oderDate;
+            Amount = amount;
         }
     }
 }

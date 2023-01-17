@@ -31,13 +31,21 @@ namespace ECommerce.OrderService.Persistence.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Fullname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar");
 
                     b.HasKey("Id");
 
@@ -114,10 +122,17 @@ namespace ECommerce.OrderService.Persistence.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Expiration")
+                    b.Property<string>("ExpirationMonth")
+                        .IsRequired()
                         .HasMaxLength(25)
-                        .HasColumnType("datetime2")
-                        .HasColumnName("Expiration");
+                        .HasColumnType("nvarchar(25)")
+                        .HasColumnName("ExpirationMonth");
+
+                    b.Property<string>("ExpirationYear")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)")
+                        .HasColumnName("ExpirationYear");
 
                     b.Property<string>("SecurityNumber")
                         .IsRequired()
@@ -145,11 +160,15 @@ namespace ECommerce.OrderService.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("OrderAmount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("OrderAmount")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("PaymentMethodId")
                         .HasColumnType("uniqueidentifier");
@@ -233,26 +252,31 @@ namespace ECommerce.OrderService.Persistence.Migrations
                         new
                         {
                             Id = 2,
-                            Name = "AwaitingValidation"
+                            Name = "AwaitingPayment"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "StockConfirmed"
+                            Name = "AwaitingValidation"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Paid"
+                            Name = "StockConfirmed"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Shipped"
+                            Name = "Paid"
                         },
                         new
                         {
                             Id = 6,
+                            Name = "Shipped"
+                        },
+                        new
+                        {
+                            Id = 7,
                             Name = "Cancelled"
                         });
                 });

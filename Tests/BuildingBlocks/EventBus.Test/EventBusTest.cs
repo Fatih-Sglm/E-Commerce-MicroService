@@ -11,7 +11,7 @@ namespace EventBus.Test
     public class EventBusTest
     {
 
-        private ServiceCollection services;
+        private readonly ServiceCollection services;
 
         public EventBusTest()
         {
@@ -23,7 +23,7 @@ namespace EventBus.Test
         public void Subscribe_event_on_rabbitmq_test()
         {
 
-            services.AddSingleton<IEventBus>(sp =>
+            services.AddSingleton(sp =>
             {
                 return EventBusFactory.Create(RabbitMq(), sp);
             });
@@ -41,7 +41,7 @@ namespace EventBus.Test
         public void Subscribe_event_on_azure_test()
         {
 
-            services.AddSingleton<IEventBus>(sp =>
+            services.AddSingleton(sp =>
             {
                 return EventBusFactory.Create(Azure(), sp);
             });
@@ -96,19 +96,19 @@ namespace EventBus.Test
         //    eventBus.Publish(new OrderCreatedIntegrationEvent(61));
         //}
 
-        //[Fact]
-        //public void ConsumeMessageAzure_test()
-        //{
-        //    services.AddSingleton<IEventBus>(sp =>
-        //    {
-        //        return EventBusFactory.Create(Azure(), sp);
-        //    });
-        //    ServiceProvider sp = services.BuildServiceProvider();
+        [Fact]
+        public void ConsumeMessageAzure_test()
+        {
+            services.AddSingleton<IEventBus>(sp =>
+            {
+                return EventBusFactory.Create(Azure(), sp);
+            });
+            ServiceProvider sp = services.BuildServiceProvider();
 
-        //    var eventBus = sp.GetRequiredService<IEventBus>();
+            var eventBus = sp.GetRequiredService<IEventBus>();
 
-        //    eventBus.Publish(new OrderCreatedIntegrationEvent(61));
-        //}
+            eventBus.Publish(new OrderCreatedIntegrationEvent(61));
+        }
 
         private static EventBusConfig Azure()
         {
@@ -116,11 +116,10 @@ namespace EventBus.Test
             {
                 ConnectionRetryCount = 5,
                 SubscriberClientAppName = "EventBusUnitTest",
-                DefaultTopicName = "DefaultTopicName",
+                DefaultTopicName = "e_commerce_eventbus",
                 EventBusType = EventBusType.AzureServiceBus,
                 EventNameSuffix = "IntegrationEvent",
-                EventBusConnectionString = ""
-
+                EventBusConnectionString = "Endpoint=sb://e-commerce.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=E9PxfHb2gwhyLTfN81w6KEZClazyb8MNLREjuUw86J8="
             };
         }
 

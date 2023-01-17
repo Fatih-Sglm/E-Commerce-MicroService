@@ -1,5 +1,4 @@
 ﻿using E_Commerce.EventBus.Base.Events;
-using E_Commerce.OrderService.Application.Features.Orders.Models;
 using E_Commerce.OrderService.Domain.Models;
 
 namespace E_Commerce.OrderService.Application.IntegrationEvents.Events
@@ -9,36 +8,33 @@ namespace E_Commerce.OrderService.Application.IntegrationEvents.Events
         public string UserName { get; }
         public string Name { get; }
         public string Email { get; }
-        public uint OrderNumber { get; set; }
-        public string City { get; set; }
-        public string Street { get; set; }
-        public string State { get; set; }
-        public string Country { get; set; }
-        public string ZipCode { get; set; }
-        public CreditCardInformation CreditCardInformation { get; private set; }
-        public int CardTypeId { get; set; }
-        public bool WillPaymentRecorded { get; set; }
+        public string City { get; private set; }
+        public string Street { get; private set; }
+        public string State { get; private set; }
+        public string Country { get; private set; }
+        public string ZipCode { get; private set; }
+        public CreditCard CreditCard { get; private set; }
+        public int CardTypeId { get; private set; }
         public string? Alias { get; set; }
+        public bool WillPaymentRecorded { get; private set; }
         public CustomerBasket Basket { get; }
 
-        public OrderCreatedIntegrationEvent(string userName, string name, string email, string city, string street,
-            string state, string country, string zipCode, CreditCardInformation creditCardInformation, int cardTypeId, uint orderNumber,
-            CustomerBasket basket, string? alias)
+        public OrderCreatedIntegrationEvent(string userName, string name, string email,
+            string city, string street, string state, string country, string zipCode,
+           string alias, CreditCard creditCard, bool willPaymentRecorded, CustomerBasket basket)
         {
             UserName = userName;
             Name = name;
             Email = email;
             City = city;
-            OrderNumber = orderNumber;
             Street = street;
-            CreditCardInformation = creditCardInformation;
             State = state;
             Country = country;
             ZipCode = zipCode;
-            CardTypeId = cardTypeId;
-            Basket = basket;
+            CreditCard = creditCard;
             Alias = alias;
+            WillPaymentRecorded = willPaymentRecorded;
+            Basket = basket;
         }
-
     }
 }

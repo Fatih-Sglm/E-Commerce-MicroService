@@ -1,65 +1,94 @@
-﻿using AutoMapper;
+﻿using E_Commerce.IdentityService.Application.Abstractions.Services;
 using E_Commerce.IdentityService.Application.Abstractions.Services.AuthService;
 using E_Commerce.IdentityService.Application.Abstractions.Services.Jwt;
-using E_Commerce.IdentityService.Application.Exceptions;
+using E_Commerce.IdentityService.Application.Features.Auths.Command.Login.User;
+using E_Commerce.IdentityService.Application.Features.Auths.Command.Register;
 using E_Commerce.IdentityService.Application.Features.Auths.Constant;
 using E_Commerce.IdentityService.Application.Features.Auths.Dtos;
 using E_Commerce.IdentityService.Application.Features.Auths.Rules;
 using E_Commerce.IdentityService.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
-using System.Text.Json;
 
 namespace E_Commerce.IdentityService.Persistence.Concretes.Services
 {
     public class AuthService : IAuthService
     {
+
         private readonly ITokenHelper _tokenHandler;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IRefreshTokenService _refreshTokenService;
+        private readonly IAppUserService _appUserService;
+        private readonly SignInManager<AppUser> _signInManager;
         //private readonly AuthBusinnesRules _authBusinnesRules;
-        private readonly IMapper _mapper;
-        public AuthService(ITokenHelper tokenHandler, UserManager<AppUser> userManager, /*AuthBusinnesRules authBusinnesRules,*/ IMapper mapper)
+
+        public AuthService(ITokenHelper tokenHandler,
+            UserManager<AppUser> userManager,
+            IRefreshTokenService refreshTokenService,
+            SignInManager<AppUser> signInManager)
         {
             _tokenHandler = tokenHandler;
             _userManager = userManager;
-            //_authBusinnesRules = authBusinnesRules;
-            _mapper = mapper;
+            _refreshTokenService = refreshTokenService;
+            _signInManager = signInManager;
         }
-
-        public async Task<AccessToken> Login(LoginUserDto loginUserDto)
+        public async Task<LoginResponseDto> LoginAsync(LoginUserCommand command)
         {
-            AppUser? user = await _userManager.FindByEmailAsync(loginUserDto.UserNameOrEmail);
-            user ??= await _userManager.FindByNameAsync(loginUserDto.UserNameOrEmail);
-
+            AppUser? user = await _userManager.FindByEmailAsync(command.UserNameOrEmail);
+            user ??= await _userManager.FindByNameAsync(command.UserNameOrEmail);
             // Created extension method for those functions
             await user.CheckUserIsNull();
-            await _userManager.CheckUserPassword(user, loginUserDto.Password);
             await _userManager.CheckEmailConfimed(user);
+            await _signInManager.CheckUserPassword(user, command.Password);
             //await AuthBusinnesRules.CheckUserIsNull(user!);
             //await AuthBusinnesRules.CheckEmailConfimed(_userManager, user);
             //await AuthBusinnesRules.CheckUserPassword(_userManager, user, loginUserDto.Password);
-            return _tokenHandler.CreateToken(user!, await _userManager.GetRolesAsync(user));
-
+            return await GenerateAccesToken(user);
         }
 
-        public async Task<string> Register(RegisterDto registerDto)
+        private async Task<LoginResponseDto> GenerateAccesToken(AppUser user)
         {
-            AppUser appUser = _mapper.Map<AppUser>(registerDto);
-            return await CreateUser(appUser, registerDto.Password);
+            AccessToken accessToken = _tokenHandler.CreateToken(user!, await _userManager.GetRolesAsync(user));
+            string refreshtoken = _tokenHandler.CreateRefreshToken();
+            await _refreshTokenService.InsertRefreshToken(user, refreshtoken, accessToken.Expiration.AddDays(1));
 
+            return new()
+            {
+                Token = accessToken.Token,
+                RefreshToken = refreshtoken,
+                Expiration = accessToken.Expiration.ToString(),
+            };
         }
 
-        public async Task<bool> RegisterAdmin(RegisterDto registerDto)
+        public async Task<LoginResponseDto> RefreshTokenLoginAsync(string refreshToken)
         {
-            AppUser appUser = _mapper.Map<AppUser>(registerDto);
-            await _userManager.AddToRoleAsync(appUser, "Admin");
-            await CreateUser(appUser, registerDto.Password);
-            return true;
+            var userRefreshToken = await _refreshTokenService.GetRefreshTokenByToken(refreshToken);
+            if (userRefreshToken is null)
+                return null;
+
+            return await GenerateAccesToken(userRefreshToken.User);
         }
 
-        private async Task<string> CreateUser(AppUser appUser, string password)
+        public Task<LoginResponseDto> FacebookLoginAsync()
         {
-            IdentityResult result = await _userManager.CreateAsync(appUser, password);
-            if (!result.Succeeded) { throw new IdentityException(JsonSerializer.Serialize(result.Errors)); }
+            throw new NotImplementedException();
+        }
+
+        public Task<LoginResponseDto> GoogleLoginAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<string> Register(RegisterUserCommand command)
+        {
+            await _appUserService.CreateUser(new()
+            {
+                Email = command.Email,
+                FirstName = command.FirstName,
+                LastName = command.LastName,
+                Password = command.Password,
+                UserName = command.UserName,
+            });
+
             return AuthConstantMessage.WelcomeMessage;
         }
     }

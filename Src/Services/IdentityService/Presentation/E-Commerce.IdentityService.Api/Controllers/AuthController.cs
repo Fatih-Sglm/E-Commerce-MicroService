@@ -1,7 +1,6 @@
-﻿using E_Commerce.IdentityService.Application.Features.Admin.Command.CreateAdmin;
+﻿using E_Commerce.IdentityService.Application.Features.AppUsers.Command.CreateUser;
+using E_Commerce.IdentityService.Application.Features.Auths.Command.Login.RefreshTokenLogin;
 using E_Commerce.IdentityService.Application.Features.Auths.Command.Login.User;
-using E_Commerce.IdentityService.Application.Features.Auths.Command.Register;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerce.IdentityService.Api.Controllers
@@ -11,22 +10,22 @@ namespace E_Commerce.IdentityService.Api.Controllers
     public class AuthController : BaseController
     {
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginUserCommand login)
+        public async Task<IActionResult> LoginAsync(LoginUserCommand login)
         {
             return Ok(await _mediator.Send(login));
         }
 
-        [HttpPost("Register")]
-        public async Task<IActionResult> Register(RegisterUserCommand register)
+        [HttpPost("RefreshTokenLogin")]
+        public async Task<IActionResult> RefreshTokenLoginAsync(RefreshTokenLoginCommand command)
         {
-            return Ok(await _mediator.Send(register));
+            return Ok(await _mediator.Send(command));
         }
 
-        [HttpPost("AdminRegister")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> AdminRegister(CreateAdminCommand register)
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register(CreateUserCommand command)
         {
-            return Ok(await _mediator.Send(register));
+            return Ok(await _mediator.Send(command));
         }
+
     }
 }

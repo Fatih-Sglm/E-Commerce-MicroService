@@ -1,5 +1,5 @@
 ﻿using E_Commerce.OrderService.Application.Features.Orders.Dtos;
-using E_Commerce.OrderService.Application.Paging;
+using E_Commerce.OrderService.Application.Models.Paging;
 
 namespace E_Commerce.OrderService.Application.Features.Orders.Models
 {

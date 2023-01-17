@@ -44,15 +44,17 @@ namespace E_Commerce.BasketService.Api.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public async Task DeleteBasketAsync(string Id)
+        public async Task<IActionResult> DeleteBasketAsync(string Id)
         {
             await _service.DeleteBasketByIdAsync(Id);
+            return Ok();
         }
 
-        [HttpDelete("DeleteBasketItem/{Id}")]
-        public async Task DeleteBasketItemAsync(string Id)
+        [HttpDelete("DeleteBasketItem/{id}")]
+        public async Task<IActionResult> DeleteBasketItemAsync(string id)
         {
-            await _service.DeleteBasketItemAsync(Id);
+            await _service.DeleteBasketItemAsync(id);
+            return Ok("product was deleted");
         }
     }
 }

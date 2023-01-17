@@ -11,7 +11,7 @@ namespace E_Commerce.EventBus.Factory
         {
             return config.EventBusType switch
             {
-                EventBusType.AzureServiceBus => new EventBusServiceBus(config, serviceProvider),
+                EventBusType.AzureServiceBus => new EventBusServiceBusNew(config, serviceProvider),
                 _ => new EventBusRabbitMQ(config, serviceProvider)
             };
         }

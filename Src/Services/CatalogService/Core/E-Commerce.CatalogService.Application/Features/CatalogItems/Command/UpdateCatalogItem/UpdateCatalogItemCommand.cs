@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using E_Commerce.CatalogService.Application.Abstractions.Services;
+﻿using E_Commerce.CatalogService.Application.Abstractions.Services.CatalogItems;
 using E_Commerce.CatalogService.Application.Features.CatalogItems.Dtos;
-using E_Commerce.CatalogService.Application.Features.Common;
+using E_Commerce.CatalogService.Application.Models;
 using MediatR;
 
 namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Command.UpdateCatalogItem
@@ -11,15 +10,11 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Command.Up
         public UpdateCatalogItemDto updateCatalogItem { get; set; }
         public class UpdateCatalogItemCommandHandler : IRequestHandler<UpdateCatalogItemCommand, ResponseDto<NoContent>>
         {
-            private readonly ICatalogItemsService _catalogItemsService;
-            private readonly ICatalogItemImageService _catalogItemImageService;
-            private readonly IMapper _mapper;
+            private readonly ICatalogItemWriteService _catalogItemsService;
 
-            public UpdateCatalogItemCommandHandler(ICatalogItemsService catalogItemsService, ICatalogItemImageService catalogItemImageService, IMapper mapper)
+            public UpdateCatalogItemCommandHandler(ICatalogItemWriteService catalogItemsService)
             {
                 _catalogItemsService = catalogItemsService;
-                _catalogItemImageService = catalogItemImageService;
-                _mapper = mapper;
             }
 
             public async Task<ResponseDto<NoContent>> Handle(UpdateCatalogItemCommand request, CancellationToken cancellationToken)

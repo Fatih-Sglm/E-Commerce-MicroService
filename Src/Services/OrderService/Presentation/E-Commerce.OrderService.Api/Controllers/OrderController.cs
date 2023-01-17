@@ -1,4 +1,5 @@
 ﻿using E_Commerce.OrderService.Application.Features.Orders.Command.CreateOrder;
+using E_Commerce.OrderService.Application.Features.Orders.Command.PaymentOrder;
 using E_Commerce.OrderService.Application.Features.Orders.Queries.GetAllOrdersList;
 using E_Commerce.OrderService.Application.Features.Orders.Queries.GetOrderById;
 using E_Commerce.OrderService.Application.Features.Orders.Queries.GetUserOrdersList;
@@ -43,6 +44,12 @@ namespace E_Commerce.OrderService.Api.Controllers
         public async Task<IActionResult> GetAllOrders([FromQuery] GetAllOrdersQuery query)
         {
             return Ok(await _mediator.Send(query));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PayOrder(PaymentOrderCommand paymentOrder)
+        {
+            return Ok(await _mediator.Send(paymentOrder));
         }
     }
 }

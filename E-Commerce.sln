@@ -48,7 +48,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderService", "OrderServic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D51FF296-E77E-4AF0-8CAA-790C7FCE3AAA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InFrastructure", "InFrastructure", "{702CB53D-3457-464C-A106-251DD92C1FC2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{702CB53D-3457-464C-A106-251DD92C1FC2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{46FD332C-F313-4CE9-A7E8-32453BDFEBDF}"
 EndProject

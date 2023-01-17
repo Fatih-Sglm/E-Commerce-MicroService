@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using E_Commerce.IdentityService.Application.Features.Auths.Dtos;
+using E_Commerce.IdentityService.Application.Features.AppUsers.Command.CreateUser;
 using E_Commerce.IdentityService.Domain.Entities.Identity;
 
 namespace E_Commerce.IdentityService.Application.Features.Auths.Profiles
@@ -8,7 +8,7 @@ namespace E_Commerce.IdentityService.Application.Features.Auths.Profiles
     {
         public AuthProfile()
         {
-            CreateMap<RegisterDto, AppUser>();
+            CreateMap<CreateUserCommand, AppUser>();
         }
     }
 }

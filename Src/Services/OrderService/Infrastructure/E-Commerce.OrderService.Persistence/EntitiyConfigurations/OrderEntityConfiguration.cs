@@ -12,7 +12,6 @@ namespace E_Commerce.OrderService.Persistence.EntitiyConfigurations
             builder.ToTable("order", OrderDbContext.DEFAULT_SCHEMA);
 
             builder.HasKey(o => o.Id);
-
             builder.Property(i => i.Id);
             builder.Ignore(x => x.DomainEvents);
             builder.Ignore(x => x.CreateDate);

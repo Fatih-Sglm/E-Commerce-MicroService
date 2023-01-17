@@ -20,9 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\BuildingBlocks\EventBus\E-Commerce.EventBus.Base\E-Commerce.EventBus.Base.csproj" />
     <ProjectReference Include="..\..\..\..\BuildingBlocks\EventBus\E-Commerce.EventBus.Factory\E-Commerce.EventBus.Factory.csproj" />
-    <ProjectReference Include="..\..\..\OrderService\Core\E-Commerce.OrderService.Application\E-Commerce.OrderService.Application.csproj" />
+    <ProjectReference Include="..\..\Core\E-Commerce.PaymentService.Application\E-Commerce.PaymentService.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\E-Commerce.PaymentService.Infrastructure\E-Commerce.PaymentService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
