@@ -66,6 +66,12 @@ namespace E_Commerce.CatalogService.Api.Controllers
             });
         }
 
+        [HttpGet("GetCatalogTypes")]
+        public async Task<IActionResult> GetCatalogTypes()
+        {
+            return Ok(await _typeService.GetCatalogTypes());
+        }
+
         [HttpGet("GetCatalogItemsByBrand")]
         public async Task<IActionResult> GetCatalogItemsByBrand([FromQuery] GetCatalogItemsByBrandQuery query)
         {

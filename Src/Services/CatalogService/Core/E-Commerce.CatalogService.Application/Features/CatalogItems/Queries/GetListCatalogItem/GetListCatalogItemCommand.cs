@@ -9,7 +9,9 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Queries.Ge
 {
     public class GetListCatalogItemQuery : PageRequest, IRequest<ResponseDto<CatalogItemListModel>>
     {
-        public Dynamic? Dynamic { get; set; }
+        public Sort? Sort { get; set; }
+        public Filter? Filter { get; set; }
+
         //public string[] Roles => new[] { "Admin" };
         public class GetListCatalogItemQueryHandler : IRequestHandler<GetListCatalogItemQuery, ResponseDto<CatalogItemListModel>>
         {
@@ -22,9 +24,14 @@ namespace E_Commerce.CatalogService.Application.Features.CatalogItems.Queries.Ge
             public async Task<ResponseDto<CatalogItemListModel>> Handle(GetListCatalogItemQuery request, CancellationToken cancellationToken)
             {
                 CatalogItemListModel model;
-                if (request.Dynamic != null)
+                if (request.Sort != null || request.Filter != null)
                 {
-                    model = await _catalogItemsService.GetListCatalogItemDynamic(request.Dynamic, new() { Page = request.Page, PageSize = request.PageSize });
+                    Dynamic dynamic = new()
+                    {
+                        Sort = request.Sort,
+                        Filter = request.Filter,
+                    };
+                    model = await _catalogItemsService.GetListCatalogItemDynamic(dynamic, new() { Page = request.Page, PageSize = request.PageSize });
                 }
                 else
                 {
