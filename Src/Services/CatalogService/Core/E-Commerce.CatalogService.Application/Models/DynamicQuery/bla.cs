@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace E_Commerce.CatalogService.Application.Models.DynamicQuery
+﻿namespace E_Commerce.CatalogService.Application.Models.DynamicQuery
 {
     public class bla
     {
