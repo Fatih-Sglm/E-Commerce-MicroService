@@ -17,7 +17,7 @@ namespace E_Commerce.IdentityService.Application.Extensions
         public static void AddApplicationServices(this IServiceCollection services)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            services.AddMediatR(assembly);
+            services.AddMediatR(opt => opt.RegisterServicesFromAssembly(assembly));
             services.AddAutoMapper(assembly);
             services.AddTechBuddyValidator(opt =>
             {

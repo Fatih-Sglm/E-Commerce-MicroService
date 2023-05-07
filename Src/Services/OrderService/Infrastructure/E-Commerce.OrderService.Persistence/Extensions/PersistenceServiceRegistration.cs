@@ -13,15 +13,23 @@ namespace E_Commerce.OrderService.Persistence.Extensions
     {
         public static void AddPersistenceServiceRegistration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<OrderDbContext>(opt =>
-            {
-                opt.UseSqlServer(configuration.GetConnectionString("MSS"));
-                opt.EnableSensitiveDataLogging();
-            });
 
             services.AddScoped<IBuyerRepository, BuyerRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IBuyerService, BuyerService>();
+            
+            services.AddDbContext<OrderDbContext>(opt => opt.
+                                 UseSqlServer(string.Format(configuration.GetConnectionString("MSS"), configuration["SqlPass"])));
+
+            services.AddSingleton(sp=>sp.DbInitialize());
+
         }
+            public static IServiceProvider DbInitialize(this IServiceProvider provider)
+            {
+                using var scope = provider.CreateScope();
+                var context = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
+                context.Database.Migrate();
+                return provider;
+            }
     }
 }

@@ -16,15 +16,24 @@ namespace E_Commerce.IdentityService.Persistence.Extensions
     {
         public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<IdentityContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("MSS")));
+            services.AddDbContext<IdentityContext>(opt => opt.
+                                 UseSqlServer(string.Format(configuration.GetConnectionString("MSS"),configuration["SqlPass"])));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepoitory<>));
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IAppUserService, AppUserService>();
             services.AddScoped<IVeriyService, VeriyService>();
-            //services.AddScoped<AuthBusinnesRules>();
+            services.AddSingleton(sp=>sp.DbInitialize());
             AddIdenTity(services);
 
+        }
+
+        public static IServiceProvider DbInitialize(this IServiceProvider provider)
+        {
+            using var scope = provider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<IdentityContext>();
+            context.Database.Migrate();
+            return provider;
         }
 
         private static void AddIdenTity(IServiceCollection services)

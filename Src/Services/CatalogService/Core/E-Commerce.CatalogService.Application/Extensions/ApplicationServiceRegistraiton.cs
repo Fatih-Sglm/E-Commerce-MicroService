@@ -17,8 +17,9 @@ namespace E_Commerce.CatalogService.Application.Extensions
     {
         public static void AddApplicationServiceRegistraiton(this IServiceCollection services)
         {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            var assembly = Assembly.GetExecutingAssembly();
+            services.AddMediatR(opt=> opt.RegisterServicesFromAssembly(assembly));
+            services.AddAutoMapper(assembly);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
             services.AddTechBuddyValidator(opt =>
             {

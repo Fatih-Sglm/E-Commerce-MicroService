@@ -10,12 +10,12 @@ namespace E_Commerce.BasketService.Api.Extensions
         {
             services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(cfg =>
             {
-                var adress = configuration["ConsulConfig:Adress"];
+                var adress = configuration["ConsulConfig:ConsulAdress"];
                 cfg.Address = new Uri(adress);
             }));
         }
 
-        public static void RegisterWithConsul(this IApplicationBuilder app, IHostApplicationLifetime lifetime)
+        public static void RegisterWithConsul(this IApplicationBuilder app, IHostApplicationLifetime lifetime , IConfiguration configuration)
         {
             var consulClient = app.ApplicationServices.GetRequiredService<IConsulClient>();
 
@@ -23,21 +23,7 @@ namespace E_Commerce.BasketService.Api.Extensions
 
             var logger = loggingFactory.CreateLogger<IApplicationBuilder>();
 
-
-            var features = app.Properties["server.Features"] as FeatureCollection;
-            var adresses = features.Get<IServerAddressesFeature>();
-            var adress = adresses.Addresses.First();
-
-            var uri = new Uri(adress);
-
-            var registration = new AgentServiceRegistration()
-            {
-                ID = "BasketService",
-                Name = "BasketService",
-                Address = $"{uri.Host}",
-                Port = uri.Port,
-                Tags = new[] { "BasketService", "Basket" }
-            };
+            var registration = configuration.GetValue<AgentServiceRegistration>("ConsulConfig:Profile");
 
             logger.LogInformation("Registering with Consul");
             consulClient.Agent.ServiceDeregister(registration.ID).Wait();

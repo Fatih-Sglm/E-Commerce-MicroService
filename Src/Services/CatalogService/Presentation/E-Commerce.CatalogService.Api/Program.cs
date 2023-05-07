@@ -9,13 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddDbContextServices(builder.Configuration);
 builder.Services.AddStorage<CloudinaryStorage>();
 builder.Services.ConfigureConsul(builder.Configuration);
 builder.Services.AddAuthServices(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddPersistenceServiceRegistraiton();
+builder.Services.AddPersistenceServiceRegistraiton(builder.Configuration);
 builder.Services.AddApplicationServiceRegistraiton();
+builder.Services.AddSingleton(sp => sp.DbInitialize());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
