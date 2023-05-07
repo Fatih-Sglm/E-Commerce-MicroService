@@ -11,15 +11,20 @@ namespace E_Commerce.BasketService.Api.Extensions
     {
         public static IEventBus EventBusRegister(this IServiceProvider service , IConfiguration configuration)
         {
-            EventBusConfig config = new()
-            {
-                ConnectionRetryCount = 5,
-                EventNameSuffix = "IntegrationEvent",
-                SubscriberClientAppName = "BasketService",
-                EventBusType = EventBusType.RabbitMQ,
-                Connection = configuration.GetValue<ConnectionFactory>("RabbitMq")
-            };
-            return EventBusFactory.Create(config, service);
+
+            var busConfig = configuration.GetSection("EventBusConfig").Get<EventBusConfig>();
+            if( busConfig == null )
+                throw new ArgumentNullException(nameof(busConfig));
+
+            //EventBusConfig config = new()
+            //{
+            //    ConnectionRetryCount = 5,
+            //    EventNameSuffix = "IntegrationEvent",
+            //    SubscriberClientAppName = "BasketService",
+            //    EventBusType = EventBusType.RabbitMQ,
+            //    Connection = configuration.GetValue<ConnectionFactory>("RabbitMq")
+            //};
+            return EventBusFactory.Create(busConfig, service);
         }
         public static void EventConfig(this WebApplication application)
         {
