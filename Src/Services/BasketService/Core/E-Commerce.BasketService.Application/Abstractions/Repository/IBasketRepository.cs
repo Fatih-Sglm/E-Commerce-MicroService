@@ -5,7 +5,7 @@ namespace E_Commerce.BasketService.Application.Abstractions.Repository
     public interface IBasketRepository
     {
         Task<CustomerBasket?> GetBasketAsync(string buyerUserName);
-        IEnumerable<string> GetUsers();
+        //IEnumerable<string> GetUsers();
         Task<CustomerBasket?> UpdateBasketAsync(CustomerBasket customerBasket);
         Task DeleteBasketAsync(string id);
 

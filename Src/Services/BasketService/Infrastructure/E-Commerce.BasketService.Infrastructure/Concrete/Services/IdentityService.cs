@@ -12,16 +12,16 @@ namespace E_Commerce.BasketService.Infrastructure.Concrete.Services
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        public Task<string> GetUserName()
+        public async Task<string> GetUserName()
         {
-            return Task.FromResult(_httpContextAccessor.HttpContext.User.FindFirst(x => x.Type == ClaimTypes.GivenName)!.Value);
+            return _httpContextAccessor.HttpContext.User.FindFirst(x => x.Type == ClaimTypes.GivenName)!.Value ?? "Fatih";
         }
 
-        public Task<(string FullName, string Email)> GetUserInfos()
+        public async Task<(string FullName, string Email)> GetUserInfos()
         {
             string Fullname = _httpContextAccessor.HttpContext.User.FindFirst(x => x.Type == ClaimTypes.Name)!.Value;
             string Email = _httpContextAccessor.HttpContext.User.FindFirst(x => x.Type == ClaimTypes.Email)!.Value;
-            return Task.FromResult((Fullname, Email));
+            return (Fullname, Email);
         }
     }
 }

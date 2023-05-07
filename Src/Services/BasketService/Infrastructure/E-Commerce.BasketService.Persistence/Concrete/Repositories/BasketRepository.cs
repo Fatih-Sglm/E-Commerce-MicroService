@@ -4,19 +4,17 @@ using E_Commerce.BasketService.Domain.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using StackExchange.Redis;
+using StackExchange.Redis.Extensions.Core.Abstractions;
 
 namespace E_Commerce.BasketService.Persistence.Concrete.Repositories
 {
     public class BasketRepository : IBasketRepository
     {
-        private readonly IDatabase _database;
-        private readonly IServer _server;
         private readonly ILogger<BasketRepository> _logger;
-
-        public BasketRepository(IRedisConfig redisConfig, ILogger<BasketRepository> logger)
+        private readonly IDatabase _database;
+        public BasketRepository(IRedisDatabase redisDatabase, ILogger<BasketRepository> logger)
         {
-            _database = redisConfig.GetRedisDatabase();
-            _server = redisConfig.GetServer();
+            _database = redisDatabase.Database;
             _logger = logger;
         }
 
@@ -49,10 +47,10 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Repositories
             return !basket.IsNullOrEmpty ? JsonConvert.DeserializeObject<CustomerBasket>(basket) : null;
         }
 
-        public IEnumerable<string> GetUsers()
-        {
-            return _server.Keys().Select(x => x.ToString());
-        }
+        //public IEnumerable<string> GetUsers()
+        //{
+        //    return _server.Keys().Select(x => x.ToString());
+        //}
 
         public async Task<CustomerBasket?> UpdateBasketAsync(CustomerBasket customerBasket)
         {

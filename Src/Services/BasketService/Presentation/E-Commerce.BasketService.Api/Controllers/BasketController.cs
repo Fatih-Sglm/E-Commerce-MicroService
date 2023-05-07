@@ -7,7 +7,7 @@ namespace E_Commerce.BasketService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     public class BasketController : ControllerBase
     {
         private readonly IBasketService _service;

@@ -1,14 +1,25 @@
-﻿using StackExchange.Redis;
+﻿using StackExchange.Redis.Extensions.Core.Configuration;
+using StackExchange.Redis.Extensions.System.Text.Json;
 
 namespace E_Commerce.BasketService.Api.Extensions
 {
     public static class RedisConfigurationExtension
     {
-        public static ConnectionMultiplexer RegisConfiguration(this IServiceProvider services, IConfiguration configuration)
+        public static IServiceCollection RegisConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            var redisConfig = ConfigurationOptions.Parse(configuration["Redis:ConnectionString"], true);
-            redisConfig.ResolveDns = true;
-            return ConnectionMultiplexer.Connect(redisConfig);
+            services.AddStackExchangeRedisExtensions<SystemTextJsonSerializer>(new RedisConfiguration
+            {
+                ConnectionString = configuration.GetConnectionString("Redis"),
+                
+                PoolSize = 5,
+                ServerEnumerationStrategy = new ServerEnumerationStrategy
+                {
+                    Mode = ServerEnumerationStrategy.ModeOptions.All,
+                    TargetRole = ServerEnumerationStrategy.TargetRoleOptions.Any,
+                    UnreachableServerAction = ServerEnumerationStrategy.UnreachableServerActionOptions.Throw
+                }
+            });
+            return services;
         }
     }
 }
