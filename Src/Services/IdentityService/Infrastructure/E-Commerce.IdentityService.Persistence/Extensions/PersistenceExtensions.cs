@@ -5,6 +5,7 @@ using E_Commerce.IdentityService.Domain.Entities.Identity;
 using E_Commerce.IdentityService.Persistence.Concretes.Repositories.GenericRepo;
 using E_Commerce.IdentityService.Persistence.Concretes.Services;
 using E_Commerce.IdentityService.Persistence.Context;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,23 +18,22 @@ namespace E_Commerce.IdentityService.Persistence.Extensions
         public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<IdentityContext>(opt => opt.
-                                 UseSqlServer(string.Format(configuration.GetConnectionString("MSS"),configuration["SqlPass"])));
+                                 UseSqlServer(string.Format(configuration.GetConnectionString("MSS"), configuration["Passwords:SqlPass"])));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepoitory<>));
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IAppUserService, AppUserService>();
             services.AddScoped<IVeriyService, VeriyService>();
-            services.AddSingleton(sp=>sp.DbInitialize());
             AddIdenTity(services);
 
         }
 
-        public static IServiceProvider DbInitialize(this IServiceProvider provider)
+        public static async Task<WebApplication> DbInitialize(this WebApplication app)
         {
-            using var scope = provider.CreateScope();
+            using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<IdentityContext>();
-            context.Database.Migrate();
-            return provider;
+            await context.Database.MigrateAsync();
+            return app;
         }
 
         private static void AddIdenTity(IServiceCollection services)

@@ -20,6 +20,7 @@ builder.Services.ConfigureConsul(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddAuthServices(builder.Configuration);
+builder.Services.AddSingleton(sp => sp.EventBusRegister(builder.Configuration));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -33,12 +34,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.AddWebApplicaitonService();
-app.AddWebApplicaitonService();
+//app.AddWebApplicaitonService();
+await app.DbInitialize();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Start();
-app.RegisterWithConsul(app.Lifetime);
+app.RegisterWithConsul(app.Lifetime, builder.Configuration);
 app.WaitForShutdown();

@@ -11,7 +11,7 @@ namespace E_Commerce.EventBus.Base.Events
         public readonly IServiceProvider ServiceProvider;
         public readonly IEventBusSubscriptionManager SubsManager;
 
-        public EventBusConfig? EventBusConfig { get; private set; }
+        public EventBusConfig EventBusConfig { get; private set; }
 
         public BaseEventBus(EventBusConfig config, IServiceProvider serviceProvider)
         {
@@ -22,11 +22,12 @@ namespace E_Commerce.EventBus.Base.Events
 
         public virtual string ProcessEventName(string eventName)
         {
-            if (EventBusConfig!.DeleteEventPrefix)
-                eventName = eventName.TrimStart(EventBusConfig.EventNamePrefix.ToArray());
+            if (EventBusConfig.DeleteEventPrefix)
+                eventName = eventName.Contains(EventBusConfig.EventNamePrefix) ? eventName[EventBusConfig.EventNamePrefix.Length..] : eventName;
+            eventName = eventName[EventBusConfig.EventNamePrefix.Length..];
 
             if (EventBusConfig.DeleteEventSuffix)
-                eventName = eventName.TrimEnd(EventBusConfig.EventNameSuffix.ToArray());
+                eventName = eventName.Contains(EventBusConfig.EventNameSuffix) ? eventName[..(eventName.Length - EventBusConfig.EventNameSuffix.Length)] : eventName;
 
             return eventName;
         }

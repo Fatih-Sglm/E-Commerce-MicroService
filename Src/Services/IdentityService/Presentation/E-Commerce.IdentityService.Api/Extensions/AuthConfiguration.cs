@@ -20,7 +20,7 @@ namespace E_Commerce.IdentityService.Api.Extensions
                   ValidIssuer = configuration["TokenOptions:Issuer"],
                   ValidAudience = configuration["TokenOptions:Audience"],
                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenOptions:SecurityKey"])),
-                  LifetimeValidator = (notBefore, expiration, securityToken, validationParameters) => expiration != null ? expiration > DateTime.UtcNow : false,
+                  LifetimeValidator = (notBefore, expiration, securityToken, validationParameters) => expiration != null && expiration > DateTime.UtcNow,
               };
           });
 

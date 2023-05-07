@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using E_Commerce.EventBus.Base.Abstraction;
 using E_Commerce.IdentityService.Application.Abstractions.Services;
 using E_Commerce.IdentityService.Application.Exceptions;
 using E_Commerce.IdentityService.Application.Features.AppUsers.Command.CreateUser;
@@ -6,6 +7,7 @@ using E_Commerce.IdentityService.Application.Features.AppUsers.Command.ResetPass
 using E_Commerce.IdentityService.Application.Features.AppUsers.Command.UpdateUserPassword;
 using E_Commerce.IdentityService.Application.Features.Auths.Rules;
 using E_Commerce.IdentityService.Application.Helper;
+using E_Commerce.IdentityService.Application.IntegrationEvents;
 using E_Commerce.IdentityService.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
@@ -17,21 +19,20 @@ namespace E_Commerce.IdentityService.Persistence.Concretes.Services
 {
     public class AppUserService : IAppUserService
     {
-        private readonly IMailService _mailService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly IVeriyService _veriyService;
+        private readonly IEventBus _eventBus;
 
-        public AppUserService(IMailService mailService, UserManager<AppUser> userManager, IConfiguration configuration, IMapper mapper, IVeriyService veriyService)
+        public AppUserService(UserManager<AppUser> userManager, IConfiguration configuration, IMapper mapper, IVeriyService veriyService, IEventBus eventBus)
         {
-            _mailService = mailService;
             _userManager = userManager;
             _configuration = configuration;
             _mapper = mapper;
             _veriyService = veriyService;
+            _eventBus = eventBus;
         }
-
 
         public async Task CreateUser(CreateUserCommand request)
         {
@@ -47,11 +48,17 @@ namespace E_Commerce.IdentityService.Persistence.Concretes.Services
             appUser.CheckUserIsNull();
 
             string resetToken = await _userManager.GeneratePasswordResetTokenAsync(appUser);
+            UserNotificationIntegrationEvent @event = new()
+            {
+                UrlRoute = "reset-password",
+                Email = appUser.Email,
+                FullName = $"{appUser.FirstName} {appUser.LastName}",
+                UserId = appUser.Id.ToString(),
+                Token = resetToken,
+                MessageType = MessageType.ReserPassword
+            };
 
-            string message = SystemMailMessages.ResetPasswordMailMessageAsync
-                  (_configuration, "reset-password", appUser.FullName, appUser.Id.ToString(), resetToken.UrlEncode());
-
-            await CreateMailMesage(appUser, "Reset Password", message);
+            _eventBus.Publish(@event);
         }
 
         public async Task UpdadePassword(UpdateUserPassworResetCommand command)
@@ -77,22 +84,18 @@ namespace E_Commerce.IdentityService.Persistence.Concretes.Services
             string resetToken = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
             byte[] tokenBytes = Encoding.UTF8.GetBytes(resetToken);
             resetToken = WebEncoders.Base64UrlEncode(tokenBytes);
-            string message = SystemMailMessages.ConfirmMailMessageAsync(_configuration, "/Confirm-Email", $"{appUser.FirstName} + {appUser.LastName}",
-                appUser.Id.ToString(), resetToken);
-            await CreateMailMesage(appUser, "Confirm Email", message);
-        }
 
-        private async Task CreateMailMesage(AppUser appUser, string subject, string message)
-        {
-            await _mailService.AddQueue(new()
+            UserNotificationIntegrationEvent @event = new()
             {
-                IsHtml = true,
-                Subject = subject,
-                TextBody = message,
-                ToEmail = appUser.Email,
-                ToFullName = appUser.FullName,
-            });
-        }
+                UrlRoute = "Confirm-Email",
+                Email = appUser.Email,
+                FullName = $"{appUser.FirstName} {appUser.LastName}",
+                UserId = appUser.Id.ToString(),
+                Token = resetToken,
+                MessageType = MessageType.VerifyEmail
+            };
 
+            _eventBus.Publish(@event);
+        }
     }
 }

@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\BuildingBlocks\EventBus\E-Commerce.EventBus.Factory\E-Commerce.EventBus.Factory.csproj" />
     <ProjectReference Include="..\..\Infrastructure\E-Commerce.IdentityService.Infrastructure\E-Commerce.IdentityService.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\E-Commerce.IdentityService.Persistence\E-Commerce.IdentityService.Persistence.csproj" />
   </ItemGroup>

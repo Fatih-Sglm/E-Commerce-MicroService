@@ -1,6 +1,7 @@
 ﻿using Consul;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.Configuration;
 
 namespace E_Commerce.IdentityService.Api.Extensions
 {
@@ -10,12 +11,12 @@ namespace E_Commerce.IdentityService.Api.Extensions
         {
             services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(cfg =>
             {
-                var adress = configuration["ConsulConfig:Adress"];
+                var adress = configuration["ConsulConfig:ConsulAdress"];
                 cfg.Address = new Uri(adress);
             }));
         }
 
-        public static void RegisterWithConsul(this IApplicationBuilder app, IHostApplicationLifetime lifetime)
+        public static void RegisterWithConsul(this IApplicationBuilder app, IHostApplicationLifetime lifetime , IConfiguration configuration)
         {
             var consulClient = app.ApplicationServices.GetRequiredService<IConsulClient>();
 
@@ -23,20 +24,7 @@ namespace E_Commerce.IdentityService.Api.Extensions
 
             var logger = loggingFactory.CreateLogger<IApplicationBuilder>();
 
-            var features = app.Properties["server.Features"] as FeatureCollection;
-            var adresses = features.Get<IServerAddressesFeature>();
-            var adress = adresses.Addresses.First();
-
-            var uri = new Uri(adress);
-
-            var registration = new AgentServiceRegistration()
-            {
-                ID = "IdentityService",
-                Name = "IdentityService",
-                Address = $"{uri.Host}",
-                Port = uri.Port,
-                Tags = new[] { "IdentityService", "Identity", "Token", "JWT" }
-            };
+            var registration = configuration.GetSection("ConsulConfig:Profile").Get<AgentServiceRegistration>();
 
             logger.LogInformation("Registering with Consul");
             consulClient.Agent.ServiceDeregister(registration.ID).Wait();
