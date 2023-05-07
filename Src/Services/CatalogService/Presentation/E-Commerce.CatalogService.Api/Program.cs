@@ -13,9 +13,9 @@ builder.Services.AddStorage<CloudinaryStorage>();
 builder.Services.ConfigureConsul(builder.Configuration);
 builder.Services.AddAuthServices(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddCloudinary(builder.Configuration);
 builder.Services.AddPersistenceServiceRegistraiton(builder.Configuration);
 builder.Services.AddApplicationServiceRegistraiton();
-builder.Services.AddSingleton(sp => sp.DbInitialize());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -29,11 +29,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.AddWebApplicaitonService();
+await app.DbInitialize();
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Start();
-app.RegisterWithConsul(app.Lifetime);
+app.RegisterWithConsul(app.Lifetime , builder.Configuration);
 app.WaitForShutdown();

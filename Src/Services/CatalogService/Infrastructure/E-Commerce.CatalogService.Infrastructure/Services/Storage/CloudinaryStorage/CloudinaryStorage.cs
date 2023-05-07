@@ -10,12 +10,13 @@ namespace E_Commerce.CatalogService.Infrastructure.Services.Storage.CloudinarySt
     {
         private readonly Cloudinary _cloudinary;
         private readonly IConfiguration _configuration;
-        public CloudinaryStorage(IConfiguration configuration)
+
+        public CloudinaryStorage(Cloudinary cloudinary, IConfiguration configuration)
         {
+            _cloudinary = cloudinary;
             _configuration = configuration;
-            Account account = configuration.GetSection("CloudinaryAccount").Get<Account>();
-            _cloudinary = new Cloudinary(account);
         }
+
         public async Task DeleteAsync(string path)
         {
             DeletionParams deletionParams = new(GetPublicId(path));

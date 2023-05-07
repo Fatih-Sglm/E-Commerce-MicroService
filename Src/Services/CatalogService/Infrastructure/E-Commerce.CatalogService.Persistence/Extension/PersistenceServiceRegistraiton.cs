@@ -5,6 +5,7 @@ using E_Commerce.CatalogService.Persistence.Concretes.Repositories;
 using E_Commerce.CatalogService.Persistence.Concretes.Services;
 using E_Commerce.CatalogService.Persistence.Concretes.Services.CatalogItems;
 using E_Commerce.CatalogService.Persistence.Context;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,16 +29,15 @@ namespace E_Commerce.CatalogService.Persistence.Extension
             services.AddScoped<ICatalogItemVariantService, CatalogItemVariantService>();
 
             services.AddDbContext<CatalogContext>(opt => opt.
-                                 UseSqlServer(string.Format(configuration.GetConnectionString("MSS"), configuration["SqlPass"])));
-            services.AddSingleton(sp => sp.DbInitialize());
+                                 UseSqlServer(string.Format(configuration.GetConnectionString("MSS"), configuration["PassWords:SqlPass"])));
         }
 
-        public static IServiceProvider DbInitialize(this IServiceProvider provider)
+        public static async Task<WebApplication> DbInitialize(this WebApplication app)
         {
-            using var scope = provider.CreateScope();
+            using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<CatalogContext>();
-            context.Database.Migrate();
-            return provider;
+            await context.Database.MigrateAsync();
+            return app;
         }
     }
 }
