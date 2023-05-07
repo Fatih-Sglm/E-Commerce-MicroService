@@ -24,7 +24,7 @@ namespace E_Commerce.BasketService.Persistence.Concrete.Services
 
         public async Task AddItemToBasket(BasketItem basketItem)
         {
-            var userName = await _identityService.GetUserName();
+            var userName = /*await _identityService.GetUserName()*/ "Fatih";
             var basket = await _basketRepository.GetBasketAsync(userName);
             basket ??= new CustomerBasket(userName);
             basket.Items.Add(basketItem);

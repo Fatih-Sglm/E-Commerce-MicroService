@@ -23,7 +23,7 @@ namespace E_Commerce.BasketService.Api.Extensions
 
             var logger = loggingFactory.CreateLogger<IApplicationBuilder>();
 
-            var registration = configuration.GetValue<AgentServiceRegistration>("ConsulConfig:Profile");
+            var registration = configuration.GetSection("ConsulConfig:Profile").Get<AgentServiceRegistration>();
 
             logger.LogInformation("Registering with Consul");
             consulClient.Agent.ServiceDeregister(registration.ID).Wait();
